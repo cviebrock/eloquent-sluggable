@@ -3,21 +3,33 @@
 
 use Closure;
 
-
 class Sluggable {
 
-
+	/**
+	 * The configuration array
+	 *
+	 * @var array
+	 */
 	protected $config = array();
 
-
+	/**
+	 * Constructor
+	 *
+	 * @param array $config
+	 */
 	public function __construct( array $config ) {
 
 		$this->config = $config;
 
 	}
 
-
-
+	/**
+	 * Make a slug for the model
+	 *
+	 * @param  \Eloquent $model The model
+	 * @param  boolean   $force Force generation of a slug
+	 * @return boolean
+	 */
 	public function make( \Eloquent $model, $force = false)
 	{
 
@@ -89,8 +101,6 @@ class Sluggable {
 			throw new \UnexpectedValueException("Sluggable method is not a callable, closure or null.");
 
 		}
-
-
 
 
 		// check for uniqueness?

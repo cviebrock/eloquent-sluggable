@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+
 use Illuminate\Support\ServiceProvider;
 
 class SluggableServiceProvider extends ServiceProvider {
@@ -9,7 +10,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = true;
+	protected $defer = false;
 
 	/**
 	 * Bootstrap the application events.
@@ -34,17 +35,11 @@ class SluggableServiceProvider extends ServiceProvider {
 
 	}
 
-	public function registerEvents()
-	{
-		$app = $this->app;
-
-		$app['events']->listen('eloquent.saving*', function($model) use ($app)
-		{
-			$app['sluggable']->make($model);
-		});
-	}
-
-
+	/**
+	 * Register the Sluggable class
+	 *
+	 * @return void
+	 */
 	public function registerSluggable()
 	{
 		$this->app['sluggable'] = $this->app->share(function($app)
@@ -56,6 +51,20 @@ class SluggableServiceProvider extends ServiceProvider {
 		});
 	}
 
+	/**
+	 * Register the listener events
+	 *
+	 * @return void
+	 */
+	public function registerEvents()
+	{
+		$app = $this->app;
+
+		$app['events']->listen('eloquent.saving*', function($model) use ($app)
+		{
+			$app['sluggable']->make($model);
+		});
+	}
 
 	/**
 	 * Get the services provided by the provider.
