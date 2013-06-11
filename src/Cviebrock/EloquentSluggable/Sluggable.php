@@ -4,8 +4,6 @@
 use Closure;
 
 
-class SluggableException extends \Exception {}
-
 class Sluggable {
 
 
