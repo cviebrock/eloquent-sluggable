@@ -35,14 +35,14 @@ class Sluggable {
 
 		// if the model isn't sluggable, then do nothing
 
-		if ( !isset( $model->sluggable ) ) {
+		if ( !isset( $model::$sluggable ) ) {
 			return true;
 		}
 
 
 		// load the configuration
 
-		$config = array_merge( $this->config, $model->sluggable );
+		$config = array_merge( $this->config, $model::$sluggable );
 
 
 		// nicer variables for readability
