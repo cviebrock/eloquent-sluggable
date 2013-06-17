@@ -2,6 +2,7 @@
 
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 
 class Sluggable {
 
@@ -26,11 +27,11 @@ class Sluggable {
 	/**
 	 * Make a slug for the model
 	 *
-	 * @param  \Eloquent $model The model
+	 * @param  Model     $model The model
 	 * @param  boolean   $force Force generation of a slug
 	 * @return boolean
 	 */
-	public function make( \Eloquent $model, $force = false)
+	public function make( Model $model, $force = false)
 	{
 
 		// if the model isn't sluggable, then do nothing
