@@ -2,6 +2,47 @@
 
 Easy creation of slugs for your Eloquent models in Laravel 4.
 
+
+## Background: What is a slug?
+
+A slug is a simplified version of a string, typically URL-friendly.  The act of "slugging" a string usually
+involves converting it to one case, and removing any non-URL-friendly characters (spaces, accented letters, ampersands,
+etc.).  The resulting string can then be used as an indentifier for a particular resource.
+
+For example, I have a blog with posts.  I could refer to each post via the ID:
+
+	http://example.com/post/1
+	http://example.com/post/2
+
+... but that's not particularly friendly (especially for [SEO](http://en.wikipedia.org/wiki/Search_engine_optimization)).
+You probably would prefer to use the post's title in the URL, but that becomes a problem if your post is
+titled "My Dinner With André & François", because this is pretty ugly too:
+
+	http://example.com/post/My+Dinner+With+Andr%C3%A9+%26+Fran%C3%A7ois
+
+The solution is to create a slug for the title and use that instead.  You might want to use Laravel's
+built-in `Str::slug()` method to convert that title into something friendlier:
+
+	http://example.com/post/my-dinner-with-andre-francois
+
+A URL like that will make users happier (readable, easier to type, etc.).
+
+For more information, you might want to read [this](http://en.wikipedia.org/wiki/Slug_(web_publishing)#Slug)
+description on Wikipedia.
+
+Slugs tend to be unique as well.  So if I wrote another post with the same title, I'd want to distinguish
+between them somehow, typically with an incremental counter added to the end of the slug:
+
+	http://example.com/post/my-dinner-with-andre-francois
+	http://example.com/post/my-dinner-with-andre-francois-1
+	http://example.com/post/my-dinner-with-andre-francois-2
+
+This keeps URLs unique.
+
+The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you automatically, with
+minimal configuration at the start.
+
+
 ## Installation
 
 First, you'll need to add the package to the `require` attribute of your `composer.json` file:
