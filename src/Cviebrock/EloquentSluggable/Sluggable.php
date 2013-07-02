@@ -48,7 +48,7 @@ class Sluggable {
 
 		// nicer variables for readability
 
-		$build_from = $save_to = $method = $separator = $unique = $on_update = null;
+		$build_from = $save_to = $method = $separator = $unique = $on_update = $reserved = null;
 		extract( $config, EXTR_IF_EXISTS );
 
 
@@ -104,6 +104,30 @@ class Sluggable {
 		}
 
 
+		// check for reserved names
+
+
+		if ( $reserved instanceof Closure ) {
+			$reserved = $reserved( $model );
+		}
+
+		if ( is_array( $reserved ) && !empty( $reserved) ) {
+
+			// if the generated slug is a reserved word, then append "-1" to it to prevent
+			// a collision (assumes there are no reserved slugs that end in "-1" ).
+
+			if ( in_array($slug, $reserved) ) {
+				$slug .= $separator . '1';
+			}
+
+		} else if ( !is_null( $reserved ) ) {
+
+			throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
+
+		}
+
+
+
 		// check for uniqueness?
 
 		if ( $unique ) {
@@ -145,6 +169,8 @@ class Sluggable {
 			}
 
 		}
+
+
 
 
 		// update the slug field
