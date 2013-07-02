@@ -104,6 +104,12 @@ class Sluggable {
 		}
 
 
+		// save this for later tests against uniqueness
+
+		$base_slug = $slug;
+
+
+
 		// check for reserved names
 
 
@@ -136,10 +142,16 @@ class Sluggable {
 
 			$class = get_class($model);
 
-			$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
+			$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
 				->orderBy( $save_to, 'DESC' )
 				->get();
 
+			// if there are no matching models, then we're okay with the generated slug
+
+			if ( $collection->isEmpty() ) {
+				$model->{$save_to} = $slug;
+				return true;
+			}
 
 			// extract the slug fields
 
@@ -153,18 +165,19 @@ class Sluggable {
 				return true;
 			}
 
-			// does the exact new slug exist?
+			// does the exact new slug exist,
+			// or did we create a new slug because of a reserved word?
 
-			if ( in_array($slug, $list) ) {
+			if ( $base_slug != $slug || in_array($slug, $list) ) {
 
 				// find the "highest" numbered version of the slug and increment it.
 
-				$idx = substr( $collection->first()->{$save_to} , strlen($slug) );
+				$idx = substr( $collection->first()->{$save_to} , strlen($base_slug) );
 				$idx = ltrim( $idx, $separator );
 				$idx = intval( $idx );
 				$idx++;
 
-				$slug .= $separator . $idx;
+				$slug = $base_slug . $separator . $idx;
 
 			}
 
