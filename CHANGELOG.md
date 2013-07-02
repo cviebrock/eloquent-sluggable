@@ -1,6 +1,12 @@
 # Change Log
 
 
+## 1.0.1 - 02-Jul-2013
+
+- `reserved` configuration option prevents generated slugs from being from a list of
+  "reserved" names (e.g. colliding with routes, etc.) (thanks @ceejayoz).
+
+
 ## 1.0.0 - 18-Jun-2013
 
 - First non-beta release.
