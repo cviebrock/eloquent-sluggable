@@ -143,7 +143,6 @@ class Sluggable {
 			$class = get_class($model);
 
 			$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
-				->orderBy( $save_to, 'DESC' )
 				->get();
 
 			// if there are no matching models, then we're okay with the generated slug
@@ -170,10 +169,17 @@ class Sluggable {
 
 			if ( $base_slug != $slug || in_array($slug, $list) ) {
 
+				// resort the collection by stripping the base slug
+
+				$len = strlen($base_slug) + strlen($separator);
+
+				$collection->sortBy(function($obj) use ($len, $save_to) {
+					return substr($obj->{$save_to}, $len);
+				});
+
 				// find the "highest" numbered version of the slug and increment it.
 
-				$idx = substr( $collection->first()->{$save_to} , strlen($base_slug) );
-				$idx = ltrim( $idx, $separator );
+				$idx = substr( $collection->last()->{$save_to} , $len );
 				$idx = intval( $idx );
 				$idx++;
 
