@@ -169,10 +169,34 @@ class Sluggable {
 
 			if ( $base_slug != $slug || in_array($slug, $list) ) {
 
+				$sluglen = strlen($base_slug);
+				$len = $sluglen + strlen($separator);
+
+				//Lets filter the collection to only include slugs that are the slug word exactly or have the seperator followed by a number
+				$collection = $collection->filter(function($obj) use ($len, $save_to, $separator, $sluglen) {
+
+				  $substr = substr($obj->{$save_to}, $sluglen);
+
+				  //Check if the Exact Word is Present
+				  if ($substr === false)
+				  {
+				    return true;
+				  }
+
+				  //Check if the First Character After The Base Word Is The Seperator
+				  if ($substr[0] === $separator)
+				  {
+				    //If it is then the next character should be a number
+				    if (is_numeric($substr[1]))
+				    {
+				      return true;
+				    }
+				  }
+
+				  return false;
+				});
+
 				// resort the collection by stripping the base slug
-
-				$len = strlen($base_slug) + strlen($separator);
-
 				$collection->sortBy(function($obj) use ($len, $save_to) {
 					return substr($obj->{$save_to}, $len);
 				});
