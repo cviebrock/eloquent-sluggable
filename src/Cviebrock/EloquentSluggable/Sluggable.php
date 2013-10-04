@@ -48,7 +48,7 @@ class Sluggable {
 
 		// nicer variables for readability
 
-		$build_from = $save_to = $method = $separator = $unique = $on_update = null;
+		$build_from = $save_to = $method = $separator = $unique = $on_update = $reserved = null;
 		extract( $config, EXTR_IF_EXISTS );
 
 
@@ -104,6 +104,36 @@ class Sluggable {
 		}
 
 
+		// save this for later tests against uniqueness
+
+		$base_slug = $slug;
+
+
+
+		// check for reserved names
+
+
+		if ( $reserved instanceof Closure ) {
+			$reserved = $reserved( $model );
+		}
+
+		if ( is_array( $reserved ) && !empty( $reserved) ) {
+
+			// if the generated slug is a reserved word, then append "-1" to it to prevent
+			// a collision (assumes there are no reserved slugs that end in "-1" ).
+
+			if ( in_array($slug, $reserved) ) {
+				$slug .= $separator . '1';
+			}
+
+		} else if ( !is_null( $reserved ) ) {
+
+			throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
+
+		}
+
+
+
 		// check for uniqueness?
 
 		if ( $unique ) {
@@ -112,10 +142,15 @@ class Sluggable {
 
 			$class = get_class($model);
 
-			$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
-				->orderBy( $save_to, 'DESC' )
+			$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
 				->get();
 
+			// if there are no matching models, then we're okay with the generated slug
+
+			if ( $collection->isEmpty() ) {
+				$model->{$save_to} = $slug;
+				return true;
+			}
 
 			// extract the slug fields
 
@@ -129,22 +164,56 @@ class Sluggable {
 				return true;
 			}
 
-			// does the exact new slug exist?
+			// does the exact new slug exist,
+			// or did we create a new slug because of a reserved word?
 
-			if ( in_array($slug, $list) ) {
+			if ( $base_slug != $slug || in_array($slug, $list) ) {
+
+				$sluglen = strlen($base_slug);
+				$len = $sluglen + strlen($separator);
+
+				//Lets filter the collection to only include slugs that are the slug word exactly or have the seperator followed by a number
+				$collection = $collection->filter(function($obj) use ($len, $save_to, $separator, $sluglen) {
+
+				  $substr = substr($obj->{$save_to}, $sluglen);
+
+				  //Check if the Exact Word is Present
+				  if ($substr === false)
+				  {
+				    return true;
+				  }
+
+				  //Check if the First Character After The Base Word Is The Seperator
+				  if ($substr[0] === $separator)
+				  {
+				    //If it is then the next character should be a number
+				    if (is_numeric($substr[1]))
+				    {
+				      return true;
+				    }
+				  }
+
+				  return false;
+				});
+
+				// resort the collection by stripping the base slug
+				$collection->sortBy(function($obj) use ($len, $save_to) {
+					return substr($obj->{$save_to}, $len);
+				});
 
 				// find the "highest" numbered version of the slug and increment it.
 
-				$idx = substr( $collection->first()->{$save_to} , strlen($slug) );
-				$idx = ltrim( $idx, $separator );
+				$idx = substr( $collection->last()->{$save_to} , $len );
 				$idx = intval( $idx );
 				$idx++;
 
-				$slug .= $separator . $idx;
+				$slug = $base_slug . $separator . $idx;
 
 			}
 
 		}
+
+
 
 
 		// update the slug field
