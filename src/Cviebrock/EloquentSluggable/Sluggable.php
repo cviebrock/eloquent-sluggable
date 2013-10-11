@@ -169,12 +169,30 @@ class Sluggable {
 
 			if ( $base_slug != $slug || in_array($slug, $list) ) {
 
+				// filter the collection to only include the base slug, or the base slug + separator + number
+
+				$collection->filter(function($obj) use ($base_slug, $separator, $save_to) {
+
+					// keep the base slug
+					if ( $obj->{$save_to} === $base_slug ) {
+						return true;
+					}
+
+					if ( strpos($obj->{$save_to}, $base_slug.$separator) === 0 ) {
+						// return if rest of slug is numbers
+						$remainder = substr($obj->{$save_to}, strlen($base_slug.$separator) );
+						return preg_match('/^\d+$/', $remainder);
+					}
+
+					return false;
+
+				});
+
+
 				// resort the collection by stripping the base slug
 
-				$len = strlen($base_slug) + strlen($separator);
-
-				$collection->sortBy(function($obj) use ($len, $save_to) {
-					return substr($obj->{$save_to}, $len);
+				$collection->sortBy(function($obj) use ($base_slug, $separator, $save_to) {
+					return (int) substr($obj->{$save_to}, strlen($base_slug.$separator) );
 				});
 
 				// find the "highest" numbered version of the slug and increment it.
