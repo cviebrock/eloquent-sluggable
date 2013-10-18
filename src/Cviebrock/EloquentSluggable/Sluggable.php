@@ -217,12 +217,6 @@ class Sluggable {
 
 		}
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 5c540090977464dab4334c76a97fcaf24acb2f3a
 		// update the slug field
 
 		$model->{$save_to} = $slug;
