@@ -29,10 +29,8 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-
 		$this->registerSluggable();
 		$this->registerEvents();
-
 	}
 
 	/**
@@ -44,9 +42,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	{
 		$this->app['sluggable'] = $this->app->share(function($app)
 		{
-
 			$config = $app['config']->get('eloquent-sluggable::config');
-
 			return new Sluggable($config);
 		});
 	}

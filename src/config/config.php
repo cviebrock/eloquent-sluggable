@@ -17,7 +17,6 @@ return array(
 	 * since Eloquent will call them when you request a custom attribute.
 	 *
 	 * Defaults to null, which uses the toString() method on your model.
-	 *
 	 */
 	'build_from' => null,
 
