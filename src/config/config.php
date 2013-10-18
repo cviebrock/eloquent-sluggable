@@ -66,6 +66,14 @@ return array(
 	'unique' => true,
 
 	/**
+	 * Should we include the trashed items when generating a unique slug?
+	 * This only applies if the softDelete property is set for the Eloquent model.
+	 * If set to "false", then a new slug could duplicate one that exists on a trashed model.
+	 * If set to "true", then uniqueness is enforced across trashed and existing models.
+	 */
+	'include_trashed' => false,
+
+	/**
 	 * Whether to update the slug value when a model is being
 	 * re-saved (i.e. already exists).  Defaults to false, which
 	 * means slugs are not updated.

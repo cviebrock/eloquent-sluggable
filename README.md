@@ -110,12 +110,14 @@ By default, global configuration can be set in the `app/config/packages/cviebroc
 
 ```php
 return array(
-	'build_from' => null,
-	'save_to'    => 'slug',
-	'method'     => null,
-	'separator'  => '-',
-	'unique'     => true,
-	'on_update'  => false,
+	'build_from'      => null,
+	'save_to'         => 'slug',
+	'method'          => null,
+	'separator'       => '-',
+	'unique'          => true,
+	'include_trashed' => false,
+	'on_update'       => false,
+	'reserved'        => null,
 );
 ```
 
@@ -176,14 +178,18 @@ Any other values for `method` will throw an exception.
 
 By turning `unique` on, then the second Post model will sluggify to "my-blog-post-1".  If there is a third post with the same title, it will sluggify to "my-blog-post-2" and so on.  Each subsequent model will get an incremental value appended to the end of the slug, ensuring uniqueness.
 
+`include_trashed` will also check deleted models when trying to enforce uniqueness.  This only affects Eloquent models that are using the [softDelete](http://laravel.com/docs/eloquent#soft-deleting) feature.  Default is `false`, so soft-deleted models don't count when checking for uniqueness.
+
 `on_update` is a boolean.  If it is `false` (the default value), then slugs will not be updated if a model is resaved (e.g. if you change the title of your blog post, the slug will remain the same) or the slug value has already been set.  You can set it to `true` (or manually change the $model->slug value in your own code) if you want to override this behaviour.
 
 (If you want to manually set the slug value using your model's Sluggable settings, you can run `Sluggable::make($model, true)`.  The second arguement forces Sluggable to update the slug field.)
 
+`reserved` is an array of values that will never be allowed as slugs, e.g. to prevent collisions with existing routes or controller methods, etc..  This can be an array, or a closure that returns an array.  Defaults to `null`: no reserved slug names.
+
 
 ## Bugs and Suggestions
 
-Please use Github for bugs, comments, suggestions.  Pull requests are preferred!
+Please use Github for bugs, comments, suggestions.  Pull requests are preferred, but please submit them to the `develop` branch.
 
 
 ## Copyright and License

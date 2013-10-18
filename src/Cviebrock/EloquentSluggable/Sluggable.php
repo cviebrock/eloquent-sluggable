@@ -48,7 +48,8 @@ class Sluggable {
 
 		// nicer variables for readability
 
-		$build_from = $save_to = $method = $separator = $unique = $on_update = $reserved = null;
+		$build_from = $save_to = $method = $separator = $unique = $on_update = $include_trashed = null;
+
 		extract( $config, EXTR_IF_EXISTS );
 
 
@@ -142,8 +143,15 @@ class Sluggable {
 
 			$class = get_class($model);
 
-			$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
-				->get();
+			if ( $include_trashed && isset($model->softDelete) ) {
+				$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
+					->withTrashed()
+					->get();
+			} else {
+				$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
+					->get();
+			}
+
 
 			// if there are no matching models, then we're okay with the generated slug
 
@@ -206,9 +214,6 @@ class Sluggable {
 			}
 
 		}
-
-
-
 
 		// update the slug field
 
