@@ -48,7 +48,7 @@ class Sluggable {
 
 		// nicer variables for readability
 
-		$build_from = $save_to = $method = $separator = $unique = $on_update = null;
+		$build_from = $save_to = $method = $separator = $unique = $on_update = $include_trashed = null;
 		extract( $config, EXTR_IF_EXISTS );
 
 
@@ -112,10 +112,16 @@ class Sluggable {
 
 			$class = get_class($model);
 
-			$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
-				->orderBy( $save_to, 'DESC' )
-				->get();
-
+			if (isset($model->softDelete) and $include_trashed) {
+				$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
+					->withTrashed()
+					->orderBy( $save_to, 'DESC' )
+					->get();
+			} else {
+				$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
+					->orderBy( $save_to, 'DESC' )
+					->get();				
+			}
 
 			// extract the slug fields
 
@@ -145,7 +151,6 @@ class Sluggable {
 			}
 
 		}
-
 
 		// update the slug field
 

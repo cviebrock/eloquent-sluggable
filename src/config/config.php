@@ -33,6 +33,13 @@ return array(
 	'save_to' => 'slug',
 
 	/**
+	 * Do we include the thrashed items? Only applicable if the softDelete property is set for the model.
+	 *
+	 */
+	'include_trashed' => false,
+
+
+	/**
 	 * If left to "null", then use Laravel's built-in Str::slug() method to
 	 * generate the slug (with the separator defined below).
 	 *
