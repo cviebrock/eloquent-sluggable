@@ -144,13 +144,11 @@ class Sluggable {
 			$class = get_class($model);
 
 			if ( $include_trashed && isset($model->softDelete) ) {
-				$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
+				$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
 					->withTrashed()
-					->orderBy( $save_to, 'DESC' )
 					->get();
 			} else {
-				$collection = $class::where( $save_to, 'LIKE', $slug.'%' )
-					->orderBy( $save_to, 'DESC' )
+				$collection = $class::where( $save_to, 'LIKE', $base_slug.'%' )
 					->get();
 			}
 
