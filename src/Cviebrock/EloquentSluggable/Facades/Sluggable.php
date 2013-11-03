@@ -9,6 +9,9 @@ class Sluggable extends Facade {
 	 *
 	 * @return string
 	 */
-	protected static function getFacadeAccessor() { return 'sluggable'; }
+	protected static function getFacadeAccessor()
+	{
+		return 'sluggable';
+	}
 
 }
