@@ -40,7 +40,7 @@ class Sluggable {
 
 		// load the configuration and use nicer variables for readability
 		$config = array_merge($this->config, $model::$sluggable);
-		$build_from = $save_to = $method = $separator = $unique = $on_update = $include_trashed = null;
+		$build_from = $save_to = $method = $separator = $unique = $on_update = $include_trashed = $reserved = null;
 		extract($config, EXTR_IF_EXISTS);
 
 		// skip slug generation if the model exists or the slug field is already populated,
