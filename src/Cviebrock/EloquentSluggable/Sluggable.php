@@ -95,21 +95,21 @@ class Sluggable {
 		$base_slug = $slug;
 
 		// check for reserved names
-		if ( $reserved instanceof Closure )
+		if ( $config['reserved'] instanceof Closure )
 		{
-			$reserved = $reserved($model);
+			$config['reserved'] = $reserved($model);
 		}
 
-		if ( is_array($reserved) && !empty($reserved) )
+		if ( is_array($config['reserved']) && !empty($config['reserved']) )
 		{
 			// if the generated slug is a reserved word, then append "-1" to it to prevent
 			// a collision (assumes there are no reserved slugs that end in "-1" ).
-			if ( in_array($slug, $reserved) )
+			if ( in_array($slug, $config['reserved']) )
 			{
 				$slug .= $separator . '1';
 			}
 		}
-		else if ( !is_null($reserved) )
+		else if ( !is_null($config['reserved']) )
 		{
 			throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
 		}
