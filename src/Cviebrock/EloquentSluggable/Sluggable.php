@@ -179,7 +179,7 @@ class Sluggable {
 				});
 
 				// find the "highest" numbered version of the slug and increment it.
-				$idx = substr($collection->last()->{$save_to}, $len);
+				$idx = substr($collection->last()->{$save_to}, strlen($base_slug.$separator));
 				$idx = intval($idx);
 				$idx++;
 
