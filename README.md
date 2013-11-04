@@ -187,9 +187,16 @@ By turning `unique` on, then the second Post model will sluggify to "my-blog-pos
 `reserved` is an array of values that will never be allowed as slugs, e.g. to prevent collisions with existing routes or controller methods, etc..  This can be an array, or a closure that returns an array.  Defaults to `null`: no reserved slug names.
 
 
-## Bugs and Suggestions
+## Bugs, Suggestions and Contributions
 
-Please use Github for bugs, comments, suggestions.  Pull requests are preferred, but please submit them to the `develop` branch.
+Please use Github for bugs, comments, suggestions.
+
+1. Fork the project.
+2. Create your bugfix/feature branch (include tests too, if you can).
+3. Commit your changes and push to your branch.
+4. Create a new pull request against the eloquent-sluggable `develop` branch.
+
+**Please note that you must create your pull request against the `develop` branch.**
 
 
 ## Copyright and License
