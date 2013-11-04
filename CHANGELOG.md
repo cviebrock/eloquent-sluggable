@@ -1,12 +1,18 @@
 # Change Log
 
 
+## 1.0.3 - 04-Nov-2013
+
+- fix for PHP warning about uninitialized variable (#10, thanks @JoeChilds).
+
+
 ## 1.0.2 - 03-Nov-2013
 
 - allow reverting to a "smaller" version of a similar slug (#5, thanks @alkin).
 - better collection filtering to prevent duplicate slugs on similar long slugs (#3, #6, thanks @torkiljohnsen, @brandonkboswell).
 - `include_trashed` option to include soft-deleted models when checking for uniqueness (#8, thanks @slovenianGooner).
 - fix ""undefined variable reserved" error (#9, thanks @altrim).
+
 
 ## 1.0.1 - 02-Jul-2013
 
