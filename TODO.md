@@ -1,3 +1,3 @@
 # Todo
 
-- [ ] Write tests
+- [x] Write tests
