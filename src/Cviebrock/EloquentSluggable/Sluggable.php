@@ -119,7 +119,7 @@ class Sluggable {
 		{
 			// find all models where the slug is similar to the generated slug
 			$class = get_class($model);
-			if ( $include_trashed && $model->softDelete )
+			if ( $include_trashed )
 			{
 				$collection = $class::where($save_to, 'LIKE', $base_slug.'%')
 					->withTrashed()
