@@ -192,7 +192,10 @@ By turning `unique` on, then the second Post model will sluggify to "my-blog-pos
 Please use Github for bugs, comments, suggestions.
 
 1. Fork the project.
-2. Create your bugfix/feature branch (include tests too, if you can).
+2. Create your bugfix/feature branch and write your code.
+3. Create tests for your code:
+	- run `composer install --dev` in the root directory to install required testing packages
+	- run `vendor/bin/phpunit` to run all tests and make sure they still pass
 3. Commit your changes and push to your branch.
 4. Create a new pull request against the eloquent-sluggable `develop` branch.
 
