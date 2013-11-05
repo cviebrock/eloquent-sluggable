@@ -76,7 +76,7 @@ class Sluggable {
 		// build slug using given slug style
 		if ( is_null($method) )
 		{
-			$slug = Str::slug($string);
+			$slug = Str::slug($string, $separator);
 		}
 		else if ( $method instanceof Closure )
 		{
@@ -119,7 +119,7 @@ class Sluggable {
 		{
 			// find all models where the slug is similar to the generated slug
 			$class = get_class($model);
-			if ( $include_trashed && $model->softDelete )
+			if ( $include_trashed )
 			{
 				$collection = $class::where($save_to, 'LIKE', $base_slug.'%')
 					->withTrashed()
@@ -143,8 +143,9 @@ class Sluggable {
 
 			// if the current model exists in the list -- i.e. the existing slug is either
 			// equal to or an incremented version of the new slug -- then the slug doesn't
-			// need to change and we can just return
-			if ( array_key_exists($model->getKey(), $list) )
+			// need to change and we can just return (unless on_update is true, in which case
+			// ignore this test and continue).
+			if ( !$on_update && array_key_exists($model->getKey(), $list) )
 			{
 				return true;
 			}
@@ -161,14 +162,7 @@ class Sluggable {
 						return true;
 					}
 
-					if ( strpos($obj->{$save_to}, $base_slug.$separator) === 0 )
-					{
-						// return if rest of slug is numbers
-						$remainder = substr($obj->{$save_to}, strlen($base_slug.$separator));
-						return preg_match( '/^\d+$/', $remainder );
-					}
-
-					return false;
+					return $this->isIncremented( $obj->{$save_to}, $base_slug, $separator);
 
 				});
 
@@ -195,6 +189,24 @@ class Sluggable {
 		// done!
 		return true;
 
+	}
+
+	/**
+	 * Test if a given slug is an incremented version of the base slug.
+	 *
+	 * @param  string  $slug      The slug to test
+	 * @param  string  $base_slug The base version of the slug
+	 * @param  string  $separator The separator
+	 * @return boolean
+	 */
+	protected function isIncremented( $slug, $base_slug, $separator )
+	{
+		if ( strpos($slug, $base_slug.$separator) === 0 )
+		{
+			$remainder = substr($slug, strlen($base_slug.$separator));
+			return preg_match( '/^\d+$/', $remainder );
+		}
+		return false;
 	}
 
 }
