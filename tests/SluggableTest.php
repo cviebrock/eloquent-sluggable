@@ -1,47 +1,74 @@
-<?php
+<?php namespace Cviebrock\EloquentSluggable\Test;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Eloquent\Model;
-use Mockery;
+use Orchestra\Testbench\TestCase;
 
-class SluggableTest extends PHPUnit_Framework_TestCase {
+class SluggableTest extends TestCase {
 
-	public static function setUpBeforeClass()
-	{
-
-		Capsule::schema()->dropIfExists('posts');
-		Capsule::schema()->create('posts', function($t) {
-			$t->increments('id');
-			$t->string('title', 255);
-			$t->string('slug', 255);
-		});
-
-	}
-
-
+  /**
+   * Setup the test environment.
+   */
 	public function setUp()
 	{
+		parent::setUp();
 
-		Model::unguard();
-		//
-		Model::reguard();
+		// create an artisan object for calling migrations
+		$artisan = $this->app->make('artisan');
+
+		// call migrations specific to our tests, e.g. to seed the db
+		$artisan->call('migrate', array(
+			'--database' => 'testbench',
+			'--path'     => '../tests/migrations',
+		));
 
 	}
 
-
-	public function tearDown()
+  /**
+   * Define environment setup.
+   *
+   * @param  Illuminate\Foundation\Application    $app
+   * @return void
+   */
+	protected function getEnvironmentSetUp($app)
 	{
+			// reset base path to point to our package's src directory
+			$app['path.base'] = __DIR__ . '/../src';
 
-		Capsule::table('posts')->delete();
-		Mockery::close();
+			$app['config']->set('database.default', 'testbench');
+			$app['config']->set('database.connections.testbench', array(
+					'driver'   => 'sqlite',
+					'database' => ':memory:',
+					'prefix'   => '',
+			));
+	}
 
+
+  /**
+   * Get Sluggable package providers.
+   *
+   * @return array
+   */
+	protected function getPackageProviders()
+	{
+		return array('Cviebrock\EloquentSluggable\SluggableServiceProvider');
+	}
+
+
+  /**
+   * Get Sluggable package aliases.
+   *
+   * @return array
+   */
+	protected function getPackageAliases()
+	{
+		return array(
+			'Sluggable' => 'Cviebrock\EloquentSluggable\Facades\Sluggable'
+		);
 	}
 
 
 	protected function post($title)
 	{
 		$post = new Post(array('title'=>$title));
-		dd($post);
 		return $post;
 	}
 

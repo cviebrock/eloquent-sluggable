@@ -1,4 +1,4 @@
-<?php
+<?php namespace Cviebrock\EloquentSluggable\Test;
 
 use Illuminate\Database\Eloquent\Model;
 
