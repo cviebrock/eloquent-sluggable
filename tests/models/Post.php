@@ -9,11 +9,23 @@ class Post extends Model {
 
   public $timestamps = false;
 
-	protected $fillable = array('title');
+	protected $fillable = array('title','subtitle');
 
 	public static $sluggable = array(
-		'build_from' => 'title',
-		'save_to'    => 'slug',
+		'build_from'      => 'title',
+		'save_to'         => 'slug',
+		'method'          => null,
+		'separator'       => '-',
+		'unique'          => true,
+		'include_trashed' => false,
+		'on_update'       => false,
+		'reserved'        => null,
 	);
+
+
+	public function __toString()
+	{
+		return $this->title;
+	}
 
 }
