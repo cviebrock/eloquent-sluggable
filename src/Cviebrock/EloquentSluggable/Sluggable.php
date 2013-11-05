@@ -76,7 +76,7 @@ class Sluggable {
 		// build slug using given slug style
 		if ( is_null($method) )
 		{
-			$slug = Str::slug($string);
+			$slug = Str::slug($string, $separator);
 		}
 		else if ( $method instanceof Closure )
 		{
