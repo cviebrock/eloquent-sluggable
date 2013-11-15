@@ -1,6 +1,13 @@
 # Change Log
 
 
+## 1.0.5 - 15-Nov-2013
+
+- Fix issues where slugs would alternate between "slug" and "slug-1" when `on_update` and `unique` are set
+  (#14, #16, thanks @mikembm, @JoeChilds).
+- Make `isIncremented` method static to solve possible "not in object context" error (#15, thanks @mayoz).
+
+
 ## 1.0.4 - 05-Nov-2013
 
 - Unit testing ... woot!  Building this revealed three new bugs:
