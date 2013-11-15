@@ -170,7 +170,7 @@ class Sluggable {
 						return true;
 					}
 
-					return $this->isIncremented( $obj->{$save_to}, $base_slug, $separator);
+					return static::isIncremented( $obj->{$save_to}, $base_slug, $separator);
 
 				});
 
@@ -207,7 +207,7 @@ class Sluggable {
 	 * @param  string  $separator The separator
 	 * @return boolean
 	 */
-	protected function isIncremented( $slug, $base_slug, $separator )
+	public function isIncremented( $slug, $base_slug, $separator )
 	{
 		if ( strpos($slug, $base_slug.$separator) === 0 )
 		{
