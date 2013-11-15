@@ -114,6 +114,14 @@ class Sluggable {
 			throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
 		}
 
+
+		// if our new slug is the same as the old one, we can be done
+		if ( $model->{$save_to} === $slug )
+		{
+			return;
+		}
+
+
 		// check for uniqueness?
 		if ( $unique )
 		{
@@ -162,7 +170,7 @@ class Sluggable {
 						return true;
 					}
 
-					return $this->isIncremented( $obj->{$save_to}, $base_slug, $separator);
+					return static::isIncremented( $obj->{$save_to}, $base_slug, $separator);
 
 				});
 
@@ -199,7 +207,7 @@ class Sluggable {
 	 * @param  string  $separator The separator
 	 * @return boolean
 	 */
-	protected function isIncremented( $slug, $base_slug, $separator )
+	public function isIncremented( $slug, $base_slug, $separator )
 	{
 		if ( strpos($slug, $base_slug.$separator) === 0 )
 		{

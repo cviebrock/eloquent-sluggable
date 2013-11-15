@@ -335,4 +335,23 @@ class SluggableTest extends TestCase {
 		$this->assertEquals($post2->slug, 'a-post-title-1');
 	}
 
+	/**
+	 * Test ignoring current model when generating unique slugs (issue #16)
+	 *
+	 * @test
+	 */
+	public function testIssue16()
+	{
+		$this->settings(array(
+			'unique' => true,
+			'on_update' => true,
+		));
+		$post = $this->post('My first post');
+		$this->assertEquals($post->slug, 'my-first-post');
+
+		$post->dummy = 'Dummy data';
+		$post->save();
+		$this->assertEquals($post->slug, 'my-first-post');
+	}
+
 }
