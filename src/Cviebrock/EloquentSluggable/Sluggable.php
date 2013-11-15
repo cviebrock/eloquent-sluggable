@@ -114,6 +114,14 @@ class Sluggable {
 			throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
 		}
 
+
+		// if our new slug is the same as the old one, we can be done
+		if ( $model->{$save_to} === $slug )
+		{
+			return;
+		}
+
+
 		// check for uniqueness?
 		if ( $unique )
 		{
