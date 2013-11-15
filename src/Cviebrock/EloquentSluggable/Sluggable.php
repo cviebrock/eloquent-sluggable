@@ -149,6 +149,20 @@ class Sluggable {
 			{
 				return true;
 			}
+			
+			// Now we've checked for updating existing slugs, we should remove the current
+			// model from the collection so it doesn't count as unique against itself
+			if ( array_key_exists($model->getKey(), $list) )
+			{
+				unset($list[$model->getKey()]);
+			}
+			
+			$key_field = $model->getKeyName();
+			$key = $model->getKey();
+			$collection = $collection->filter( function($obj) use ($key_field, $key)
+			{
+				return $obj->$key_field !== $key;
+			});
 
 			// does the exact new slug exist, or did we create a new slug because of a reserved word?
 			if ( $base_slug != $slug || in_array($slug, $list) )
