@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.x - UNRELEASED
+
+- Update composer requirements so that the package installs nicely with the upcoming Laravel 4.1.
+
 
 ## 1.0.5 - 15-Nov-2013
 
