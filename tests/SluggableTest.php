@@ -2,6 +2,7 @@
 
 use Orchestra\Testbench\TestCase;
 
+
 class SluggableTest extends TestCase {
 
   /**
@@ -53,6 +54,7 @@ class SluggableTest extends TestCase {
 					'database' => ':memory:',
 					'prefix'   => '',
 			));
+
 	}
 
 
@@ -353,5 +355,21 @@ class SluggableTest extends TestCase {
 		$post->save();
 		$this->assertEquals($post->slug, 'my-first-post');
 	}
+
+	/**
+	 * Test ignoring current model when generating unique slugs (issue #16)
+	 *
+	 * @test
+	 */
+	public function testArdent()
+	{
+		$post = PostArdent::create(array(
+			'title'    => 'My First Post'
+		));
+		$post->save();
+		// \Sluggable::make($post, true);
+		$this->assertEquals($post->slug, 'my-first-post');
+	}
+
 
 }

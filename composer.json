@@ -18,7 +18,8 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
-		"orchestra/testbench": "2.0.*"
+		"orchestra/testbench": "2.0.*",
+		"laravelbook/ardent": "dev-master"
 	},
 	"autoload": {
 		"psr-0": {
