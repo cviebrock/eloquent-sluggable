@@ -157,13 +157,14 @@ class Sluggable {
 			{
 				return true;
 			}
-			
-			// copy this
-			$self = $this;
 
 			// does the exact new slug exist, or did we create a new slug because of a reserved word?
 			if ( $base_slug != $slug || in_array($slug, $list) )
 			{
+
+				// copy this
+				$self = $this;
+
 				// filter the collection to only include the base slug, or the base slug + separator + number
 				$collection->filter( function($obj) use ($base_slug, $separator, $save_to, $self)
 				{
