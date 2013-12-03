@@ -70,7 +70,7 @@ First, you'll need to add the package to the `require` attribute of your `compos
 
 Aftwards, run `composer update` from your command line.
 
-Then, update `app/config/app.php` by adding entries for the service providers and class aliass:
+Then, update `app/config/app.php` by adding entries for the service providers and class aliases:
 
 ```php
 
@@ -95,7 +95,7 @@ Then, update `app/config/app.php` by adding entries for the service providers an
 
 ```
 
-From the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable`.
+Finally, from the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable` to publish the configuration file.
 
 
 
