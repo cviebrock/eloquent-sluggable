@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.0.6.1 - 03-Dec-2013
+## 1.0.7 - 03-Dec-2013
 
 - Really fix issue #15 -- "not in object context" errors.  Previous fix didn't work for PHP 5.3.x
 	(thanks again @mayoz).
