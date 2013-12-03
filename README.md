@@ -80,7 +80,7 @@ From the command line again, run `php artisan config:publish cviebrock/eloquent-
 <a name="eloquent"></a>
 ## Updating your Eloquent Models
 
-Define a public property `$sluggable` with the definitions (see [#Configuration] below for details):
+Define a public property `$sluggable` with the definitions (see [Configuration](#config) below for details):
 
 ```php
 class Post extends Eloquent
