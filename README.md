@@ -70,8 +70,30 @@ First, you'll need to add the package to the `require` attribute of your `compos
 
 Aftwards, run `composer update` from your command line.
 
-Then, add `'Cviebrock\EloquentSluggable\SluggableServiceProvider',` to the list of service providers in `app/config/app.php`
-and add `'Sluggable' => 'Cviebrock\EloquentSluggable\Facades\Sluggable'` to the list of class aliases in `app/config/app.php`.
+Then, update `app/config/app.php` by adding entries for the service providers and class aliass:
+
+```php
+
+	'providers' => array(
+
+		// ...
+
+		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+
+	);
+
+	// ...
+
+	'aliases' => array(
+
+		// ...
+
+		'Sluggable' => 'Cviebrock\EloquentSluggable\Facades\Sluggable',
+
+	);
+
+
+```
 
 From the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable`.
 
@@ -105,7 +127,7 @@ Saving a model is easy:
 
 ```php
 $post = new Post(array(
-	'title'    => 'My Awesome Blog Post'
+	'title' => 'My Awesome Blog Post'
 ));
 
 $post->save();
@@ -134,7 +156,7 @@ class Post extends Ardent {
 	 */
 	public static $rules = array(
 		'title' => 'required',
-		'slug' => 'required|unique'
+		'slug'  => 'required|unique'
 	);
 
 	/**
@@ -167,12 +189,12 @@ There are three ways around this:
 
 3. Manually generate the slug before saving:
 
-```php
-$post = new Post(...);
+	```php
+	$post = new Post(...);
 
-Sluggable::make($post,true);
-$post->save();
-```
+	Sluggable::make($post,true);
+	$post->save();
+	```
 
 The second option above is likely the most elegant.  If you have your own BaseModel class that extends Ardent, then just put the `beforeValidate()` method in there and you should be good to go!
 
