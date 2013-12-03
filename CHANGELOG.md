@@ -1,8 +1,10 @@
 # Change Log
 
-## 1.0.x - UNRELEASED
+## 1.0.6 - 02-Dec-2013
 
 - Update composer requirements so that the package installs nicely with the upcoming Laravel 4.1.
+- Updated docs to show how to use package with [Ardent](http://github.com/laravelbook/ardent) models
+	(thanks to @Flynsarmy for the pointers).
 
 
 ## 1.0.5 - 15-Nov-2013
