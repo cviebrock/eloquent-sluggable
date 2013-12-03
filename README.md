@@ -257,17 +257,17 @@ Schema::create('posts', function($table)
 
 2. When `method` is a callable, then that function or class method is used.  The function/method should expect two parameters: the string to process, and a separator string.  For example, to duplicate the default behaviour, you could do:
 
-```php
-	'method' => array('Illuminate\Support\Str','slug'),
-```
+	```php
+		'method' => array('Illuminate\Support\Str','slug'),
+	```
 
 3. You can also define `method` as a closure (again, expecting two parameters):
 
-```php
-	'method' => function( $string, $separator ) {
-		return strtolower( preg_replace('/[^a-z]+/i', $separator, $string) );
-	},
-```
+	```php
+		'method' => function( $string, $separator ) {
+			return strtolower( preg_replace('/[^a-z]+/i', $separator, $string) );
+		},
+	```
 
 Any other values for `method` will throw an exception.
 
