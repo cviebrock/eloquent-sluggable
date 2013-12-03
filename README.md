@@ -158,12 +158,12 @@ There are three ways around this:
 
 2. Create a `beforeValidate` method in your model that generates the slug first:
 
-```php
-public function beforeValidate()
-{
-	\Sluggable::make($this,true);
-}
-```
+	```php
+	public function beforeValidate()
+	{
+		\Sluggable::make($this,true);
+	}
+	```
 
 3. Manually generate the slug before saving:
 
