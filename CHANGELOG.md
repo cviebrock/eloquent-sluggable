@@ -1,22 +1,24 @@
 # Change Log
 
+## 1.0.8 - 20-Feb-2014
+
+- Fix issue where replicated models couldn't forceably be reslugged (#20 thanks @trideout).
+
+
 ## 1.0.7 - 03-Dec-2013
 
-- Really fix issue #15 -- "not in object context" errors.  Previous fix didn't work for PHP 5.3.x
-	(thanks again @mayoz).
+- Really fix issue #15 -- "not in object context" errors.  Previous fix didn't work for PHP 5.3.x (thanks again @mayoz).
 
 
 ## 1.0.6 - 02-Dec-2013
 
 - Update composer requirements so that the package installs nicely with the upcoming Laravel 4.1.
-- Updated docs to show how to use package with [Ardent](http://github.com/laravelbook/ardent) models
-	(thanks to @Flynsarmy for the pointers).
+- Updated docs to show how to use package with [Ardent](http://github.com/laravelbook/ardent) models (thanks to @Flynsarmy for the pointers).
 
 
 ## 1.0.5 - 15-Nov-2013
 
-- Fix issues where slugs would alternate between "slug" and "slug-1" when `on_update` and `unique` are set
-  (#14, #16, thanks @mikembm, @JoeChilds).
+- Fix issues where slugs would alternate between "slug" and "slug-1" when `on_update` and `unique` are set (#14, #16, thanks @mikembm, @JoeChilds).
 - Make `isIncremented` method static to solve possible "not in object context" error (#15, thanks @mayoz).
 
 
@@ -43,8 +45,7 @@
 
 ## 1.0.1 - 02-Jul-2013
 
-- `reserved` configuration option prevents generated slugs from being from a list of
-  "reserved" names (e.g. colliding with routes, etc.) (#2, thanks @ceejayoz).
+- `reserved` configuration option prevents generated slugs from being from a list of "reserved" names (e.g. colliding with routes, etc.) (#2, thanks @ceejayoz).
 
 
 ## 1.0.0 - 18-Jun-2013

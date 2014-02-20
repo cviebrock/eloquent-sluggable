@@ -135,6 +135,12 @@ echo $post->slug;
 
 See the [README-Ardent.md](./README-Ardent.md) file for using Eloquent-Sluggable with [Ardent](//github.com/laravelbook/ardent).
 
+Also note that if you are replicating your models using Eloquent's `replicate()` method, then you will need to explicity tell the package to force a re-slugging of the model afterwards to ensure uniqueness:
+
+```php
+$new_post = $post->replicate();
+Sluggable::make($new_post, true);
+```
 
 
 <a name="config"></a>

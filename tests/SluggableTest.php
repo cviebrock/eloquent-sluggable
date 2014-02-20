@@ -371,5 +371,19 @@ class SluggableTest extends TestCase {
 		$this->assertEquals($post->slug, 'my-first-post');
 	}
 
+	/**
+	 * Test model replication (issue #20)
+	 *
+	 * @test
+	 */
+	public function testIssue20()
+	{
+		$post = $this->post('My first post');
+		$this->assertEquals($post->slug, 'my-first-post');
+
+		$new_post = $post->replicate();
+		\Sluggable::make($new_post,true);
+		$this->assertEquals($new_post->slug, 'my-first-post-1');
+	}
 
 }
