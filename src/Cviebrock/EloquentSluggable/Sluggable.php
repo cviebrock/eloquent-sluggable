@@ -115,8 +115,8 @@ class Sluggable {
 		}
 
 
-		// if our new slug is the same as the old one, we can be done
-		if ( $model->{$save_to} === $slug )
+		// if our new slug is the same as the old one, and we aren't forcing, we can be done
+		if ( !$force && $model->{$save_to} === $slug )
 		{
 			return;
 		}
