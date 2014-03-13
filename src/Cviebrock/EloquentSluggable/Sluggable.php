@@ -130,12 +130,14 @@ class Sluggable {
 			if ( $include_trashed )
 			{
 				$collection = $class::where($save_to, 'LIKE', $base_slug.'%')
+					->where($model->getKeyName(), '!=', $model->{$model->getKeyName()})
 					->withTrashed()
 					->get();
 			}
 			else
 			{
 				$collection = $class::where($save_to, 'LIKE', $base_slug.'%')
+					->where($model->getKeyName(), '!=', $model->{$model->getKeyName()})
 					->get();
 			}
 
