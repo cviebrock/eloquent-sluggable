@@ -1,6 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Closure;
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -187,10 +188,21 @@ class Sluggable {
 				// find the "highest" numbered version of the slug and increment it.
 				$idx = substr($collection->last()->{$save_to}, strlen($base_slug.$separator));
 				$idx = intval($idx);
+
+        $cachePrefix = "sluggable";
+        $cacheKey    = $cachePrefix . $slug;
+
+        //Get The Most Recent Idx out of the Cache
+        $idx = Cache::get($cacheKey, $idx);
+
+        //Increment The Index
 				$idx++;
 
-				$slug = $base_slug . $separator . $idx;
+        //Put The Index In The Cache, Locking It From Others From using
+        //One Minute Should Be Plenty Long To Prevent Race Conditions
+        Cache::put($cacheKey, $idx, 1);
 
+				$slug = $base_slug . $separator . $idx;
 			}
 
 		}
