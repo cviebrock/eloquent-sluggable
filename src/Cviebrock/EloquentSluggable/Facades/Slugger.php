@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Sluggable extends Facade {
+class Slugger extends Facade {
 
 	/**
 	 * Get the registered name of the component.
@@ -11,7 +11,7 @@ class Sluggable extends Facade {
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return 'sluggable';
+		return 'slugger';
 	}
 
 }
