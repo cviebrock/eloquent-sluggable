@@ -7,6 +7,7 @@ trait SluggableTrait {
 	protected function needsSlugging()
 	{
 		$save_to = $this->sluggable['save_to'];
+		$on_update = $this->sluggable['on_update'];
 
 		return ( !$this->exists || empty($this->{$save_to}) || $on_update );
 	}
@@ -93,11 +94,16 @@ trait SluggableTrait {
 	protected function isSlugUnique($slug)
 	{
 		$instance = new static;
+		$query = $instance->where( $this->sluggable['save_to'], $slug );
 		if ( $this->sluggable['include_trashed'] )
 		{
-			$instance->withTrashed();
+			$query = $query->withTrashed();
 		}
-		return $instance->where( $this->sluggable['save_to'], $slug )->count() == 0;
+		if ( $this->exists )
+		{
+			$query = $query->where( $this->getKeyName(), '!=', $this->getKey() );
+		}
+		return $query->count() == 0;
 	}
 
 
@@ -106,18 +112,6 @@ trait SluggableTrait {
 	{
 
 		$separator = $this->sluggable['separator'];
-
-		if ($this->sluggable['use_cache'])
-		{
-
-			$cache_key = 'sluggable.'.$base;
-
-			if ( $idx = \Cache::get($cache_key) ) {
-				\Cache::put($cache_key, ++$idx, 1);
-				return $base.$separator.$idx;
-			}
-		}
-
 
 		if( strpos($slug, $base.$separator) === 0)
 		{
@@ -158,8 +152,6 @@ trait SluggableTrait {
 		$slug = $base = $this->generateSlug($source);
 		while (!$this->isSlugValid($slug))
 		{
-			echo $slug . "\n";
-			ob_flush();
 			$slug = $this->incrementSlug($base, $slug);
 		}
 		$this->setSlug($slug);

@@ -24,8 +24,21 @@ class Post extends Model implements SluggableInterface {
 		'include_trashed' => false,
 		'on_update'       => false,
 		'reserved'        => null,
-		'use_cache'				=> true,
 	);
+
+
+	/**
+	 * Helper to set slug options for tests.
+	 *
+	 * @param array $array Array of new slug options
+	 */
+	public function setSlugConfig($array)
+	{
+		foreach($array as $key=>$value)
+		{
+			$this->sluggable[$key] = $value;
+		}
+	}
 
 
 	public function __toString()

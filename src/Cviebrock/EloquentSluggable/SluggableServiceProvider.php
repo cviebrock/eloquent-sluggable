@@ -29,23 +29,23 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerSluggable();
+		// $this->registerSluggable();
 		$this->registerEvents();
 	}
 
-	/**
-	 * Register the Sluggable class
-	 *
-	 * @return void
-	 */
-	public function registerSluggable()
-	{
-		$this->app['slugger'] = $this->app->share(function($app)
-		{
-			$config = $app['config']->get('eloquent-sluggable::config');
-			return new Slugger($config);
-		});
-	}
+	// /**
+	//  * Register the Sluggable class
+	//  *
+	//  * @return void
+	//  */
+	// public function registerSluggable()
+	// {
+	// 	$this->app['slugger'] = $this->app->share(function($app)
+	// 	{
+	// 		$config = $app['config']->get('eloquent-sluggable::config');
+	// 		return new Slugger($config);
+	// 	});
+	// }
 
 	/**
 	 * Register the listener events
@@ -54,12 +54,10 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function registerEvents()
 	{
-		// $app = $this->app;
-
-		// $app['events']->listen('eloquent.saving*', function($model) use ($app)
-		// {
-		// 	$app['sluggable']->make($model);
-		// });
+		$this->app['events']->listen('eloquent.saving*', function($model)
+		{
+			$model->slug();
+		});
 	}
 
 	/**
@@ -67,9 +65,9 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return array
 	 */
-	public function provides()
-	{
-		return array('slugger');
-	}
+	// public function provides()
+	// {
+	// 	return array('slugger');
+	// }
 
 }
