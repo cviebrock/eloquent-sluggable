@@ -1,9 +1,13 @@
 <?php namespace Cviebrock\EloquentSluggable\Test;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
 
-class Post extends Model {
+class Post extends Model implements SluggableInterface {
+
+	use SluggableTrait;
 
   protected $table = 'posts';
 
@@ -11,7 +15,7 @@ class Post extends Model {
 
 	protected $fillable = array('title','subtitle');
 
-	public static $sluggable = array(
+	protected $sluggable = array(
 		'build_from'      => 'title',
 		'save_to'         => 'slug',
 		'method'          => null,
@@ -20,6 +24,7 @@ class Post extends Model {
 		'include_trashed' => false,
 		'on_update'       => false,
 		'reserved'        => null,
+		'use_cache'				=> true,
 	);
 
 

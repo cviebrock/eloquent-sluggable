@@ -1,8 +1,4 @@
-<?php
-
-namespace Cviebrock\EloquentSluggable;
-
-use Illuminate\Support\Facades\App;
+<?php namespace Cviebrock\EloquentSluggable;
 
 
 trait SluggableTrait {
@@ -25,10 +21,15 @@ trait SluggableTrait {
 			return $this->__toString();
 		}
 
-		$from = (array) $from;
-		$source = array_map(function($attribute) { return $this->{$attribute}; }, $from );
+		$source = array_map(
+			function($attribute)
+			{
+				return $this->{$attribute};
+			},
+			(array) $from
+		);
 
-		return join($source, ' '));
+		return join($source, ' ');
 	}
 
 
@@ -40,9 +41,9 @@ trait SluggableTrait {
 
 		if ( $method === null )
 		{
-			return Str::slug($source, $separator);
+			return \Str::slug($source, $separator);
 		}
-		
+
 		if ( $method instanceof Closure )
 		{
 			return $method($source, $separator);
@@ -54,14 +55,14 @@ trait SluggableTrait {
 		}
 
 		throw new \UnexpectedValueException("Sluggable method is not a callable, closure or null.");
-	
+
 	}
 
 
 	protected function isSlugValid($slug)
 	{
-		return isSlugReserved($slug) && 
-			($this->sluggable['unique'] && isSlugUnique($slug));
+		return !$this->isSlugReserved($slug) &&
+			($this->sluggable['unique'] && $this->isSlugUnique($slug));
 	}
 
 
@@ -92,6 +93,10 @@ trait SluggableTrait {
 	protected function isSlugUnique($slug)
 	{
 		$instance = new static;
+		if ( $this->sluggable['include_trashed'] )
+		{
+			$instance->withTrashed();
+		}
 		return $instance->where( $this->sluggable['save_to'], $slug )->count() == 0;
 	}
 
@@ -99,7 +104,20 @@ trait SluggableTrait {
 
 	protected function incrementSlug($base, $slug)
 	{
+
 		$separator = $this->sluggable['separator'];
+
+		if ($this->sluggable['use_cache'])
+		{
+
+			$cache_key = 'sluggable.'.$base;
+
+			if ( $idx = \Cache::get($cache_key) ) {
+				\Cache::put($cache_key, ++$idx, 1);
+				return $base.$separator.$idx;
+			}
+		}
+
 
 		if( strpos($slug, $base.$separator) === 0)
 		{
@@ -115,7 +133,7 @@ trait SluggableTrait {
 		}
 
 		// otherwise, just add first increment
-		
+
 		return $base.$separator.'1';
 
 	}
@@ -131,7 +149,7 @@ trait SluggableTrait {
 	public function slug($force=false)
 	{
 
-		$config = App::make('config')->get('eloquent-sluggable::config');
+		$config = \App::make('config')->get('eloquent-sluggable::config');
 		$this->sluggable = array_merge( $config, $this->sluggable );
 
 		if (!$force && !$this->needsSlugging()) return true;
@@ -140,6 +158,8 @@ trait SluggableTrait {
 		$slug = $base = $this->generateSlug($source);
 		while (!$this->isSlugValid($slug))
 		{
+			echo $slug . "\n";
+			ob_flush();
 			$slug = $this->incrementSlug($base, $slug);
 		}
 		$this->setSlug($slug);

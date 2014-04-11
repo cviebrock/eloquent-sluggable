@@ -75,7 +75,11 @@ class SluggableTest extends TestCase {
 	 */
 	public function testSimpleSlug()
 	{
-		$post = $this->post('My First Post');
+		$post = new Post(array(
+			'title' => 'My First Post'
+		));
+		$post->slug();
+		dd($post->toArray());
 		$this->assertEquals($post->slug, 'my-first-post');
 	}
 }
