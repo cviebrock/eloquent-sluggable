@@ -17,8 +17,8 @@
 		"illuminate/support": "4.*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "3.7.*",
-		"orchestra/testbench": "2.0.*",
+		"phpunit/phpunit": "4.0.*",
+		"orchestra/testbench": "2.*",
 		"laravelbook/ardent": "dev-master"
 	},
 	"autoload": {
@@ -26,5 +26,5 @@
 			"Cviebrock\\EloquentSluggable": "src/"
 		}
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }
