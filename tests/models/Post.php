@@ -17,13 +17,6 @@ class Post extends Model implements SluggableInterface {
 
 	protected $sluggable = array(
 		'build_from'      => 'title',
-		'save_to'         => 'slug',
-		'method'          => null,
-		'separator'       => '-',
-		'unique'          => true,
-		'include_trashed' => false,
-		'on_update'       => false,
-		'reserved'        => null,
 	);
 
 
