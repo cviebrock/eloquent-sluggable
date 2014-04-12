@@ -18,7 +18,7 @@ class Post extends Ardent {
 	/**
 	 * Sluggable config
 	 */
-	public static $sluggable = array(
+	protected $sluggable = array(
 		'build_from' => 'title',
 		'save_to'    => 'slug',
 	);
@@ -39,7 +39,7 @@ There are three ways around this:
 ```php
 public function beforeValidate()
 {
-	\Sluggable::make($this,true);
+	$this->slug();
 }
 ```
 
@@ -48,7 +48,7 @@ public function beforeValidate()
 ```php
 $post = new Post(...);
 
-Sluggable::make($post,true);
+$post->slug();
 $post->save();
 ```
 

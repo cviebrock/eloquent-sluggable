@@ -6,10 +6,12 @@ Easy creation of slugs for your Eloquent models in Laravel 4.
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 
 * [Background](#background)
-* [Installation](#installation)
+* [Installation and Requirements](#installation)
 * [Updating your Eloquent Models](#eloquent)
 * [Using the Class](#usage)
 * [Configuration](#config)
+* [Extending Sluggable](#extending)
+* [Upgrading from 1.0](#upgrading)
 * [Bugs, Suggestions and Contributions](#bugs)
 * [Copyright and License](#copyright)
 
@@ -50,24 +52,25 @@ The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you
 
 
 <a name="installation"></a>
-## Installation
+## Installation and Requirements
 
 First, you'll need to add the package to the `require` attribute of your `composer.json` file:
 
 ```json
 {
     "require": {
-        "cviebrock/eloquent-sluggable": "1.0.*"
+        "cviebrock/eloquent-sluggable": "2.*"
     },
 }
 ```
 
+> **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running PHP 5.4 or higher.  If you are still using 5.3, then use the "1.*" version and follow the instructions in that version's README.md file.
+
 Aftwards, run `composer update` from your command line.
 
-Then, update `app/config/app.php` by adding entries for the service providers and class aliases:
+Then, update `app/config/app.php` by adding an entry for the service provider.
 
 ```php
-
 	'providers' => array(
 
 		// ...
@@ -75,34 +78,26 @@ Then, update `app/config/app.php` by adding entries for the service providers an
 		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
 	);
-
-	// ...
-
-	'aliases' => array(
-
-		// ...
-
-		'Sluggable' => 'Cviebrock\EloquentSluggable\Facades\Sluggable',
-
-	);
-
-
 ```
 
-Finally, from the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable` to publish the configuration file.
-
+Finally, from the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable` to publish the default configuration file.
 
 
 <a name="eloquent"></a>
 ## Updating your Eloquent Models
 
-Define a public property `$sluggable` with the definitions (see [Configuration](#config) below for details):
+Your models should implement Sluggable's interface and use it's trait.  You should also define a protected property `$sluggable` with any model-specific configurations (see [Configuration](#config) below for details):
 
 ```php
-class Post extends Eloquent
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+
+class Post extends Eloquent implements SluggableInterface
 {
 
-	public static $sluggable = array(
+	use SluggableTrait;
+
+	protected $sluggable = array(
 		'build_from' => 'title',
 		'save_to'    => 'slug',
 	);
@@ -131,6 +126,9 @@ And so is retrieving the slug:
 
 ```php
 echo $post->slug;
+
+// or, if you don't know the name of the slug attribute:
+echo $post->getSlug();
 ```
 
 See the [README-Ardent.md](./README-Ardent.md) file for using Eloquent-Sluggable with [Ardent](//github.com/laravelbook/ardent).
@@ -138,8 +136,7 @@ See the [README-Ardent.md](./README-Ardent.md) file for using Eloquent-Sluggable
 Also note that if you are replicating your models using Eloquent's `replicate()` method, then you will need to explicity tell the package to force a re-slugging of the model afterwards to ensure uniqueness:
 
 ```php
-$new_post = $post->replicate();
-Sluggable::make($new_post, true);
+$new_post = $post->replicate()->reslug();
 ```
 
 
@@ -160,6 +157,7 @@ return array(
 	'include_trashed' => false,
 	'on_update'       => false,
 	'reserved'        => null,
+	'use_cache'       => false,
 );
 ```
 
@@ -168,7 +166,9 @@ return array(
 This is the field or array of fields from which to build the slug. Each `$model->field` is contactenated (with space separation) to build the sluggable string.  This can be model attribues (i.e. fields in the database) or custom getters.  So, for example, this works:
 
 ```php
-class Person extends Eloquent {
+class Person extends Eloquent implements SluggableInterface {
+
+	use SluggableTrait;
 
 	public static $sluggable = array(
 		'build_from' => 'fullname'
@@ -220,6 +220,8 @@ Defines the method used to turn the sluggable string into a slug.  There are thr
 
 Any other values for `method` will throw an exception.
 
+For more complex slugging requirements, see [Extending Sluggable](#extending) below.
+
 ### separator
 
 This defines the separator used when building a slug, and is passed to the `method` defined above.  The default value is a hyphen.
@@ -238,12 +240,78 @@ Setting this to `true` will also check deleted models when trying to enforce uni
 
 A boolean.  If it is `false` (the default value), then slugs will not be updated if a model is resaved (e.g. if you change the title of your blog post, the slug will remain the same) or the slug value has already been set.  You can set it to `true` (or manually change the $model->slug value in your own code) if you want to override this behaviour.
 
-(If you want to manually set the slug value using your model's Sluggable settings, you can run `Sluggable::make($model, true)`.  The second arguement forces Sluggable to update the slug field.)
+(If you want to manually set the slug value using your model's Sluggable settings, you can run `$model->reslug()` to force Sluggable to update the slug field.)
 
 ### reserved
 
 An array of values that will never be allowed as slugs, e.g. to prevent collisions with existing routes or controller methods, etc..  This can be an array, or a closure that returns an array.  Defaults to `null`: no reserved slug names.
 
+### use_cache
+
+When checking for uniqueness, the package will query the database for any existing models with the same or similar slugs, and then see if an increment is required.  This means more DB usage, and could also lead to a race condition if you are saving a lot of models at the same time.
+
+Turning on `use_cache` will store the last generated increment using Laravel's cache so that your app can save those database requests.
+
+The default value is `false`: don't use caching.  If you are already using a cache system that supports the `Cache::tags()` feature (i.e. anything except database and file caches), then you should really enable this setting.  Change it to a positive integer, which equals the number of minutes to store slug information in the cache.
+
+(If for whatever reason you want to clear out all of Sluggable's cache entries, then just run `Cache::tags('sluggable')->flush()`.)
+
+
+<a name="extending"></a>
+## Extending Sluggable
+
+Sometimes the configuration options aren't sufficient for complex needs (e.g. maybe the uniqueness test needs to take other attributes into account, or maybe you need to make two slugs for the same model).
+
+In instances like these, your best bet is to overload some of SluggableTrait's methods with your own functions, either on a per-model basis, or in your own trait that extends SluggableTrait.  Each step of the slugging process is broken out into it's own method, and those are called in turn when the slug is generated.
+
+Take a look at `SluggableTrait->slug()` to see the order of operations, but you might consider overloading any of the following protected methods:
+
+### needsSlugging()
+
+Determines if the model needs to be slugged.  Should return a boolean.
+
+### getSlugSource()
+
+Returns a string that forms the source of the slug (usually based on the `build_from` configuration value).
+
+### generateSlug($source)
+
+The actual slugging code.  Usually implements whatever is defined in the `method` configuration, but could call out to other slugging libraries.  Takes the source string (above) and returns a string.
+
+### validateSlug($slug)
+
+Validates that the generated slug is valid, usually by checking it against anything defined in the `reserved` configuration.  Should return a valid slug string.
+
+### makeSlugUnique($slug)
+
+Checks to see if the given slug is unique.  Should return a unique slug string.
+
+### setSlug($slug)
+
+Writes the (generated, valid, and unique) slug to the model's attributes.
+
+
+
+<a name="upgrade"></a>
+## Upgrading From a 1.x Version
+
+1. There is no facade, so you should remove the alias entry from `app/config/app.php`.
+2. Add the interface and trait to your models and change the `$sluggable` configuration array from `public static` to `protected`:
+````php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+
+class MyModel extends Eloquent implement SluggableInterface {
+
+	use SluggableTrait;
+
+	protected $sluggable = array(
+		// ...
+	);
+}
+````
+3. Any references to `Sluggable::make($model,[false|true])` should become `$model->slug()` or `$model->reslug()`.  This will be of importance to [Ardent](./README-Ardent.md) users.
+4. Enable the `use_cache` configuration if at all possible.
 
 
 <a name="bugs"></a>
@@ -252,7 +320,7 @@ An array of values that will never be allowed as slugs, e.g. to prevent collisio
 Please use Github for bugs, comments, suggestions.
 
 1. Fork the project.
-2. Create your bugfix/feature branch and write your code.
+2. Create your bugfix/feature branch and write your (well-commented) code.
 3. Create unit tests for your code:
 	- Run `composer install --dev` in the root directory to install required testing packages.
 	- Add your test methods to `eloquent-sluggable/tests/SluggableTest.php`.

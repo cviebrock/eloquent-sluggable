@@ -104,4 +104,17 @@ return array(
 	 */
 	'reserved' => null,
 
+	/**
+	 * Whether or not to use Laravel's caching system to help generate
+	 * incremental slug.  Defaults to false.
+	 *
+	 * Set it to a positive integer to use the cache (the value is the
+	 * time to store slug increments in the cache).
+	 *
+	 * If you use this -- and we really recommend that you do, especially
+	 * if 'unique' is true -- then you must use a cache backend that
+	 * supports tags, i.e. not 'file' or 'database'.
+	 */
+	'use_cache' => false,
+
 );

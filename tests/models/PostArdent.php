@@ -34,7 +34,7 @@ class PostArdent extends Ardent implements SluggableInterface {
 
 	public function beforeValidate()
 	{
-		$this->slug(true);
+		$this->slug();
 	}
 
 
