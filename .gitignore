@@ -3,5 +3,5 @@ composer.phar
 composer.lock
 .DS_Store
 .semver
-.sublime-project
-.sublime-workspace
+*.sublime-project
+*.sublime-workspace
