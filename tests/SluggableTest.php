@@ -445,4 +445,44 @@ class SluggableTest extends TestCase {
 		$this->assertEquals(null, $post->slug);
 	}
 
+	/**
+	 * Test for max_length option
+	 *
+	 * @test
+	 */
+	public function testMaxLength()
+	{
+		$post = $this->makePost('A post with a really long title');
+		$post->setSlugConfig(array(
+			'max_length' => 10,
+		));
+		$post->save();
+		$this->assertEquals('a-post-wit', $post->slug);
+	}
+
+	/**
+	 * Test for max_length option with increments
+	 *
+	 * @test
+	 */
+	public function testMaxLengthWithIncrements()
+	{
+		for ($i=0; $i < 20; $i++)
+		{
+			$post = $this->makePost('A post with a really long title');
+			$post->setSlugConfig(array(
+				'max_length' => 10,
+			));
+			$post->save();
+			if ($i==0)
+			{
+				$this->assertEquals('a-post-wit', $post->slug);
+			}
+			elseif ($i<10)
+			{
+				$this->assertEquals('a-post-wit-'.$i, $post->slug);
+			}
+		}
+	}
+
 }

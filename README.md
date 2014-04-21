@@ -151,6 +151,7 @@ By default, global configuration can be set in the `app/config/packages/cviebroc
 return array(
 	'build_from'      => null,
 	'save_to'         => 'slug',
+	'max_length'      => null,
 	'method'          => null,
 	'separator'       => '-',
 	'unique'          => true,
@@ -197,6 +198,12 @@ Schema::create('posts', function($table)
 	$table->timestamps();
 });
 ```
+
+### max_length
+
+Setting this to a positive integer will ensure that your generated slugs are restricted to a maximum length (e.g. to ensure that they fit within your databse fields).  By default, this value is null and no limit is enforced.
+
+Note: If `unique` is enabled (which it is by default), and you anticipate having several models with the same slug, then you should set this value to a few characters less than the length of your database field.  The reason why is that the class will append "-1", "-2", "-3", etc., to subsequent models in order to maintain uniqueness.  These incremental extensions aren't included in part of the `max_length` calculation.
 
 ### method
 
@@ -292,7 +299,7 @@ Writes the (generated, valid, and unique) slug to the model's attributes.
 
 
 
-<a name="upgrade"></a>
+<a name="upgrading"></a>
 ## Upgrading From a 1.x Version
 
 1. There is no facade, so you should remove the alias entry from `app/config/app.php`.

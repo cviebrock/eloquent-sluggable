@@ -37,26 +37,33 @@ trait SluggableTrait {
 
 	protected function generateSlug($source)
 	{
-		$separator = $this->sluggable['separator'];
-		$method    = $this->sluggable['method'];
+		$separator  = $this->sluggable['separator'];
+		$method     = $this->sluggable['method'];
+		$max_length = $this->sluggable['max_length'];
 
 		if ( $method === null )
 		{
-			return \Str::slug($source, $separator);
+			$slug = \Str::slug($source, $separator);
 		}
-
-		if ( $method instanceof Closure )
+		elseif ( $method instanceof Closure )
 		{
-			return $method($source, $separator);
+			$slug = $method($source, $separator);
 		}
-
-		if ( is_callable($method) )
+		elseif ( is_callable($method) )
 		{
-			return call_user_func($method, $source, $separator);
+			$slug = call_user_func($method, $source, $separator);
+		}
+		else
+		{
+			throw new \UnexpectedValueException("Sluggable method is not a callable, closure or null.");
 		}
 
-		throw new \UnexpectedValueException("Sluggable method is not a callable, closure or null.");
+		if ($max_length)
+		{
+			$slug = substr($slug, 0, $max_length);
+		}
 
+		return $slug;
 	}
 
 
@@ -90,9 +97,9 @@ trait SluggableTrait {
 	{
 		if (!$this->sluggable['unique']) return $slug;
 
-		$separator = $this->sluggable['separator'];
-		$use_cache = $this->sluggable['use_cache'];
-		$save_to   = $this->sluggable['save_to'];
+		$separator  = $this->sluggable['separator'];
+		$use_cache  = $this->sluggable['use_cache'];
+		$save_to    = $this->sluggable['save_to'];
 
 		// if using the cache, check if we have an entry already instead
 		// of querying the database
@@ -191,6 +198,7 @@ trait SluggableTrait {
 
 		return $this;
 	}
+
 
 	public function resluggify()
 	{

@@ -32,6 +32,13 @@ return array(
 	'save_to' => 'slug',
 
 	/**
+	 * The maximum length of a generated slug.  Defaults to "null", which means
+	 * no length restrictions are enforced.  Set it to a positive integer if you
+	 * want to make sure your slugs aren't too long.
+	 */
+	'max_length' => null,
+
+	/**
 	 * If left to "null", then use Laravel's built-in Str::slug() method to
 	 * generate the slug (with the separator defined below).
 	 *
