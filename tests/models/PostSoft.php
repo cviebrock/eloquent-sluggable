@@ -1,4 +1,4 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 
 class PostSoft extends Post {

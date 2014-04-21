@@ -1,4 +1,4 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 use LaravelBook\Ardent\Ardent;
 use Cviebrock\EloquentSluggable\SluggableInterface;

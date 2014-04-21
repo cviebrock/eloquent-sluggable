@@ -1,4 +1,4 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
