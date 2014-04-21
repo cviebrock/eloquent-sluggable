@@ -44,10 +44,7 @@ class SluggableTest extends TestCase {
 		));
 
 		// set up caching configuration
-		$app['config']->set('cache.driver', 'memcached');
-		$app['config']->set('cache.memcached', array(
-			array( 'host' => '127.0.0.1', 'port' => 11211, 'weight' => 100 )
-		));
+		$app['config']->set('cache.driver', 'redis');
 		$app['config']->set('cache.prefix', 'SluggableTest');
 
 	}
@@ -434,5 +431,18 @@ class SluggableTest extends TestCase {
 		$this->assertEquals($post2->id, $post->id);
 	}
 
+	/**
+	 * Test that we don't try and slug models that don't implement Sluggable
+	 *
+	 * @test
+	 */
+	public function testNonSluggableModels()
+	{
+		$post = new PostNotSluggable(array(
+			'title' => 'My First Post'
+		));
+		$post->save();
+		$this->assertEquals(null, $post->slug);
+	}
 
 }
