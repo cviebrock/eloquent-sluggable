@@ -18,7 +18,7 @@ class SluggableTest extends TestCase {
 		// Call migrations specific to our tests, e.g. to seed the db
 		$artisan->call('migrate', array(
 			'--database' => 'testbench',
-			'--path'     => '../tests/migrations',
+			'--path'     => '../tests/database/migrations',
 		));
 
 	}
