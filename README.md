@@ -105,6 +105,20 @@ class Post extends Eloquent implements SluggableInterface
 }
 ```
 
+Of course, your database will need a column in which to store the slug.  You can do this manually, or use the built-in artisan command to create a migration for you.  For example:
+
+```
+php artisan sluggable:table posts
+```
+
+Running that command will create a migration that adds a column named "slug" to your posts table.  If you want to use a different name for the slug column, you can provide that as a second argument:
+
+```
+php artisan sluggable:table posts slug_column
+```
+
+Be sure to set your model's `save_to` configuration to match the column name.
+
 That's it ... your model is now "sluggable"!
 
 
