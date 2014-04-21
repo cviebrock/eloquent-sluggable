@@ -7,8 +7,8 @@ interface SluggableInterface {
 
 	public function getSlug();
 
-	public function slug($force=false);
+	public function sluggify($force=false);
 
-	public function reslug();
+	public function resluggify();
 
 }

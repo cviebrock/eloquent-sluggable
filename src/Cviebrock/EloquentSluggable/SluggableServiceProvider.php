@@ -54,11 +54,11 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function registerEvents()
 	{
-		$this->app['events']->listen('eloquent.saving', function($model)
+		$this->app['events']->listen('eloquent.saving*', function($model)
 		{
-			if ($model instanceof Cviebrock\EloquentSluggable\SluggableInterface)
+			if ($model instanceof SluggableInterface)
 			{
-				$model->slug();
+				$model->sluggify();
 			}
 		});
 	}

@@ -406,7 +406,7 @@ class SluggableTest extends TestCase {
 		$this->assertEquals('my-first-post', $post1->slug);
 
 		$post2 = $post1->replicate();
-		$post2->slug();
+		$post2->sluggify();
 		$this->assertEquals('my-first-post-1', $post2->slug);
 	}
 

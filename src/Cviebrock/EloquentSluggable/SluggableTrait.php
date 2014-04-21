@@ -172,9 +172,8 @@ trait SluggableTrait {
 	}
 
 
-	public function slug($force=false)
+	public function sluggify($force=false)
 	{
-
 		$config = \App::make('config')->get('eloquent-sluggable::config');
 		$this->sluggable = array_merge( $config, $this->sluggable );
 
@@ -193,9 +192,9 @@ trait SluggableTrait {
 		return $this;
 	}
 
-	public function reslug()
+	public function resluggify()
 	{
-		return $this->slug(true);
+		return $this->sluggify(true);
 	}
 
 
