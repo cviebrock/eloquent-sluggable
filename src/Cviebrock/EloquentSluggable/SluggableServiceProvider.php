@@ -30,6 +30,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->registerEvents();
+		$this->registerCommands();
 	}
 
 	/**
@@ -46,6 +47,31 @@ class SluggableServiceProvider extends ServiceProvider {
 				$model->sluggify();
 			}
 		});
+	}
+
+	/**
+	 * Register the artisan commands
+	 *
+	 * @return void
+	 */
+	public function registerCommands()
+	{
+		$this->app->bindShared('command.sluggable.table', function($app)
+		{
+			return new SluggableTableCommand;
+		});
+
+		$this->commands('command.sluggable.table');
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array();
 	}
 
 }
