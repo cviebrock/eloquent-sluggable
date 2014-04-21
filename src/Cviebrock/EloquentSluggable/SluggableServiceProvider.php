@@ -56,12 +56,12 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function registerCommands()
 	{
-		$this->app->bindShared('command.sluggable.table', function($app)
+		$this->app['sluggable.table'] = $this->app->share(function($app)
 		{
 			return new SluggableTableCommand;
 		});
 
-		$this->commands('command.sluggable.table');
+		$this->commands('sluggable.table');
 	}
 
 	/**
