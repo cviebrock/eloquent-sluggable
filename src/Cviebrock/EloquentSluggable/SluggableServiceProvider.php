@@ -29,23 +29,8 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		// $this->registerSluggable();
 		$this->registerEvents();
 	}
-
-	// /**
-	//  * Register the Sluggable class
-	//  *
-	//  * @return void
-	//  */
-	// public function registerSluggable()
-	// {
-	// 	$this->app['slugger'] = $this->app->share(function($app)
-	// 	{
-	// 		$config = $app['config']->get('eloquent-sluggable::config');
-	// 		return new Slugger($config);
-	// 	});
-	// }
 
 	/**
 	 * Register the listener events
@@ -62,15 +47,5 @@ class SluggableServiceProvider extends ServiceProvider {
 			}
 		});
 	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	// public function provides()
-	// {
-	// 	return array('slugger');
-	// }
 
 }
