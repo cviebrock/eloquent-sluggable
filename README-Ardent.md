@@ -39,7 +39,7 @@ There are three ways around this:
 ```php
 public function beforeValidate()
 {
-	$this->slug();
+	$this->sluggify();
 }
 ```
 
@@ -48,7 +48,7 @@ public function beforeValidate()
 ```php
 $post = new Post(...);
 
-$post->slug();
+$post->sluggify();
 $post->save();
 ```
 

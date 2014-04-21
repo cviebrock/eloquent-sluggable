@@ -136,7 +136,7 @@ See the [README-Ardent.md](./README-Ardent.md) file for using Eloquent-Sluggable
 Also note that if you are replicating your models using Eloquent's `replicate()` method, then you will need to explicity tell the package to force a re-slugging of the model afterwards to ensure uniqueness:
 
 ```php
-$new_post = $post->replicate()->reslug();
+$new_post = $post->replicate()->resluggify();
 ```
 
 
@@ -240,7 +240,7 @@ Setting this to `true` will also check deleted models when trying to enforce uni
 
 A boolean.  If it is `false` (the default value), then slugs will not be updated if a model is resaved (e.g. if you change the title of your blog post, the slug will remain the same) or the slug value has already been set.  You can set it to `true` (or manually change the $model->slug value in your own code) if you want to override this behaviour.
 
-(If you want to manually set the slug value using your model's Sluggable settings, you can run `$model->reslug()` to force Sluggable to update the slug field.)
+(If you want to manually set the slug value using your model's Sluggable settings, you can run `$model->resluggify()` to force Sluggable to update the slug field.)
 
 ### reserved
 
@@ -264,7 +264,7 @@ Sometimes the configuration options aren't sufficient for complex needs (e.g. ma
 
 In instances like these, your best bet is to overload some of SluggableTrait's methods with your own functions, either on a per-model basis, or in your own trait that extends SluggableTrait.  Each step of the slugging process is broken out into it's own method, and those are called in turn when the slug is generated.
 
-Take a look at `SluggableTrait->slug()` to see the order of operations, but you might consider overloading any of the following protected methods:
+Take a look at `SluggableTrait->sluggify()` to see the order of operations, but you might consider overloading any of the following protected methods:
 
 ### needsSlugging()
 
@@ -310,7 +310,7 @@ class MyModel extends Eloquent implement SluggableInterface {
 	);
 }
 ````
-3. Any references to `Sluggable::make($model,[false|true])` should become `$model->slug()` or `$model->reslug()`.  This will be of importance to [Ardent](./README-Ardent.md) users.
+3. Any references to `Sluggable::make($model,[false|true])` should become `$model->sluggify()` or `$model->resluggify()`.  This will be of importance to [Ardent](./README-Ardent.md) users.
 4. Enable the `use_cache` configuration if at all possible.
 
 
