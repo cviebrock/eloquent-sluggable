@@ -37,7 +37,7 @@ class SluggableTableCommand extends Command {
 	}
 
 	/**
-	 * Create a base migration file for the reminders.
+	 * Create a base migration file for the model.
 	 *
 	 * @return string
 	 */
@@ -51,7 +51,7 @@ class SluggableTableCommand extends Command {
 	}
 
 	/**
-	 * Get the contents of the reminder migration stub.
+	 * Get the contents of the sluggable migration stub.
 	 *
 	 * @return string
 	 */
