@@ -1,7 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 class SluggableTableCommand extends Command {
@@ -75,7 +74,7 @@ class SluggableTableCommand extends Command {
 	{
 		return array(
 			array('table',  InputArgument::REQUIRED, 'The name of your sluggable table.'),
-			array('column', InputArgument::OPTIONAL, 'The name of your slugged column (deafults to "slug").', 'slug'),
+			array('column', InputArgument::OPTIONAL, 'The name of your slugged column (defaults to "slug").', 'slug'),
 		);
 	}
 
