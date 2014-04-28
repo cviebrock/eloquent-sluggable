@@ -17,7 +17,7 @@ class Posts extends Migration {
 			$table->increments('id');
 			$table->string('title');
 			$table->string('subtitle')->nullable();
-			$table->string('slug');
+			$table->string('slug')->nullable();
 			$table->string('dummy')->nullable();
 			$table->softDeletes();
 		});

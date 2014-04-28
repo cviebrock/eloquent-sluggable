@@ -29,22 +29,8 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerSluggable();
 		$this->registerEvents();
-	}
-
-	/**
-	 * Register the Sluggable class
-	 *
-	 * @return void
-	 */
-	public function registerSluggable()
-	{
-		$this->app['sluggable'] = $this->app->share(function($app)
-		{
-			$config = $app['config']->get('eloquent-sluggable::config');
-			return new Sluggable($config);
-		});
+		$this->registerCommands();
 	}
 
 	/**
@@ -54,12 +40,28 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function registerEvents()
 	{
-		$app = $this->app;
-
-		$app['events']->listen('eloquent.saving*', function($model) use ($app)
+		$this->app['events']->listen('eloquent.saving*', function($model)
 		{
-			$app['sluggable']->make($model);
+			if ($model instanceof SluggableInterface)
+			{
+				$model->sluggify();
+			}
 		});
+	}
+
+	/**
+	 * Register the artisan commands
+	 *
+	 * @return void
+	 */
+	public function registerCommands()
+	{
+		$this->app['sluggable.table'] = $this->app->share(function($app)
+		{
+			return new SluggableTableCommand;
+		});
+
+		$this->commands('sluggable.table');
 	}
 
 	/**
@@ -69,7 +71,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('sluggable');
+		return array();
 	}
 
 }

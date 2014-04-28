@@ -32,6 +32,13 @@ return array(
 	'save_to' => 'slug',
 
 	/**
+	 * The maximum length of a generated slug.  Defaults to "null", which means
+	 * no length restrictions are enforced.  Set it to a positive integer if you
+	 * want to make sure your slugs aren't too long.
+	 */
+	'max_length' => null,
+
+	/**
 	 * If left to "null", then use Laravel's built-in Str::slug() method to
 	 * generate the slug (with the separator defined below).
 	 *
@@ -103,5 +110,18 @@ return array(
 	 * and continue from there.
 	 */
 	'reserved' => null,
+
+	/**
+	 * Whether or not to use Laravel's caching system to help generate
+	 * incremental slug.  Defaults to false.
+	 *
+	 * Set it to a positive integer to use the cache (the value is the
+	 * time to store slug increments in the cache).
+	 *
+	 * If you use this -- and we really recommend that you do, especially
+	 * if 'unique' is true -- then you must use a cache backend that
+	 * supports tags, i.e. not 'file' or 'database'.
+	 */
+	'use_cache' => false,
 
 );

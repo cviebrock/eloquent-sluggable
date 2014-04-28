@@ -1,4 +1,4 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 use Orchestra\Testbench\TestCase;
 
@@ -18,24 +18,11 @@ class SluggableTest extends TestCase {
 		// Call migrations specific to our tests, e.g. to seed the db
 		$artisan->call('migrate', array(
 			'--database' => 'testbench',
-			'--path'     => '../tests/migrations',
-		));
-
-		// Reset the default Sluggable settings since we might change them during tests and they are static.
-		// (There is probably a better way to do this, but I can't think of it without using different models
-		// for each possible configuration we want to test.)
-		$this->settings(array(
-			'build_from'      => 'title',
-			'save_to'         => 'slug',
-			'method'          => null,
-			'separator'       => '-',
-			'unique'          => true,
-			'include_trashed' => false,
-			'on_update'       => false,
-			'reserved'        => null,
+			'--path'     => '../tests/database/migrations',
 		));
 
 	}
+
 
   /**
    * Define environment setup.
@@ -45,15 +32,20 @@ class SluggableTest extends TestCase {
    */
 	protected function getEnvironmentSetUp($app)
 	{
-			// reset base path to point to our package's src directory
-			$app['path.base'] = __DIR__ . '/../src';
+		// reset base path to point to our package's src directory
+		$app['path.base'] = __DIR__ . '/../src';
 
-			$app['config']->set('database.default', 'testbench');
-			$app['config']->set('database.connections.testbench', array(
-					'driver'   => 'sqlite',
-					'database' => ':memory:',
-					'prefix'   => '',
-			));
+		// set up database configuration
+		$app['config']->set('database.default', 'testbench');
+		$app['config']->set('database.connections.testbench', array(
+				'driver'   => 'sqlite',
+				'database' => ':memory:',
+				'prefix'   => '',
+		));
+
+		// set up caching configuration
+		$app['config']->set('cache.driver', 'redis');
+		$app['config']->set('cache.prefix', 'SluggableTest');
 
 	}
 
@@ -69,41 +61,17 @@ class SluggableTest extends TestCase {
 	}
 
 
-  /**
-   * Get Sluggable package aliases.
-   *
-   * @return array
-   */
-	protected function getPackageAliases()
+	protected function makePost($title, $subtitle=null)
 	{
-		return array(
-			'Sluggable' => 'Cviebrock\EloquentSluggable\Facades\Sluggable'
-		);
-	}
-
-	/**
-	 * Helper function to create a post.
-	 *
-	 * @param  string $title
-	 * @param  string $subtitle
-	 * @param  array $settings
-	 * @return Post
-	 */
-	protected function post($title, $subtitle=null)
-	{
-		return Post::create(array(
-			'title'    => $title,
-			'subtitle' => $subtitle,
-		));
-	}
-
-	protected function settings($settings = array())
-	{
-		foreach($settings as $setting => $value)
+		$post = new Post;
+		$post->title = $title;
+		if ($subtitle)
 		{
-			Post::$sluggable[$setting] = $value;
+			$post->subtitle = $subtitle;
 		}
+		return $post;
 	}
+
 
 
 	/**
@@ -113,8 +81,9 @@ class SluggableTest extends TestCase {
 	 */
 	public function testSimpleSlug()
 	{
-		$post = $this->post('My First Post');
-		$this->assertEquals($post->slug, 'my-first-post');
+		$post = $this->makePost('My First Post');
+		$post->save();
+		$this->assertEquals('my-first-post', $post->slug);
 	}
 
 	/**
@@ -124,8 +93,9 @@ class SluggableTest extends TestCase {
 	 */
 	public function testAccentedCharacters()
 	{
-		$post = $this->post('My Dinner With André & François');
-		$this->assertEquals($post->slug, 'my-dinner-with-andre-francois');
+		$post = $this->makePost('My Dinner With André & François');
+		$post->save();
+		$this->assertEquals('my-dinner-with-andre-francois', $post->slug);
 	}
 
 	/**
@@ -136,10 +106,11 @@ class SluggableTest extends TestCase {
 	 */
 	public function testRenameSlugWithoutUpdate()
 	{
-		$post = $this->post('My First Post');
+		$post = $this->makePost('My First Post');
+		$post->save();
 		$post->title = 'A New Title';
 		$post->save();
-		$this->assertEquals($post->slug, 'my-first-post');
+		$this->assertEquals('my-first-post', $post->slug);
 	}
 
 	/**
@@ -150,13 +121,14 @@ class SluggableTest extends TestCase {
 	 */
 	public function testRenameSlugWithUpdate()
 	{
-		$this->settings(array(
+		$post = $this->makePost('My First Post');
+		$post->setSlugConfig(array(
 			'on_update' => true
 		));
-		$post = $this->post('My First Post');
+		$post->save();
 		$post->title = 'A New Title';
 		$post->save();
-		$this->assertEquals($post->slug, 'a-new-title');
+		$this->assertEquals('a-new-title', $post->slug);
 	}
 
 	/**
@@ -168,30 +140,60 @@ class SluggableTest extends TestCase {
 	{
 		for ($i=0; $i < 20; $i++)
 		{
-			$post = $this->post('A post title');
+			$post = $this->makePost('A post title');
+			$post->save();
 			if ($i==0)
 			{
-				$this->assertEquals($post->slug, 'a-post-title');
+				$this->assertEquals('a-post-title', $post->slug);
 			}
 			else
 			{
-				$this->assertEquals($post->slug, 'a-post-title-'.$i);
+				$this->assertEquals('a-post-title-'.$i, $post->slug);
 			}
 		}
 	}
 
 	/**
-	 * Test that building a slug from multiple attributes.
+	 * Test uniqueness of generated slugs using caching
+	 *
+	 * @test
+	 */
+	public function testUniqueWithCache()
+	{
+		// Manually flush the cache for tests
+		\Cache::tags('sluggable')->flush();
+
+		for ($i=0; $i < 20; $i++)
+		{
+			$post = $this->makePost('A post title');
+			$post->setSlugConfig(array(
+				'use_cache' => 10,
+			));
+			$post->save();
+			if ($i==0)
+			{
+				$this->assertEquals('a-post-title', $post->slug);
+			}
+			else
+			{
+				$this->assertEquals('a-post-title-'.$i, $post->slug);
+			}
+		}
+	}
+
+	/**
+	 * Test building a slug from multiple attributes.
 	 *
 	 * @test
 	 */
 	public function testMultipleSource()
 	{
-		$this->settings(array(
+		$post =$this->makePost('A Post Title','A Subtitle');
+		$post->setSlugConfig(array(
 			'build_from' => array('title','subtitle')
 		));
-		$post = $this->post('A Post Title', 'A Subtitle');
-		$this->assertEquals($post->slug, 'a-post-title-a-subtitle');
+		$post->save();
+		$this->assertEquals('a-post-title-a-subtitle', $post->slug);
 	}
 
 	/**
@@ -201,14 +203,15 @@ class SluggableTest extends TestCase {
 	 */
 	public function testCustomMethod()
 	{
-		$this->settings(array(
+		$post =$this->makePost('A Post Title','A Subtitle');
+		$post->setSlugConfig(array(
 			'method' => function($string, $separator)
 			{
 				return strrev( \Str::slug($string,$separator) );
 			}
 		));
-		$post = $this->post('A Post Title');
-		$this->assertEquals($post->slug, 'eltit-tsop-a');
+		$post->save();
+		$this->assertEquals('eltit-tsop-a', $post->slug);
 	}
 
 	/**
@@ -218,11 +221,12 @@ class SluggableTest extends TestCase {
 	 */
 	public function testToStringMethod()
 	{
-		$this->settings(array(
+		$post = $this->makePost('A Post Title');
+		$post->setSlugConfig(array(
 			'build_from' => null
 		));
-		$post = $this->post('A Post Title');
-		$this->assertEquals($post->slug, 'a-post-title');
+		$post->save();
+		$this->assertEquals('a-post-title', $post->slug);
 	}
 
 	/**
@@ -232,16 +236,19 @@ class SluggableTest extends TestCase {
 	 */
 	public function testUniqueAfterDelete()
 	{
-		$post1 = $this->post('A post title');
-		$this->assertEquals($post1->slug, 'a-post-title');
+		$post1 = $this->makePost('A post title');
+		$post1->save();
+		$this->assertEquals('a-post-title', $post1->slug);
 
-		$post2 = $this->post('A post title');
-		$this->assertEquals($post2->slug, 'a-post-title-1');
+		$post2 = $this->makePost('A post title');
+		$post2->save();
+		$this->assertEquals('a-post-title-1', $post2->slug);
 
-		$post2->delete();
+		$post1->delete();
 
-		$post3 = $this->post('A post title');
-		$this->assertEquals($post3->slug, 'a-post-title-1');
+		$post3 = $this->makePost('A post title');
+		$post3->save();
+		$this->assertEquals('a-post-title', $post3->slug);
 	}
 
 	/**
@@ -251,11 +258,12 @@ class SluggableTest extends TestCase {
 	 */
 	public function testCustomSeparator()
 	{
-		$this->settings(array(
+		$post = $this->makePost('A post title');
+		$post->setSlugConfig(array(
 			'separator' => '.'
 		));
-		$post = $this->post('A post title');
-		$this->assertEquals($post->slug, 'a.post.title');
+		$post->save();
+		$this->assertEquals('a.post.title', $post->slug);
 	}
 
 	/**
@@ -265,11 +273,12 @@ class SluggableTest extends TestCase {
 	 */
 	public function testReservedWord()
 	{
-		$this->settings(array(
+		$post = $this->makePost('Add');
+		$post->setSlugConfig(array(
 			'reserved' => array('add')
 		));
-		$post = $this->post('Add');
-		$this->assertEquals($post->slug, 'add-1');
+		$post->save();
+		$this->assertEquals('add-1', $post->slug);
 	}
 
 	/**
@@ -279,19 +288,20 @@ class SluggableTest extends TestCase {
 	 */
 	public function testIssue5()
 	{
-		$this->settings(array(
+		$post = $this->makePost('My first post');
+		$post->setSlugConfig(array(
 			'on_update' => true
 		));
-		$post = $this->post('My first post');
-		$this->assertEquals($post->slug, 'my-first-post');
+		$post->save();
+		$this->assertEquals('my-first-post', $post->slug);
 
 		$post->title = 'My first post rocks';
 		$post->save();
-		$this->assertEquals($post->slug, 'my-first-post-rocks');
+		$this->assertEquals('my-first-post-rocks', $post->slug);
 
 		$post->title = 'My first post';
 		$post->save();
-		$this->assertEquals($post->slug, 'my-first-post');
+		$this->assertEquals('my-first-post', $post->slug);
 	}
 
 	/**
@@ -301,16 +311,25 @@ class SluggableTest extends TestCase {
 	 */
 	public function testSoftDeletesWithoutTrashed()
 	{
-		PostSoft::$sluggable['include_trashed'] = false;
-		$post1 = PostSoft::create(array(
+		$post1 = new PostSoft(array(
 			'title' => 'A Post Title'
 		));
+		$post1->setSlugConfig(array(
+			'include_trashed' => false
+		));
+		$post1->save();
+		$this->assertEquals('a-post-title', $post1->slug);
+
 		$post1->delete();
 
-		$post2 = PostSoft::create(array(
+		$post2 = new PostSoft(array(
 			'title' => 'A Post Title'
 		));
-		$this->assertEquals($post2->slug, 'a-post-title');
+		$post2->setSlugConfig(array(
+			'include_trashed' => false
+		));
+		$post2->save();
+		$this->assertEquals('a-post-title', $post2->slug);
 	}
 
 	/**
@@ -320,21 +339,25 @@ class SluggableTest extends TestCase {
 	 */
 	public function testSoftDeletesWithTrashed()
 	{
-		PostSoft::$sluggable['include_trashed'] = true;
-
 		$post1 = new PostSoft(array(
 			'title' => 'A Post Title'
 		));
+		$post1->setSlugConfig(array(
+			'include_trashed' => true
+		));
 		$post1->save();
-		$this->assertEquals($post1->slug, 'a-post-title');
+		$this->assertEquals('a-post-title', $post1->slug);
 
 		$post1->delete();
 
 		$post2 = new PostSoft(array(
 			'title' => 'A Post Title'
 		));
+		$post2->setSlugConfig(array(
+			'include_trashed' => true
+		));
 		$post2->save();
-		$this->assertEquals($post2->slug, 'a-post-title-1');
+		$this->assertEquals('a-post-title-1', $post2->slug);
 	}
 
 	/**
@@ -344,16 +367,17 @@ class SluggableTest extends TestCase {
 	 */
 	public function testIssue16()
 	{
-		$this->settings(array(
-			'unique' => true,
+		$post = $this->makePost('My first post');
+		$post->save();
+		$this->assertEquals('my-first-post', $post->slug);
+
+		$post->setSlugConfig(array(
+			'unique'    => true,
 			'on_update' => true,
 		));
-		$post = $this->post('My first post');
-		$this->assertEquals($post->slug, 'my-first-post');
-
 		$post->dummy = 'Dummy data';
 		$post->save();
-		$this->assertEquals($post->slug, 'my-first-post');
+		$this->assertEquals('my-first-post', $post->slug);
 	}
 
 	/**
@@ -363,12 +387,11 @@ class SluggableTest extends TestCase {
 	 */
 	public function testArdent()
 	{
-		$post = PostArdent::create(array(
-			'title'    => 'My First Post'
+		$post = new PostArdent(array(
+			'title' => 'My First Post'
 		));
 		$post->save();
-		// \Sluggable::make($post, true);
-		$this->assertEquals($post->slug, 'my-first-post');
+		$this->assertEquals('my-first-post', $post->slug);
 	}
 
 	/**
@@ -378,12 +401,88 @@ class SluggableTest extends TestCase {
 	 */
 	public function testIssue20()
 	{
-		$post = $this->post('My first post');
-		$this->assertEquals($post->slug, 'my-first-post');
+		$post1 = $this->makePost('My first post');
+		$post1->save();
+		$this->assertEquals('my-first-post', $post1->slug);
 
-		$new_post = $post->replicate();
-		\Sluggable::make($new_post,true);
-		$this->assertEquals($new_post->slug, 'my-first-post-1');
+		$post2 = $post1->replicate();
+		$post2->sluggify();
+		$this->assertEquals('my-first-post-1', $post2->slug);
+	}
+
+	/**
+	 * Test static findBySlug() method
+	 *
+	 * @test
+	 */
+	public function testFindBySlug()
+	{
+		$post1 = $this->makePost('My first post');
+		$post1->save();
+
+		$post2 = $this->makePost('My second post');
+		$post2->save();
+
+		$post3 = $this->makePost('My third post');
+		$post3->save();
+
+		$post = Post::findBySlug('my-second-post')->first();
+
+		$this->assertEquals($post2->id, $post->id);
+	}
+
+	/**
+	 * Test that we don't try and slug models that don't implement Sluggable
+	 *
+	 * @test
+	 */
+	public function testNonSluggableModels()
+	{
+		$post = new PostNotSluggable(array(
+			'title' => 'My First Post'
+		));
+		$post->save();
+		$this->assertEquals(null, $post->slug);
+	}
+
+	/**
+	 * Test for max_length option
+	 *
+	 * @test
+	 */
+	public function testMaxLength()
+	{
+		$post = $this->makePost('A post with a really long title');
+		$post->setSlugConfig(array(
+			'max_length' => 10,
+		));
+		$post->save();
+		$this->assertEquals('a-post-wit', $post->slug);
+	}
+
+	/**
+	 * Test for max_length option with increments
+	 *
+	 * @test
+	 */
+	public function testMaxLengthWithIncrements()
+	{
+		for ($i=0; $i < 20; $i++)
+		{
+			$post = $this->makePost('A post with a really long title');
+			$post->setSlugConfig(array(
+				'max_length' => 10,
+			));
+			$post->save();
+			if ($i==0)
+			{
+				$this->assertEquals('a-post-wit', $post->slug);
+			}
+			elseif ($i<10)
+			{
+				$this->assertEquals('a-post-wit-'.$i, $post->slug);
+			}
+		}
 	}
 
 }
