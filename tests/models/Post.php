@@ -1,9 +1,13 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
 
-class Post extends Model {
+class Post extends Model implements SluggableInterface {
+
+	use SluggableTrait;
 
   protected $table = 'posts';
 
@@ -11,16 +15,24 @@ class Post extends Model {
 
 	protected $fillable = array('title','subtitle');
 
-	public static $sluggable = array(
+	protected $sluggable = array(
 		'build_from'      => 'title',
 		'save_to'         => 'slug',
-		'method'          => null,
-		'separator'       => '-',
-		'unique'          => true,
-		'include_trashed' => false,
-		'on_update'       => false,
-		'reserved'        => null,
 	);
+
+
+	/**
+	 * Helper to set slug options for tests.
+	 *
+	 * @param array $array Array of new slug options
+	 */
+	public function setSlugConfig($array)
+	{
+		foreach($array as $key=>$value)
+		{
+			$this->sluggable[$key] = $value;
+		}
+	}
 
 
 	public function __toString()

@@ -1,8 +1,12 @@
-<?php namespace Cviebrock\EloquentSluggable\Test;
+<?php
 
 use LaravelBook\Ardent\Ardent;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class PostArdent extends Ardent {
+class PostArdent extends Ardent implements SluggableInterface {
+
+	use SluggableTrait;
 
   protected $table = 'posts';
 
@@ -10,15 +14,9 @@ class PostArdent extends Ardent {
 
 	protected $fillable = array('title','subtitle');
 
-	public static $sluggable = array(
+	protected $sluggable = array(
 		'build_from'      => 'title',
 		'save_to'         => 'slug',
-		'method'          => null,
-		'separator'       => '-',
-		'unique'          => true,
-		'include_trashed' => false,
-		'on_update'       => false,
-		'reserved'        => null,
 	);
 
 	/**
@@ -27,7 +25,7 @@ class PostArdent extends Ardent {
 
 	public static $rules = array(
 		'title' => 'required',
-		'slug' => 'required|unique:posts'
+		'slug'  => 'required|unique:posts'
 	);
 
 	/**
@@ -36,7 +34,7 @@ class PostArdent extends Ardent {
 
 	public function beforeValidate()
 	{
-		\Sluggable::make($this,true);
+		$this->sluggify();
 	}
 
 
