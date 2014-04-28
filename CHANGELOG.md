@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.0 - 27-Apr-2014
+
+- See the [README](https://github.com/cviebrock/eloquent-sluggable/tree/master#upgrading) for all upgrading details.
+- Now uses traits, so PHP >= 5.4 is required.
+- Configuration and usage is _mostly_ backwards-compatible, although users of Ardent or anyone who force-builds slugs will need to make some changes.
+- Use Laravel's cache to speed up unique slug generation (and prevent duplicates in heavy-usage cases).
+
+
 ## 1.0.8 - 20-Feb-2014
 
 - Fix issue where replicated models couldn't forceably be reslugged (#20 thanks @trideout).
