@@ -6,10 +6,14 @@ trait SluggableTrait {
 
 	protected function needsSlugging()
 	{
+		$from = $this->sluggable['build_from'];
 		$save_to = $this->sluggable['save_to'];
 		$on_update = $this->sluggable['on_update'];
 
-		return ( !$this->exists || empty($this->{$save_to}) || $on_update );
+        if (empty($this->{$save_to})) return true;
+        if ($on_update && ! $this->isDirty($save_to) && $this->isDirty($from)) return true;
+
+        return false;
 	}
 
 
