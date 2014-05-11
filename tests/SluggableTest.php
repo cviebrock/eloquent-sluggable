@@ -61,13 +61,17 @@ class SluggableTest extends TestCase {
 	}
 
 
-	protected function makePost($title, $subtitle=null)
+	protected function makePost($title, $subtitle = null, $slug = null)
 	{
 		$post = new Post;
 		$post->title = $title;
 		if ($subtitle)
 		{
 			$post->subtitle = $subtitle;
+		}
+		if ($slug)
+		{
+			$post->slug = $slug;
 		}
 		return $post;
 	}
@@ -96,6 +100,18 @@ class SluggableTest extends TestCase {
 		$post = $this->makePost('My Dinner With André & François');
 		$post->save();
 		$this->assertEquals('my-dinner-with-andre-francois', $post->slug);
+	}
+
+	/**
+	 * Test that no slugging when we set a slug directly
+	 *
+	 * @test
+	 */
+	public function testDoesNotNeedSluggingWhenSlugIsSet()
+	{
+		$post = $this->makePost('My First Post', null, 'custom-slug');
+		$post->save();
+		$this->assertEquals('custom-slug', $post->slug);
 	}
 
 	/**
@@ -129,6 +145,26 @@ class SluggableTest extends TestCase {
 		$post->title = 'A New Title';
 		$post->save();
 		$this->assertEquals('a-new-title', $post->slug);
+	}
+
+	/**
+	 * Test that renaming the sluggable fields does not update the slug if on_update is true
+	 * and we set custom slug.
+	 *
+	 * @param  Post $post
+	 * @test
+	 */
+	public function testDoesNotNeedSluggingWithUpdateWhenSlugIsSet()
+	{
+		$post = $this->makePost('Another Post', null, 'custom-slug');
+		$post->setSlugConfig(array(
+			'on_update' => true
+		));
+		$post->save();
+		$post->title = 'A New Title';
+		$post->slug = 'new-custom-slug';
+		$post->save();
+		$this->assertEquals('new-custom-slug', $post->slug);
 	}
 
 	/**
