@@ -61,13 +61,17 @@ class SluggableTest extends TestCase {
 	}
 
 
-	protected function makePost($title, $subtitle=null)
+	protected function makePost($title, $subtitle=null, $slug=null)
 	{
 		$post = new Post;
 		$post->title = $title;
 		if ($subtitle)
 		{
 			$post->subtitle = $subtitle;
+		}
+		if ($slug)
+		{
+			$post->slug = $slug;
 		}
 		return $post;
 	}
@@ -406,7 +410,7 @@ class SluggableTest extends TestCase {
 		$this->assertEquals('my-first-post', $post1->slug);
 
 		$post2 = $post1->replicate();
-		$post2->sluggify();
+		$post2->resluggify();
 		$this->assertEquals('my-first-post-1', $post2->slug);
 	}
 
@@ -483,6 +487,42 @@ class SluggableTest extends TestCase {
 				$this->assertEquals('a-post-wit-'.$i, $post->slug);
 			}
 		}
+	}
+
+	/**
+	 * Test that models aren't slugged if the slug field is defined (issue #32)
+	 *
+	 * @test
+	 */
+	public function testDoesNotNeedSluggingWhenSlugIsSet()
+	{
+		$post = $this->makePost('My first post', null, 'custom-slug');
+		$post->save();
+		$this->assertEquals('custom-slug', $post->slug);
+	}
+
+	/**
+	 * Test that models aren't *re*slugged if the slug field is defined (issue #32)
+	 *
+	 * @test
+	 */
+	public function testDoesNotNeedSluggingWithUpdateWhenSlugIsSet()
+	{
+		$post = $this->makePost('My first post', null, 'custom-slug');
+		$post->setSlugConfig(array(
+			'on_update' => true,
+		));
+		$this->assertEquals('custom-slug', $post->slug);
+
+		$post->title = 'A New Title';
+		$post->save();
+		$this->assertEquals('custom-slug', $post->slug);
+
+		$post->title = 'A Another New Title';
+		$post->slug = 'new-custom-slug';
+		$post->save();
+		$this->assertEquals('new-custom-slug', $post->slug);
+
 	}
 
 }
