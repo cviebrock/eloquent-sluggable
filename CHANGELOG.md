@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.1 - 13-May-2014
+
+- Fix issue where manually setting the slug field would be overwritten when updating the sluggable fields (#32 thanks @D1kz)
+
+
 ## 2.0.0 - 27-Apr-2014
 
 - See the [README](https://github.com/cviebrock/eloquent-sluggable/tree/master#upgrading) for all upgrading details.
