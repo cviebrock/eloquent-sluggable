@@ -9,6 +9,10 @@ trait SluggableTrait {
 		$save_to = $this->sluggable['save_to'];
 		$on_update = $this->sluggable['on_update'];
 
+		if ($this->isDirty($save_to)) {
+			return false;
+		}
+
 		return ( !$this->exists || empty($this->{$save_to}) || $on_update );
 	}
 
