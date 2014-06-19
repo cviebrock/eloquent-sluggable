@@ -26,5 +26,5 @@
 			"Cviebrock\\EloquentSluggable": "src/"
 		}
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "dev"
 }
