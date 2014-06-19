@@ -161,7 +161,8 @@ trait SluggableTrait {
 	protected function getExistingSlugs($slug)
 	{
 		$instance = new static;
-		$query = $instance->where( $this->sluggable['save_to'], 'LIKE', $slug.'%' );
+		$save_to = $this->sluggable['save_to'];
+		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
 
 		// include trashed models if required
 		if ( $this->sluggable['include_trashed'] )
