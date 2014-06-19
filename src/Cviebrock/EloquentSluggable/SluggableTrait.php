@@ -122,21 +122,9 @@ trait SluggableTrait {
 			return $slug;
 		}
 
-
-		// no cache, so we need to check the database directly
+		// no cache, so we need to check directly
 		// find all models where the slug is like the current one
-
-		$instance = new static;
-		$query = $instance->where( $this->sluggable['save_to'], 'LIKE', $slug.'%' );
-
-		// include trashed models if required
-		if ( $this->sluggable['include_trashed'] )
-		{
-			$query = $query->withTrashed();
-		}
-
-		// get a list of all matching slugs
-		$list = $query->lists($save_to, $this->getKeyName());
+		$list = $this->getExistingSlugs($slug);
 
 		// if ...
 		// 	a) the list is empty
@@ -166,6 +154,28 @@ trait SluggableTrait {
 
 		return $slug . $separator . $increment;
 
+	}
+
+
+	protected function getExistingSlugs($slug)
+	{
+		$save_to         = $this->sluggable['save_to'];
+		$include_trashed = $this->sluggable['include_trashed'];
+
+		$instance = new static;
+
+		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
+
+		// include trashed models if required
+		if ( $include_trashed )
+		{
+			$query = $query->withTrashed();
+		}
+
+		// get a list of all matching slugs
+		$list = $query->lists($save_to, $this->getKeyName());
+
+		return $list;
 	}
 
 

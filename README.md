@@ -307,6 +307,10 @@ Validates that the generated slug is valid, usually by checking it against anyth
 
 Checks to see if the given slug is unique.  Should return a unique slug string.
 
+### getExistingSlugs($slug)
+
+Returns all existing slugs that are "similar" to the given one.  Should return an key-value array of existing slugs, where the values are the Eloquent model's slug values (from the `save_to` field) and the keys are the respective Eloquent model's ids.
+
 ### setSlug($slug)
 
 Writes the (generated, valid, and unique) slug to the model's attributes.
