@@ -122,8 +122,7 @@ trait SluggableTrait {
 			return $slug;
 		}
 
-
-		// no cache, so we need to check the database directly
+		// no cache, so we need to check directly
 		// find all models where the slug is like the current one
 		$list = $this->getExistingSlugs($slug);
 
@@ -160,12 +159,15 @@ trait SluggableTrait {
 
 	protected function getExistingSlugs($slug)
 	{
+		$save_to         = $this->sluggable['save_to'];
+		$include_trashed = $this->sluggable['include_trashed'];
+
 		$instance = new static;
-		$save_to = $this->sluggable['save_to'];
+
 		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
 
 		// include trashed models if required
-		if ( $this->sluggable['include_trashed'] )
+		if ( $include_trashed )
 		{
 			$query = $query->withTrashed();
 		}
