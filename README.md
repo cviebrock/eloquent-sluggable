@@ -153,6 +153,9 @@ Also note that if you are replicating your models using Eloquent's `replicate()`
 $new_post = $post->replicate()->resluggify();
 ```
 
+See issue #37 if you want to use Eloquent-Sluggable with Eloquent but outside of Laravel.
+
+
 
 <a name="config"></a>
 ## Configuration
