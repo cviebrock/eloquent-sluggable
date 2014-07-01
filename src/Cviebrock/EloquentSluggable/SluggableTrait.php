@@ -10,7 +10,13 @@ trait SluggableTrait {
 		$on_update = $this->sluggable['on_update'];
 
 		if ($this->isDirty($save_to)) {
-			return false;
+		
+			if ($this->sluggable['on_update_use_slug']){
+				return true;
+			} else {
+				return false;
+			}
+			
 		}
 
 		return ( !$this->exists || empty($this->{$save_to}) || $on_update );
@@ -202,6 +208,14 @@ trait SluggableTrait {
 		{
 
 			$source = $this->getSlugSource();
+			
+			if ($this->sluggable['on_update_use_slug']){
+                		$save_to = $this->sluggable['save_to'];
+                		if ( ($this->getAttribute( $save_to )!='') && ($this->isDirty($save_to)) ){         
+                        		$source = $this->getAttribute( $save_to );  
+                		} 
+            		}
+			
 			$slug = $this->generateSlug($source);
 
 			$slug = $this->validateSlug($slug);
