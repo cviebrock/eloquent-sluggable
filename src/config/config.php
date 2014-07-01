@@ -83,9 +83,17 @@ return array(
 	 * Whether to update the slug value when a model is being
 	 * re-saved (i.e. already exists).  Defaults to false, which
 	 * means slugs are not updated.
+	 * The slug is updated usign the build_from attribute
 	 */
 	'on_update' => false,
 
+	/**
+	 * Whether to update the slug value when a model is being
+	 * re-saved (i.e. already exists).  Defaults to false, which
+	 * means slugs are not updated.
+	 * The slug is updated using the slug attribute
+	 */
+	'on_update_use_slug' => false,
 	/**
 	 * An array of slug names that can never be used for this model,
 	 * e.g. to prevent collisions with existing routes or controller methods, etc..
