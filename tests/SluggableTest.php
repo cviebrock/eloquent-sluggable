@@ -524,5 +524,38 @@ class SluggableTest extends TestCase {
 		$this->assertEquals('new-custom-slug', $post->slug);
 
 	}
+	
+	/**
+	 * Test that changing the slug field does not update the slug if on_update_use_slug is false.
+	 *
+	 * @param  Post $post
+	 * @test
+	 */
+	public function testRenameSlugWithoutUpdateUseSlug()
+	{
+		$post = $this->makePost('Yet Another Post');
+		$post->save();
+		$post->slug = 'my new slug';
+		$post->save();
+		$this->assertEquals('my new slug', $post->slug);
+	}
+
+	/**
+	 * Test that changing the slug field does update the slug if on_update_use_slug is true.
+	 *
+	 * @param  Post $post
+	 * @test
+	 */
+	public function testRenameSlugWithUpdateUseSlug()
+	{
+		$post = $this->makePost('Yet Another Post');
+		$post->setSlugConfig(array(
+			'on_update_use_slug' => true
+		));
+		$post->save();
+		$post->slug = 'my new slug';
+		$post->save();
+		$this->assertEquals('my-new-slug', $post->slug);
+	}
 
 }
