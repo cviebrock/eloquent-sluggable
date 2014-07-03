@@ -233,15 +233,12 @@ trait SluggableTrait {
 	}
 
 
-	public static function findBySlug($slug)
-	{
-
-		$instance = new static;
-
+	public function scopeFindBySlug($query, $slug)
+    	{
 		$config = \App::make('config')->get('eloquent-sluggable::config');
-		$config = array_merge( $config, $instance->sluggable );
-
-		return $instance->where( $config['save_to'], $slug )->get();
-	}
+        	$this->sluggable = array_merge( $config, $this->sluggable );
+		
+        	return $query->where( $this->sluggable['save_to'] ,'=',$slug)->get();
+    	}  
 
 }
