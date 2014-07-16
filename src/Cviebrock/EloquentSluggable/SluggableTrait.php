@@ -219,7 +219,13 @@ trait SluggableTrait {
 		return $this->sluggify(true);
 	}
 
-
+	/**
+         * To get model that equals $slug
+         * by sorting first
+         * 
+         * @param string $slug
+         * @return object   Model
+         */
 	public static function findBySlug($slug)
 	{
 
@@ -228,7 +234,7 @@ trait SluggableTrait {
 		$config = \App::make('config')->get('eloquent-sluggable::config');
 		$config = array_merge( $config, $instance->sluggable );
 
-		return $instance->where( $config['save_to'], $slug )->get();
+		return $instance->where($config['save_to'],  $slug )->get()->first();
 	}
 
 }
