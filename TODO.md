@@ -1,8 +1,9 @@
 # Todos
 
 - [x] Write tests
-- [ ] Better docblock commenting
-
+- [ ] Better docblock and inline-commenting
+- [ ] Make code style consistent
+- [ ] Drop `develop` branch and just have `master` and tagged releases
 
 ## Planned changes (possibly BC-breaking) for next major version
 
