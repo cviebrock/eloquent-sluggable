@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.3 - 17-Jul-2014
+
+- Don't allow slugs to be empty (#44 thanks @lfbittencourt).
+
+
 ## 2.0.2 - 19-Jun-2014
 
 - Add `getExistingSlugs()` method to trait (#36 thanks @neilcrookes).
