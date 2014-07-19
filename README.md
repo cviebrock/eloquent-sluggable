@@ -153,6 +153,9 @@ Also note that if you are replicating your models using Eloquent's `replicate()`
 $new_post = $post->replicate()->resluggify();
 ```
 
+See issue #37 if you want to use Eloquent-Sluggable with Eloquent but outside of Laravel.
+
+
 
 <a name="config"></a>
 ## Configuration
@@ -306,6 +309,10 @@ Validates that the generated slug is valid, usually by checking it against anyth
 ### makeSlugUnique($slug)
 
 Checks to see if the given slug is unique.  Should return a unique slug string.
+
+### getExistingSlugs($slug)
+
+Returns all existing slugs that are "similar" to the given one.  Should return an key-value array of existing slugs, where the values are the Eloquent model's slug values (from the `save_to` field) and the keys are the respective Eloquent model's ids.
 
 ### setSlug($slug)
 
