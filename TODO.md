@@ -4,6 +4,8 @@
 - [ ] Better docblock and inline-commenting
 - [ ] Make code style consistent
 - [ ] Drop `develop` branch and just have `master` and tagged releases
+- [ ] Add check that model uses softDelete trait when using `with_trashed` (see issue #47)
+
 
 ## Planned changes (possibly BC-breaking) for next major version
 
