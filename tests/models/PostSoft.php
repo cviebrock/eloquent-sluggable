@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class PostSoft extends Post {
 
-	protected $softDelete = true;
-
+    use SoftDeletingTrait;
 }
