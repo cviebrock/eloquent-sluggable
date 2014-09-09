@@ -17,9 +17,23 @@ trait SluggableTrait {
 			return false;
 		}
 
-		return ( !$this->exists || $on_update );
+		return ( !$this->exists || ($on_update && $this->hasDirtySource()) );
 	}
 
+	protected function hasDirtySource()
+	{
+		$from = $this->sluggable['build_from'];
+
+		if ( is_null($from) )
+		{
+			return true;
+		}
+
+		$dirty_keys = array_keys($this->getDirty());
+		$dirties    = array_intersect((array) $from, $dirty_keys);
+
+		return count($dirties) > 0;
+	}
 
 	protected function getSlugSource()
 	{
