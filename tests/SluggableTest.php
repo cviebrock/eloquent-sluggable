@@ -525,4 +525,50 @@ class SluggableTest extends TestCase {
 
 	}
 
+	/**
+	 * Test uniqueness of generated slugs and only resluggify if dirty source.
+	 *
+	 * @test
+	 */
+	public function testUniqueResliggifyDirtySource()
+	{
+		$posts = array();
+
+		for ($i=0; $i < 20; $i++)
+		{
+			$post = $this->makePost('A post title');
+			$post->setSlugConfig(array(
+				'unique'    => true,
+				'on_update' => true
+			));
+			$post->save();
+
+			if ($i == 0)
+			{
+				$this->assertEquals('a-post-title-a-subtitle', $post->slug);
+			}
+			else
+			{
+				$this->assertEquals('a-post-title-a-subtitle-'.$i, $post->slug);
+			}
+
+			$posts[$i] = $post;
+		}
+
+		for ($i = 0; $i < count($posts); $i++)
+		{
+			$posts[$i]->dummy = "dummi$i";
+			$posts[$i]->save();
+
+			if ($i == 0)
+			{
+				$this->assertEquals('a-post-title-a-subtitleaaaa', $posts[$i]->slug);
+			}
+			else
+			{
+				$this->assertEquals('a-post-title-a-subtitleaaaa-'.$i, $posts[$i]->slug);
+			}
+		}
+	}
+
 }
