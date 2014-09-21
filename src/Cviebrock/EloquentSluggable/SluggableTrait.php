@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Illuminate\Support\Str;
 
 trait SluggableTrait {
 
@@ -51,7 +52,7 @@ trait SluggableTrait {
 
 		if ( $method === null )
 		{
-			$slug = \Str::slug($source, $separator);
+			$slug = Str::slug($source, $separator);
 		}
 		elseif ( $method instanceof Closure )
 		{
