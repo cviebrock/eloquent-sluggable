@@ -1,8 +1,16 @@
+# Travis CI configuration
+
 language: php
 
+services:
+  - redis-server
+  
 php: 
   - 5.3
   - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
