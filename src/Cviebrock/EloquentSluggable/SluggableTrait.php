@@ -171,7 +171,7 @@ trait SluggableTrait {
 		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
 
 		// include trashed models if required
-		if ( $include_trashed )
+		if ( $include_trashed && $instance->usesSoftDeleting() )
 		{
 			$query = $query->withTrashed();
 		}
@@ -180,6 +180,13 @@ trait SluggableTrait {
 		$list = $query->lists($save_to, $this->getKeyName());
 
 		return $list;
+	}
+
+	protected function usesSoftDeleting() {
+		if ( in_array('Illuminate\Database\Eloquent\SoftDeletingTrait', class_uses($this) ) ) {
+			return true;
+		}
+		return ( property_exists($this,'softDelete') && $this->softDelete==true );
 	}
 
 
