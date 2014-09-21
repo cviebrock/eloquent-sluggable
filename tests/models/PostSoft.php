@@ -1,7 +1,7 @@
 <?php
 
 /* LARAVEL >= 4.2 */
-if (class_exists('Illuminate\Database\Eloquent\SoftDeletingTrait')) {
+if (trait_exists('Illuminate\Database\Eloquent\SoftDeletingTrait')) {
 
 	class PostSoft extends Post {
 		use Illuminate\Database\Eloquent\SoftDeletingTrait;
