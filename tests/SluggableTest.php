@@ -525,4 +525,21 @@ class SluggableTest extends TestCase {
 
 	}
 
+	/**
+	 * Test that include_trashed is ignored if the model doesn't use the softDelete trait.
+	 *
+	 * @test
+	 */
+	public function testSoftDeletesWithNonSoftDeleteModel()
+	{
+		$post1 = new Post(array(
+			'title' => 'A Post Title'
+		));
+		$post1->setSlugConfig(array(
+			'include_trashed' => true
+		));
+		$post1->save();
+		$this->assertEquals('a-post-title', $post1->slug);
+	}
+
 }

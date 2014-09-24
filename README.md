@@ -2,8 +2,10 @@
 
 Easy creation of slugs for your Eloquent models in Laravel 4.
 
-[![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/stable.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
+[![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
+[![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/stable.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
+[![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/unstable.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 
 * [Background](#background)
 * [Installation and Requirements](#installation)
@@ -153,7 +155,7 @@ Also note that if you are replicating your models using Eloquent's `replicate()`
 $new_post = $post->replicate()->resluggify();
 ```
 
-See issue #37 if you want to use Eloquent-Sluggable with Eloquent but outside of Laravel.
+See [issue #37](https://github.com/cviebrock/eloquent-sluggable/issues/37) if you want to use Eloquent-Sluggable with Eloquent but outside of Laravel.
 
 
 

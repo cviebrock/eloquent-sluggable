@@ -1,5 +1,16 @@
 # Change Log
 
+## 3.0.0 - xx-xxx-2014
+
+- Laravel 5.0 support
+
+
+## 2.0.4 - 23-Sep-2014
+
+- fixed softDelete behaviour and tests so Laravel 4.2 and earlier are supported (#56 thanks @hammat).
+- fixed alias for `Illuminate\Support\Str` to prepare for Laravel 4.3/5.0 (#58 thanks @0xMatt).
+
+
 ## 2.0.3 - 17-Jul-2014
 
 - Don't allow slugs to be empty (#44 thanks @lfbittencourt).
