@@ -157,6 +157,14 @@ $new_post = $post->replicate()->resluggify();
 
 See [issue #37](https://github.com/cviebrock/eloquent-sluggable/issues/37) if you want to use Eloquent-Sluggable with Eloquent but outside of Laravel.
 
+There is also a handy helper in the trait for finding a model based on it's slug:
+
+```php
+$post = Post::findBySlug('my-slug');
+```
+
+This is basically a wrapper for `Post::where('slug-field','=','my-slug')->get()`.
+
 
 
 <a name="config"></a>
