@@ -527,5 +527,34 @@ class SluggableTest extends TestCase {
 		$post1->save();
 		$this->assertEquals('a-post-title', $post1->slug);
 	}
+	
+	/**
+	 * Test that it does not update a slug if there's no need too
+	 *
+	 * @test
+	 */
+	public function testItDoesNotIncrementIdOnSlugIfNotRequired()
+	{
+		$post1 = $this->makePost('A post title');
+		$post1->setSlugConfig(array(
+			'on_update' => true,
+		));
+		$post1->save();
+		$this->assertEquals('a-post-title', $post1->slug);
+
+		$post2 = $this->makePost('A post title');
+		$post2->setSlugConfig(array(
+			'on_update' => true,
+		));
+		
+		$post2->save();
+		$this->assertEquals('a-post-title-1', $post2->slug);
+		
+		$post2->save();
+		$this->assertEquals('a-post-title-1', $post2->slug);
+
+		$post1->save();
+		$this->assertEquals('a-post-title', $post1->slug);
+	}
 
 }
