@@ -54,7 +54,7 @@ trait SluggableTrait {
 		{
 			$slug = Str::slug($source, $separator);
 		}
-		elseif ( $method instanceof Closure )
+		elseif ( $method instanceof \Closure )
 		{
 			$slug = $method($source, $separator);
 		}
@@ -84,7 +84,7 @@ trait SluggableTrait {
 		if ( $reserved === null ) return $slug;
 
 		// check for reserved names
-		if ( $reserved instanceof Closure )
+		if ( $reserved instanceof \Closure )
 		{
 			$reserved = $reserved($this);
 		}
