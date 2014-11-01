@@ -163,7 +163,7 @@ There is also a handy helper in the trait for finding a model based on it's slug
 $post = Post::findBySlug('my-slug');
 ```
 
-This is basically a wrapper for `Post::where('slug-field','=','my-slug')->get()`.
+This is basically a wrapper for `Post::where('slug-field','=','my-slug')->get()->first()`.
 
 
 

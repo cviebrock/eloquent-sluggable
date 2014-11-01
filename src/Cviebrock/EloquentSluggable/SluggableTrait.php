@@ -240,7 +240,7 @@ trait SluggableTrait {
 		$config = \App::make('config')->get('eloquent-sluggable::config');
 		$config = array_merge( $config, $instance->sluggable );
 
-		return $instance->where( $config['save_to'], $slug )->get();
+		return $instance->where( $config['save_to'], $slug )->get()->first();
 	}
 
 }

@@ -430,7 +430,7 @@ class SluggableTest extends TestCase {
 		$post3 = $this->makePost('My third post');
 		$post3->save();
 
-		$post = Post::findBySlug('my-second-post')->first();
+		$post = Post::findBySlug('my-second-post');
 
 		$this->assertEquals($post2->id, $post->id);
 	}
