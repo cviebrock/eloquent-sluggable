@@ -166,6 +166,7 @@ trait SluggableTrait {
 	{
 		$save_to         = $this->sluggable['save_to'];
 		$include_trashed = $this->sluggable['include_trashed'];
+		$on_slugcheck    = $this->sluggable['on_slugcheck'];
 
 		$instance = new static;
 
@@ -177,11 +178,40 @@ trait SluggableTrait {
 			$query = $query->withTrashed();
 		}
 
+		$query = $this->onSlugCheck( $on_slugcheck, $query );
+
 		// get a list of all matching slugs
 		$list = $query->lists($save_to, $this->getKeyName());
 
 		return $list;
 	}
+
+
+	protected function onSlugCheck( $on_slugcheck, $query )
+	{
+		if( empty($on_slugcheck) ) return $query;
+
+		$class = $method = null;
+
+		if( is_array($on_slugcheck) )
+		{
+			list( $class, $method ) = $this->sluggable['on_slugcheck'];
+
+			if(!class_exists($class)) throw new \UnexpectedValueException('Class ' . $class . ' not found');
+
+		}elseif(is_callable([$this,$on_slugcheck]))
+		{
+			list( $class, $method ) = [$this, $on_slugcheck];
+		}
+
+		if( $class && $method && ( $on_slugcheck_query = call_user_func_array( array($class,$method) ,[$query] ) ) != null )
+		{
+			return $on_slugcheck_query;
+		}
+
+		return $query;
+	}
+
 
 	protected function usesSoftDeleting() {
 		if ( in_array('Illuminate\Database\Eloquent\SoftDeletingTrait', class_uses($this) ) ) {
