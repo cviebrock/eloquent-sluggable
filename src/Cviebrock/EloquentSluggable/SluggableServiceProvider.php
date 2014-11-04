@@ -66,7 +66,7 @@ class SluggableServiceProvider extends ServiceProvider {
 			return new SluggableSluggifyCommand;
 		});
 
-		$this->commands('sluggable.sluggify');
+		$this->commands(array('sluggable.table', 'sluggable.sluggify'));
 	}
 
 	/**
