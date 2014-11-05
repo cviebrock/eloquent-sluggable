@@ -56,14 +56,10 @@ The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you
 <a name="installation"></a>
 ## Installation and Requirements
 
-First, you'll need to add the package to the `require` attribute of your `composer.json` file:
+First, you'll need to require the package with Composer:
 
-```json
-{
-    "require": {
-        "cviebrock/eloquent-sluggable": "2.*"
-    },
-}
+```bash
+$ composer require cviebrock/eloquent-sluggable
 ```
 
 > **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running PHP 5.4 or higher.  If you are still using 5.3, then use the "1.*" version and follow the instructions in that version's README.md file.
