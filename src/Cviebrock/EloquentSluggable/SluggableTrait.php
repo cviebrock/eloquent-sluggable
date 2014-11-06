@@ -208,7 +208,7 @@ trait SluggableTrait {
 	public function sluggify($force=false)
 	{
 		$config = \App::make('config')->get('eloquent-sluggable::config');
-		$this->sluggable = array_merge( $config, $this->sluggable );
+		$this->sluggable = array_merge( $config, (array) $this->sluggable );
 
 		if ($force || $this->needsSlugging())
 		{
