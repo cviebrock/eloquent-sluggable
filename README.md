@@ -1,6 +1,6 @@
 # Eloquent-Sluggable
 
-Easy creation of slugs for your Eloquent models in Laravel 4.
+Easy creation of slugs for your Eloquent models in Laravel 5.
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads.png)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
