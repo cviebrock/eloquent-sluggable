@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase;
 
 
@@ -53,9 +54,10 @@ class SluggableTest extends TestCase {
   /**
    * Get Sluggable package providers.
    *
+   * @param Application $app
    * @return array
    */
-	protected function getPackageProviders()
+	protected function getPackageProviders($app)
 	{
 		return array('Cviebrock\EloquentSluggable\SluggableServiceProvider');
 	}
