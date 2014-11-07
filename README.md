@@ -95,7 +95,6 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 
 class Post extends Eloquent implements SluggableInterface
 {
-
 	use SluggableTrait;
 
 	protected $sluggable = array(
@@ -131,7 +130,7 @@ Saving a model is easy:
 
 ```php
 $post = new Post(array(
-	'title' => 'My Awesome Blog Post'
+	'title' => 'My Awesome Blog Post',
 ));
 
 $post->save();
@@ -185,18 +184,18 @@ return array(
 This is the field or array of fields from which to build the slug. Each `$model->field` is contactenated (with space separation) to build the sluggable string. This can be model attribues (i.e. fields in the database) or custom getters. So, for example, this works:
 
 ```php
-class Person extends Eloquent implements SluggableInterface {
-
+class Person extends Eloquent implements SluggableInterface
+{
 	use SluggableTrait;
 
-	public static $sluggable = array(
-		'build_from' => 'fullname'
+	protected $sluggable = array(
+		'build_from' => 'fullname',
 	);
 
-	public function getFullnameAttribute() {
+	public function getFullnameAttribute()
+	{
 		return $this->firstname . ' ' . $this->lastname;
 	}
-
 }
 ```
 
@@ -207,8 +206,7 @@ If `build_from` is empty, false or null, then the value of `$model->__toString()
 The attribute field in your model where the slug is stored. By default, this is "slug". You need to create this column in your table when defining your schema:
 
 ```php
-Schema::create('posts', function($table)
-{
+Schema::create('posts', function ($table) {
 	$table->increments('id');
 	$table->string('title');
 	$table->string('body');
@@ -231,17 +229,17 @@ Defines the method used to turn the sluggable string into a slug. There are thre
 
 2. When `method` is a callable, then that function or class method is used. The function/method should expect two parameters: the string to process, and a separator string. For example, to duplicate the default behaviour, you could do:
 
-	```php
-		'method' => array('Illuminate\\Support\\Str', 'slug'),
-	```
+```php
+	'method' => array('Illuminate\\Support\\Str', 'slug'),
+```
 
 3. You can also define `method` as a closure (again, expecting two parameters):
 
-	```php
-		'method' => function( $string, $separator ) {
-			return strtolower( preg_replace('/[^a-z]+/i', $separator, $string) );
-		},
-	```
+```php
+	'method' => function ($string, $separator) {
+		return strtolower(preg_replace('/[^a-z]+/i', $separator, $string));
+	},
+```
 
 Any other values for `method` will throw an exception.
 
@@ -330,17 +328,19 @@ Writes the (generated, valid, and unique) slug to the model's attributes.
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class MyModel extends Eloquent implement SluggableInterface {
-
+class MyModel extends Eloquent implement SluggableInterface
+{
 	use SluggableTrait;
 
 	protected $sluggable = array(
 		// ...
 	);
 }
-````
-3. Any references to `Sluggable::make($model,[false|true])` should become `$model->sluggify()` or `$model->resluggify()`. This will be of importance to [Ardent](./README-Ardent.md) users.
+```
+
+3. Any references to `Sluggable::make($model, [false|true])` should become `$model->sluggify()` or `$model->resluggify()`. This will be of importance to [Ardent](./README-Ardent.md) users.
 4. Enable the `use_cache` configuration if at all possible.
+
 
 
 <a name="bugs"></a>
