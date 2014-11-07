@@ -54,10 +54,6 @@ trait SluggableTrait {
 		{
 			$slug = Str::slug($source, $separator);
 		}
-		elseif ( $method instanceof Closure )
-		{
-			$slug = $method($source, $separator);
-		}
 		elseif ( is_callable($method) )
 		{
 			$slug = call_user_func($method, $source, $separator);
