@@ -17,6 +17,8 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Bugs, Suggestions and Contributions](#bugs)
 * [Copyright and License](#copyright)
 
+
+
 <a name="background"></a>
 ## Background: What is a slug?
 
@@ -50,7 +52,6 @@ This keeps URLs unique.
 The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you automatically, with minimal configuration at the start.
 
 
-
 <a name="installation"></a>
 ## Installation and Requirements
 
@@ -60,7 +61,7 @@ First, you'll need to add the package to the `require` attribute of your `compos
 {
     "require": {
         "cviebrock/eloquent-sluggable": "2.*"
-    },
+    }
 }
 ```
 
