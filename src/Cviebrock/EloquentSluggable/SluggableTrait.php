@@ -67,7 +67,7 @@ trait SluggableTrait {
 			throw new \UnexpectedValueException("Sluggable method is not a callable, closure or null.");
 		}
 
-		if ($max_length)
+		if (is_string($slug) && $max_length)
 		{
 			$slug = substr($slug, 0, $max_length);
 		}
