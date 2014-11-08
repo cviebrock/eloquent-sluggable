@@ -21,8 +21,8 @@
 		"orchestra/testbench": "dev-master"
 	},
 	"autoload": {
-		"psr-0": {
-			"Cviebrock\\EloquentSluggable": "src/"
+		"psr-4": {
+			"Cviebrock\\": "src/Cviebrock"
 		}
 	},
 	"minimum-stability": "dev"
