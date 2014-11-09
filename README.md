@@ -121,6 +121,12 @@ php artisan sluggable:table posts slug_column
 
 Be sure to set your model's `save_to` configuration to match the column name.
 
+You may also run the following command to sluggify your pre-existing data.
+
+```
+php artisan sluggable:sluggify Posts
+```
+
 That's it ... your model is now "sluggable"!
 
 
