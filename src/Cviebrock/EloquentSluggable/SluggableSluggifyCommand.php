@@ -27,14 +27,14 @@ class SluggableSluggifyCommand extends Command {
 	 */
 	public function fire()
 	{
-	  $model = $this->argument('model');
+		$model = $this->argument('model');
 
-    $this->output->write("Sluggifying $model... ");
-	  foreach ($model::all() as $record)
-	  {
-	    $record->sluggify($this->option('overwrite'));
-	    $record->save();
-    }
+		$this->output->write("Sluggifying $model... ");
+		foreach ($model::all() as $record)
+		{
+			$record->sluggify($this->option('overwrite'));
+			$record->save();
+		}
 
 		$this->info(count($model::all()) . ' records slugged!');
 	}
@@ -51,12 +51,17 @@ class SluggableSluggifyCommand extends Command {
 		);
 	}
 	
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
 	protected function getOptions()
 	{
-	  return array(
+		return array(
 			array('overwrite',  null, InputOption::VALUE_NONE, 'Whether to overwrite the existing slug.'),			
-    );
-  }
+		);
+	}
   
 
 }
