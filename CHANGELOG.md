@@ -5,6 +5,13 @@
 - Laravel 5.0 support
 
 
+## 2.0.5 - 13-Nov-2014
+
+- fixed `findBySlug()` to return a model and `getBySlug()` to return a collection (#72 thanks @jaewun and @Jono20202)
+- fix testbench version requirements (#87 thanks @hannesvdvreken)
+- clean up some redundant code and documentation (thanks @hannesvdvreken, @Anahkiasen, @nimbol, @enzomaserati)
+
+
 ## 2.0.4 - 23-Sep-2014
 
 - fixed softDelete behaviour and tests so Laravel 4.2 and earlier are supported (#56 thanks @hammat).
