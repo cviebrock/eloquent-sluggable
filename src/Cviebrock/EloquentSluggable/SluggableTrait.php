@@ -232,7 +232,7 @@ trait SluggableTrait {
 	}
 
 
-	public static function findBySlug($slug)
+	public static function getBySlug($slug)
 	{
 
 		$instance = new static;
@@ -241,6 +241,12 @@ trait SluggableTrait {
 		$config = array_merge( $config, $instance->sluggable );
 
 		return $instance->where( $config['save_to'], $slug )->get();
+	}
+
+	public static function findBySlug($slug)
+	{
+
+		return static::getBySlug($slug)->first();
 	}
 
 }
