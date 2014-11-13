@@ -18,6 +18,8 @@ Easy creation of slugs for your Eloquent models in Laravel 4.
 * [Copyright and License](#copyright)
 
 
+> **NOTE** If you are using Laravel 5, then try the `3.0` branch instead. Currently, `master` is only tested against Laravel 4.*.
+> 
 
 <a name="background"></a>
 ## Background: What is a slug?
