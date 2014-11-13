@@ -7,15 +7,16 @@
 
 ## 2.0.5 - 13-Nov-2014
 
-- fixed `findBySlug()` to return a model and `getBySlug()` to return a collection (#72 thanks @jaewun and @Jono20202)
-- fix testbench version requirements (#87 thanks @hannesvdvreken)
-- clean up some redundant code and documentation (thanks @hannesvdvreken, @Anahkiasen, @nimbol, @enzomaserati)
+- Fixed `findBySlug()` to return a model and `getBySlug()` to return a collection (#72 thanks @jaewun and @Jono20202)
+- Fixed testbench version requirements (#87 thanks @hannesvdvreken)
+- Fixed so that `max_length` option only applies to string slugs (#64 thanks @enzomaserati)
+- Cleaned up some redundant code and documentation (thanks @hannesvdvreken, @Anahkiasen, @nimbol)
 
 
 ## 2.0.4 - 23-Sep-2014
 
-- fixed softDelete behaviour and tests so Laravel 4.2 and earlier are supported (#56 thanks @hammat).
-- fixed alias for `Illuminate\Support\Str` to prepare for Laravel 4.3/5.0 (#58 thanks @0xMatt).
+- Fixed softDelete behaviour and tests so Laravel 4.2 and earlier are supported (#56 thanks @hammat).
+- Fixed alias for `Illuminate\Support\Str` to prepare for Laravel 4.3/5.0 (#58 thanks @0xMatt).
 
 
 ## 2.0.3 - 17-Jul-2014
