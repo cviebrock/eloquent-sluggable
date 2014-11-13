@@ -362,9 +362,9 @@ Please use Github for bugs, comments, suggestions.
 	- Add your test methods to `eloquent-sluggable/tests/SluggableTest.php`.
 	- Run `vendor/bin/phpunit` to the new (and all previous) tests and make sure everything passes.
 3. Commit your changes (and your tests) and push to your branch.
-4. Create a new pull request against the eloquent-sluggable `develop` branch.
+4. Create a new pull request against the eloquent-sluggable `2.0` branch.
 
-**Please note that you must create your pull request against the `develop` branch.**
+**Please note that you must create your pull request against the `2.0` branch for fixes to the version compatible with Laravel 4.  If you are working on Laravel 5 support, use the `3.0` branch.**
 
 
 
