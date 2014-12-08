@@ -17,10 +17,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
-		$this->package('cviebrock/eloquent-sluggable');
-	}
+	public function boot() {}
 
 	/**
 	 * Register the service provider.
