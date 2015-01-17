@@ -225,16 +225,19 @@ trait SluggableTrait {
 		return $this->sluggify(true);
 	}
 
-
-	public static function getBySlug($slug)
+	public static function whereSlug($slug)
 	{
-
 		$instance = new static;
 
 		$config = \App::make('config')->get('sluggable');
 		$config = array_merge( $config, $instance->sluggable );
 
-		return $instance->where( $config['save_to'], $slug )->get();
+		return $instance->where( $config['save_to'], $slug );
+	}
+
+	public static function getBySlug($slug)
+	{
+		return static::whereSlug($slug)->get();
 	}
 
 	public static function findBySlug($slug)
