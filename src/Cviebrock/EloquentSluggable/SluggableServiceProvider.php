@@ -19,7 +19,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('cviebrock/eloquent-sluggable');
+		$this->registerConfiguration();
 	}
 
 	/**
@@ -72,6 +72,26 @@ class SluggableServiceProvider extends ServiceProvider {
 	public function provides()
 	{
 		return array();
+	}
+
+	/**
+	 * Register configuration files
+	 *
+	 * @return void
+	 */
+
+	protected function registerConfiguration()
+	{
+		$user_config_file = app()->configPath().'/packages/cviebrock/eloquent-sluggable/config.php';
+		$package_config_file = __DIR__.'/../../config/config.php';
+		$config = $this->app['files']->getRequire($package_config_file);
+
+		if (file_exists($user_config_file)) {
+			$userConfig = $this->app['files']->getRequire($user_config_file);
+			$config = array_replace_recursive($config, $userConfig);
+		}
+
+		$this->app['config']->set('eloquent-sluggable::config', $config);
 	}
 
 }
