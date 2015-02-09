@@ -385,20 +385,6 @@ class SluggableTest extends TestCase {
 	}
 
 	/**
-	 * Test ignoring current model when generating unique slugs (issue #16)
-	 *
-	 * @test
-	 */
-	public function testArdent()
-	{
-		$post = new PostArdent(array(
-			'title' => 'My First Post'
-		));
-		$post->save();
-		$this->assertEquals('my-first-post', $post->slug);
-	}
-
-	/**
 	 * Test model replication (issue #20)
 	 *
 	 * @test

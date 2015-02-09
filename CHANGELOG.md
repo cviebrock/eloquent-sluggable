@@ -3,6 +3,7 @@
 ## 3.0.0 - xx-xxx-2014
 
 - Laravel 5.0 support
+- Fix so that `max_length` option only applies to string slugs (#64 thanks @enzomaserati)
 
 
 ## 2.0.5 - 13-Nov-2014
