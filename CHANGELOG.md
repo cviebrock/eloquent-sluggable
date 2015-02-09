@@ -3,6 +3,7 @@
 ## 3.0.0 - xx-xxx-2014
 
 - Laravel 5.0 support
+- Remove Ardent support and tests
 - Fix so that `max_length` option only applies to string slugs (#64 thanks @enzomaserati)
 
 
