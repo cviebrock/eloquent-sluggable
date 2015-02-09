@@ -124,4 +124,25 @@ return array(
 	 */
 	'use_cache' => false,
 
+
+	/**
+	 *	Add more conditions to check when "unique" equals true
+	 *
+	 * 'on_slugcheck' => array('My\Checker','check')
+	 *
+	 *  or, if you want to check inside your own model, use
+	 *
+	 * 'on_slugcheck' => 'call_this_method_inside_this_model'
+	 *
+	 *  Example:
+	 *
+	 *  'on_slugcheck' =>  'call_this_method_inside_this_model',
+	 *
+	 *   public function call_this_method_inside_this_model($query) {
+	 *   	return $query->whereAnotherCondition(true);
+	 *   }
+	 *
+	 */
+	'on_slugcheck' => null,
+
 );
