@@ -18,7 +18,7 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Copyright and License](#copyright)
 
 
-> **NOTE** If you are using Laravel 4, then use the `2.x` branch or `2.*` releases. Currently, `master` is only tested against Laravel 5.*.
+> **NOTE** If you are using Laravel 4, then use the `2.x` branch or tagged `2.*` releases. Currently, `master` is only tested against Laravel 5.*.
  
 
 <a name="background"></a>
@@ -59,17 +59,8 @@ The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you
 
 First, you'll need to require the package with Composer:
 
-<<<<<<< HEAD
 ```bash
 $ composer require cviebrock/eloquent-sluggable
-=======
-```json
-{
-    "require": {
-        "cviebrock/eloquent-sluggable": "2.*"
-    }
-}
->>>>>>> develop
 ```
 
 > **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running PHP 5.4 or higher. If you are still using 5.3, then use the "1.*" version and follow the instructions in that version's README.md file.
@@ -151,8 +142,6 @@ echo $post->slug;
 // or, if you don't know the name of the slug attribute:
 echo $post->getSlug();
 ```
-
-See the [README-Ardent.md](./README-Ardent.md) file for using Eloquent-Sluggable with [Ardent](//github.com/laravelbook/ardent).
 
 Also note that if you are replicating your models using Eloquent's `replicate()` method, then you will need to explicity tell the package to force a re-slugging of the model afterwards to ensure uniqueness:
 
@@ -354,6 +343,7 @@ class MyModel extends Eloquent implement SluggableInterface
 ```
 
 3. Any references to `Sluggable::make($model, [false|true])` should become `$model->sluggify()` or `$model->resluggify()`. This will be of importance to [Ardent](./README-Ardent.md) users.
+
 4. Enable the `use_cache` configuration if at all possible.
 
 
@@ -370,9 +360,9 @@ Please use Github for bugs, comments, suggestions.
 	- Add your test methods to `eloquent-sluggable/tests/SluggableTest.php`.
 	- Run `vendor/bin/phpunit` to the new (and all previous) tests and make sure everything passes.
 3. Commit your changes (and your tests) and push to your branch.
-4. Create a new pull request against the eloquent-sluggable `2.0` branch.
+4. Create a new pull request against the eloquent-sluggable `master` branch.
 
-**Please note that you must create your pull request against the `2.0` branch for fixes to the version compatible with Laravel 4.  If you are working on Laravel 5 support, use the `3.0` branch.**
+**Please note that you must create your pull request against the `master` branch for fixes to the version compatible with Laravel 5.  If you are working on Laravel 4 support, use the `2.x` branch.**
 
 
 
