@@ -168,7 +168,7 @@ trait SluggableTrait {
 		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
 
 		// include trashed models if required
-		if ( $include_trashed && $instance->usesSoftDeleting() )
+		if ( $include_trashed && $this->usesSoftDeleting() )
 		{
 			$query = $query->withTrashed();
 		}
@@ -179,11 +179,9 @@ trait SluggableTrait {
 		return $list;
 	}
 
+
 	protected function usesSoftDeleting() {
-		if ( in_array('Illuminate\Database\Eloquent\SoftDeletingTrait', class_uses($this) ) ) {
-			return true;
-		}
-		return ( property_exists($this,'softDelete') && $this->softDelete==true );
+		return in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this));
 	}
 
 
@@ -203,7 +201,7 @@ trait SluggableTrait {
 
 	public function sluggify($force=false)
 	{
-		$config = \App::make('config')->get('eloquent-sluggable::config');
+		$config = \App::make('config')->get('sluggable');
 		$this->sluggable = array_merge( $config, $this->sluggable );
 
 		if ($force || $this->needsSlugging())
@@ -233,7 +231,7 @@ trait SluggableTrait {
 
 		$instance = new static;
 
-		$config = \App::make('config')->get('eloquent-sluggable::config');
+		$config = \App::make('config')->get('sluggable');
 		$config = array_merge( $config, $instance->sluggable );
 
 		return $instance->where( $config['save_to'], $slug )->get();

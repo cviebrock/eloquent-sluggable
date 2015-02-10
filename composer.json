@@ -14,15 +14,16 @@
 		"php": ">=5.4.0",
 		"illuminate/config": "5.*",
 		"illuminate/database": "5.*",
-		"illuminate/support": "5.*"
+		"illuminate/support": "5.*",
+		"predis/predis": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.*",
-		"orchestra/testbench": "dev-master"
+		"orchestra/testbench": "3.0.*"
 	},
 	"autoload": {
-		"psr-0": {
-			"Cviebrock\\EloquentSluggable": "src/"
+		"psr-4": {
+			"Cviebrock\\EloquentSluggable\\": "src/"
 		}
 	},
 	"minimum-stability": "dev"

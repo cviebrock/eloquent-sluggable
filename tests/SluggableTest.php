@@ -1,7 +1,7 @@
 <?php
 
 use Orchestra\Testbench\TestCase;
-
+use Illuminate\Support\Str;
 
 class SluggableTest extends TestCase {
 
@@ -13,7 +13,7 @@ class SluggableTest extends TestCase {
 		parent::setUp();
 
 		// Create an artisan object for calling migrations
-		$artisan = $this->app->make('artisan');
+		$artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
 
 		// Call migrations specific to our tests, e.g. to seed the db
 		$artisan->call('migrate', array(
@@ -44,9 +44,8 @@ class SluggableTest extends TestCase {
 		));
 
 		// set up caching configuration
-		$app['config']->set('cache.driver', 'redis');
+		$app['config']->set('cache.default', 'redis');
 		$app['config']->set('cache.prefix', 'SluggableTest');
-
 	}
 
 
@@ -55,7 +54,7 @@ class SluggableTest extends TestCase {
    *
    * @return array
    */
-	protected function getPackageProviders()
+	protected function getPackageProviders($app)
 	{
 		return array('Cviebrock\EloquentSluggable\SluggableServiceProvider');
 	}
@@ -211,7 +210,7 @@ class SluggableTest extends TestCase {
 		$post->setSlugConfig(array(
 			'method' => function($string, $separator)
 			{
-				return strrev( \Str::slug($string,$separator) );
+				return strrev( Str::slug($string,$separator) );
 			}
 		));
 		$post->save();

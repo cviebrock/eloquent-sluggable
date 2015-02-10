@@ -19,7 +19,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('cviebrock/eloquent-sluggable');
+		$this->handleConfigs();
 	}
 
 	/**
@@ -31,6 +31,16 @@ class SluggableServiceProvider extends ServiceProvider {
 	{
 		$this->registerEvents();
 		$this->registerCommands();
+	}
+
+	/**
+	 * Register the configuration.
+	 */
+	private function handleConfigs()
+	{
+		$configPath = __DIR__ . '/../config/sluggable.php';
+		$this->publishes([$configPath => config_path('sluggable.php')]);
+		$this->mergeConfigFrom($configPath, 'sluggable');
 	}
 
 	/**
@@ -71,7 +81,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return [];
 	}
 
 }
