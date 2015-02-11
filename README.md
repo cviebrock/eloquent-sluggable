@@ -13,7 +13,6 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Using the Class](#usage)
 * [Configuration](#config)
 * [Extending Sluggable](#extending)
-* [Upgrading from 1.0](#upgrading)
 * [Bugs, Suggestions and Contributions](#bugs)
 * [Copyright and License](#copyright)
 
@@ -166,7 +165,7 @@ This is basically a wrapper for `Post::where('slug-field','=','my-slug')->first(
 
 Configuration was designed to be as flexible as possible. You can set up defaults for all of your Eloquent models, and then override those settings for individual models.
 
-By default, global configuration can be set in the `app/config/packages/cviebrock/eloquent-sluggable/config.php` file. If a configuration isn't set, then the package defaults from `vendor/cviebrock/eloquent-sluggable/src/config/config.php` are used. Here is an example configuration, with all the default settings shown:
+By default, global configuration can be set in the `app/config/sluggable.php` file. If a configuration isn't set, then the package defaults from `vendor/cviebrock/eloquent-sluggable/config/sluggable.php` are used. Here is an example configuration, with all the default settings shown:
 
 ```php
 return array(
@@ -321,30 +320,6 @@ Returns all existing slugs that are "similar" to the given one. Should return an
 
 Writes the (generated, valid, and unique) slug to the model's attributes.
 
-
-
-<a name="upgrading"></a>
-## Upgrading From a 1.x Version
-
-1. There is no facade, so you should remove the alias entry from `app/config/app.php`.
-2. Add the interface and trait to your models and change the `$sluggable` configuration array from `public static` to `protected`:
-````php
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
-
-class MyModel extends Eloquent implement SluggableInterface
-{
-	use SluggableTrait;
-
-	protected $sluggable = array(
-		// ...
-	);
-}
-```
-
-3. Any references to `Sluggable::make($model, [false|true])` should become `$model->sluggify()` or `$model->resluggify()`. This will be of importance to [Ardent](./README-Ardent.md) users.
-
-4. Enable the `use_cache` configuration if at all possible.
 
 
 

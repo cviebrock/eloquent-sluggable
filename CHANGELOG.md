@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0 - xx-xxx-2014
+## 3.0.0-beta - 11-Feb-2015
 
 - Laravel 5.0 support
 - Remove Ardent support and tests
