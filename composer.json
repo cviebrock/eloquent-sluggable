@@ -1,6 +1,6 @@
 {
 	"name": "cviebrock/eloquent-sluggable",
-	"description": "Easy creation of slugs for your Eloquent models in Laravel 5.",
+	"description": "Easy creation of slugs for your Eloquent models in Laravel",
 	"keywords": ["laravel","eloquent","slug"],
 	"homepage": "https://github.com/cviebrock/eloquent-sluggable",
 	"license": "MIT",
