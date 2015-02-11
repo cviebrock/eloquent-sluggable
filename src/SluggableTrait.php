@@ -162,11 +162,19 @@ trait SluggableTrait {
 	{
 		$save_to         = $this->sluggable['save_to'];
 		$include_trashed = $this->sluggable['include_trashed'];
+        	$scoped          = $this->sluggable['scoped'];
 
 		$instance = new static;
 
 		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
-
+		
+	        // restirct with scope
+	        if ( $scoped )
+	        {
+	            $scoped_value = $this->{$scoped};
+	            $query = $query->where( $scoped, '=', $scoped_value );
+	        }
+        
 		// include trashed models if required
 		if ( $include_trashed && $this->usesSoftDeleting() )
 		{
