@@ -1,9 +1,11 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Illuminate\Console\Command;
+use Illuminate\Database\Console\Migrations\BaseCommand;
+use Illuminate\Database\Migrations\MigrationCreator;
+use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputArgument;
 
-class SluggableTableCommand extends Command {
+class SluggableTableCommand extends BaseCommand {
 
 	/**
 	 * The console command name.
@@ -20,49 +22,68 @@ class SluggableTableCommand extends Command {
 	protected $description = 'Create a migration for the Sluggable database columns';
 
 	/**
+	 * @var \Cviebrock\EloquentSluggable
+	 */
+	protected $creator;
+
+	/**
+	 * @var \Illuminate\Foundation\Composer
+	 */
+	protected $composer;
+
+	/**
+	 * Create a new migration sluggable instance.
+	 *
+	 * @param  \Cviebrock\EloquentSluggable  $creator
+	 * @param  \Illuminate\Foundation\Composer  $composer
+	 * @return void
+	 */
+	public function __construct(SluggableMigrationCreator $creator, Composer $composer)
+	{
+		parent::__construct();
+
+		$this->creator = $creator;
+		$this->composer = $composer;
+	}
+
+	/**
 	 * Execute the console command.
 	 *
 	 * @return void
 	 */
 	public function fire()
 	{
-		$fullPath = $this->createBaseMigration();
+		$table = $this->input->getArgument('table');
 
-		file_put_contents($fullPath, $this->getMigrationStub());
+		$column = $this->input->getArgument('column');
 
-		$this->info('Migration created successfully!');
+		$name = 'add_'.$table.'_'.$column.'_column';
 
-		$this->call('dump-autoload');
+		// Now we are ready to write the migration out to disk. Once we've written
+		// the migration out, we will dump-autoload for the entire framework to
+		// make sure that the migrations are registered by the class loaders.
+		$this->writeMigration($name, $table, $column);
+
+		$this->composer->dumpAutoloads();
 	}
 
 	/**
-	 * Create a base migration file for the model.
+	 * Write the migration file to disk.
 	 *
+	 * @param  string  $name
+	 * @param  string  $table
+	 * @param  bool    $column
 	 * @return string
 	 */
-	protected function createBaseMigration()
+	protected function writeMigration($name, $table, $column)
 	{
-		$name = 'add_sluggable_columns';
+		$path = $this->getMigrationPath();
 
-		$path = $this->laravel['path'].'/database/migrations';
+		$this->creator->setColumn($column);
 
-		return $this->laravel['migration.creator']->create($name, $path);
-	}
+		$file = pathinfo($this->creator->create($name, $path, $table), PATHINFO_FILENAME);
 
-	/**
-	 * Get the contents of the sluggable migration stub.
-	 *
-	 * @return string
-	 */
-	protected function getMigrationStub()
-	{
-		$stub = file_get_contents(__DIR__.'/stubs/migration.stub');
-
-		return str_replace(
-			array('sluggable_table', 'sluggable_column'),
-			array($this->argument('table'), $this->argument('column')),
-			$stub
-		);
+		$this->line("<info>Created Migration:</info> $file");
 	}
 
 	/**
