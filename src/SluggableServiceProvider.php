@@ -29,6 +29,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->registerCreator();
 		$this->registerEvents();
 		$this->registerCommands();
 	}
@@ -41,6 +42,19 @@ class SluggableServiceProvider extends ServiceProvider {
 		$configPath = __DIR__ . '/../config/sluggable.php';
 		$this->publishes([$configPath => config_path('sluggable.php')]);
 		$this->mergeConfigFrom($configPath, 'sluggable');
+	}
+
+	/**
+	 * Register the migration creator.
+	 *
+	 * @return void
+	 */
+	protected function registerCreator()
+	{
+		$this->app->singleton('sluggable.creator', function($app)
+		{
+			return new SluggableMigrationCreator($app['files']);
+		});
 	}
 
 	/**
@@ -68,7 +82,14 @@ class SluggableServiceProvider extends ServiceProvider {
 	{
 		$this->app['sluggable.table'] = $this->app->share(function($app)
 		{
-			return new SluggableTableCommand;
+			// Once we have the migration creator registered, we will create the command
+			// and inject the creator. The creator is responsible for the actual file
+			// creation of the migrations, and may be extended by these developers.
+			$creator = $app['sluggable.creator'];
+
+			$composer = $app['composer'];
+
+			return new SluggableTableCommand($creator, $composer);
 		});
 
 		$this->commands('sluggable.table');
@@ -81,7 +102,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return [];
+		return ['sluggable.creator', 'sluggable.table'];
 	}
 
 }
