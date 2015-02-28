@@ -50,7 +50,7 @@ Slugs tend to be unique as well. So if I wrote another post with the same title,
 
 This keeps URLs unique.
 
-The **Eloquent-Sluggable** package for Laravel 4 will handle all of this for you automatically, with minimal configuration at the start.
+The **Eloquent-Sluggable** package for Laravel 5 will handle all of this for you automatically, with minimal configuration at the start.
 
 
 <a name="installation"></a>
@@ -78,8 +78,7 @@ Then, update `app/config/app.php` by adding an entry for the service provider.
 	);
 ```
 
-Finally, from the command line again, run `php artisan config:publish cviebrock/eloquent-sluggable` to publish the default configuration file.
-
+Finally, from the command line again, run `php artisan vendor:publish` to publish the default configuration file.
 
 <a name="eloquent"></a>
 ## Updating your Eloquent Models
