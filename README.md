@@ -174,6 +174,7 @@ return array(
 	'method'          => null,
 	'separator'       => '-',
 	'unique'          => true,
+	'scoped'          => null,
 	'include_trashed' => false,
 	'on_update'       => false,
 	'reserved'        => null,
@@ -256,6 +257,10 @@ This defines the separator used when building a slug, and is passed to the `meth
 This is a boolean defining whether slugs should be unique among all models of the given type. For example, if you have two blog posts and both are called "My Blog Post", then they will both sluggify to "my-blog-post" (when using Sluggable's default settings). This could be a problem, e.g. if you use the slug in URLs.
 
 By turning `unique` on, then the second Post model will sluggify to "my-blog-post-1". If there is a third post with the same title, it will sluggify to "my-blog-post-2" and so on. Each subsequent model will get an incremental value appended to the end of the slug, ensuring uniqueness.
+
+### scoped
+
+You can use this variable if you use unique words as limited to any particular model column.
 
 ### include_trashed
 

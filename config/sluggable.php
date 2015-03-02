@@ -72,6 +72,22 @@ return array(
 	'unique' => true,
 
 	/**
+	 * You can use this variable if you use unique words as limited 
+	 * to any particular model column.
+	 * 
+	 * For example, assume that your model has a column named scope_id
+	 * and you want the slugs to be unique for each scope separately 
+	 * then 'scoped' => "scope_id". eg:
+	 *
+	 *     scope1	my-slug
+	 *     scope1	my-slug-1
+	 *     scope2	my-slug
+	 *     scope1	my-slug-2
+	 *     scope2	my-slug-1
+	 */
+	'scoped' => null,
+	
+	/**
 	 * Should we include the trashed items when generating a unique slug?
 	 * This only applies if the softDelete property is set for the Eloquent model.
 	 * If set to "false", then a new slug could duplicate one that exists on a trashed model.
