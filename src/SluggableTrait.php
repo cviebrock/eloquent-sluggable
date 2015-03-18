@@ -145,22 +145,40 @@ trait SluggableTrait {
 			return $slug;
 		}
 
+		$suffix = $this->generateSuffix($slug, $list);
 
-		// map our list to keep only the increments
-		$len = strlen($slug.$separator);
-		array_walk($list, function(&$value, $key) use ($len)
-		{
-			$value = intval(substr($value, $len));
-		});
-
-		// find the highest increment
-		rsort($list);
-		$increment = reset($list) + 1;
-
-		return $slug . $separator . $increment;
+		return $slug . $separator . $suffix;
 
 	}
 
+	/**
+	 * @param $slug
+	 * @param $list
+	 *
+	 * @return mixed
+	 */
+	protected function generateSuffix($slug, $list)
+	{
+		$method = array_get($this->sluggable, 'uniqueMethod', null);
+
+		if ($method === null) {
+			$config = $this->getSluggableConfig();
+			$separator  = $config['separator'];
+			$len = strlen($slug . $separator);
+
+			array_walk($list, function (&$value, $key) use ($len) {
+				$value = intval(substr($value, $len));
+			});
+
+			// find the highest increment
+			rsort($list);
+			return reset($list) + 1;
+		} elseif (is_callable([$this, $method])) {
+			return call_user_func([$this, $method], $slug, $list);
+		}
+
+		throw new \UnexpectedValueException("Sluggable uniqueMethod is not callable or null.");
+	}
 
 	protected function getExistingSlugs($slug)
 	{
