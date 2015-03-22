@@ -59,14 +59,14 @@ The **Eloquent-Sluggable** package for Laravel 5 will handle all of this for you
 First, you'll need to require the package with Composer:
 
 ```bash
-$ composer require cviebrock/eloquent-sluggable
+$ composer require cviebrock/eloquent-sluggable >=3.0.0-alpha
 ```
 
 > **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running PHP 5.4 or higher. If you are still using 5.3, then use the "1.*" version and follow the instructions in that version's README.md file.
 
 Aftwards, run `composer update` from your command line.
 
-Then, update `app/config/app.php` by adding an entry for the service provider.
+Then, update `config/app.php` by adding an entry for the service provider.
 
 ```php
 	'providers' => array(
