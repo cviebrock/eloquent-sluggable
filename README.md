@@ -89,7 +89,7 @@ Your models should implement Sluggable's interface and use it's trait. You shoul
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Post extends Eloquent implements SluggableInterface
+class Post extends Model implements SluggableInterface
 {
 	use SluggableTrait;
 
