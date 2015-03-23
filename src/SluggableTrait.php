@@ -7,8 +7,9 @@ trait SluggableTrait {
 
 	protected function needsSlugging()
 	{
-		$save_to = $this->sluggable['save_to'];
-		$on_update = $this->sluggable['on_update'];
+		$config = $this->getSluggableConfig();
+		$save_to = $config['save_to'];
+		$on_update = $config['on_update'];
 
 		if (empty($this->{$save_to})) {
 			return true;
@@ -24,7 +25,8 @@ trait SluggableTrait {
 
 	protected function getSlugSource()
 	{
-		$from = $this->sluggable['build_from'];
+		$config = $this->getSluggableConfig();
+		$from = $config['build_from'];
 
 		if ( is_null($from) )
 		{
@@ -46,9 +48,10 @@ trait SluggableTrait {
 
 	protected function generateSlug($source)
 	{
-		$separator  = $this->sluggable['separator'];
-		$method     = $this->sluggable['method'];
-		$max_length = $this->sluggable['max_length'];
+		$config = $this->getSluggableConfig();
+		$separator  = $config['separator'];
+		$method     = $config['method'];
+		$max_length = $config['max_length'];
 
 		if ( $method === null )
 		{
@@ -74,8 +77,8 @@ trait SluggableTrait {
 
 	protected function validateSlug($slug)
 	{
-
-		$reserved = $this->sluggable['reserved'];
+		$config = $this->getSluggableConfig();
+		$reserved = $config['reserved'];
 
 		if ( $reserved === null ) return $slug;
 
@@ -89,7 +92,7 @@ trait SluggableTrait {
 		{
 			if ( in_array($slug, $reserved) )
 			{
-				return $slug . $this->sluggable['separator'] . '1';
+				return $slug . $config['separator'] . '1';
 			}
 			return $slug;
 		}
@@ -100,11 +103,12 @@ trait SluggableTrait {
 
 	protected function makeSlugUnique($slug)
 	{
-		if (!$this->sluggable['unique']) return $slug;
+		$config = $this->getSluggableConfig();
+		if (!$config['unique']) return $slug;
 
-		$separator  = $this->sluggable['separator'];
-		$use_cache  = $this->sluggable['use_cache'];
-		$save_to    = $this->sluggable['save_to'];
+		$separator  = $config['separator'];
+		$use_cache  = $config['use_cache'];
+		$save_to    = $config['save_to'];
 
 		// if using the cache, check if we have an entry already instead
 		// of querying the database
@@ -160,8 +164,9 @@ trait SluggableTrait {
 
 	protected function getExistingSlugs($slug)
 	{
-		$save_to         = $this->sluggable['save_to'];
-		$include_trashed = $this->sluggable['include_trashed'];
+		$config = $this->getSluggableConfig();
+		$save_to         = $config['save_to'];
+		$include_trashed = $config['include_trashed'];
 
 		$instance = new static;
 
@@ -187,26 +192,24 @@ trait SluggableTrait {
 
 	protected function setSlug($slug)
 	{
-		$save_to = $this->sluggable['save_to'];
+		$config = $this->getSluggableConfig();
+		$save_to = $config['save_to'];
 		$this->setAttribute( $save_to, $slug );
 	}
 
 
 	public function getSlug()
 	{
-		$save_to = $this->sluggable['save_to'];
+		$config = $this->getSluggableConfig();
+		$save_to = $config['save_to'];
 		return $this->getAttribute( $save_to );
 	}
 
 
 	public function sluggify($force=false)
 	{
-		$config = \App::make('config')->get('sluggable');
-		$this->sluggable = array_merge( $config, $this->sluggable );
-
 		if ($force || $this->needsSlugging())
 		{
-
 			$source = $this->getSlugSource();
 			$slug = $this->generateSlug($source);
 
@@ -228,11 +231,9 @@ trait SluggableTrait {
 
 	public static function getBySlug($slug)
 	{
-
 		$instance = new static;
 
-		$config = \App::make('config')->get('sluggable');
-		$config = array_merge( $config, $instance->sluggable );
+		$config = $instance->getSluggableConfig();
 
 		return $instance->where( $config['save_to'], $slug )->get();
 	}
@@ -243,4 +244,13 @@ trait SluggableTrait {
 		return static::getBySlug($slug)->first();
 	}
 
+	protected function getSluggableConfig()
+	{
+		$defaults = \App::make('config')->get('sluggable');
+		if (property_exists($this, 'sluggable'))
+		{
+ 			return array_merge($defaults, $this->sluggable);
+		}
+		return $defaults;
+	}
 }
