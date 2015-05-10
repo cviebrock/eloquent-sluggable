@@ -443,6 +443,7 @@ class SluggableTest extends TestCase {
 			Post::findBySlugOrFail('my-fourth-post');
 			$this->fail('Not found exception not raised');
 		} catch (Exception $e) {
+			$this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException', $e);
 		}
 	}
 
