@@ -229,7 +229,7 @@ trait SluggableTrait {
 
 	public function scopeWhereSlug($scope,$slug)
 	{
-		$config = (new static)->getSluggableConfig();
+		$config = $this->getSluggableConfig();
 		return $scope->where($config['save_to'],$slug);
 	}
 
