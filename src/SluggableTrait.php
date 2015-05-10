@@ -222,26 +222,25 @@ trait SluggableTrait {
 		return $this;
 	}
 
-
 	public function resluggify()
 	{
 		return $this->sluggify(true);
 	}
 
-
-	public static function getBySlug($slug)
+	public function scopeWhereSlug($scope,$slug)
 	{
-		$instance = new static;
-
-		$config = $instance->getSluggableConfig();
-
-		return $instance->where( $config['save_to'], $slug )->get();
+		$config = (new static)->getSluggableConfig();
+		return $scope->where($config['save_to'],$slug);
 	}
 
-	public static function findBySlug($slug)
+	public function scopeFindBySlug($scope,$slug)
 	{
+		return $scope->whereSlug($slug)->first();
+	}
 
-		return static::getBySlug($slug)->first();
+	public function scopeFindBySlugOrFail($scope,$slug)
+	{
+		return $scope->whereSlug($slug)->firstOrFail();
 	}
 
 	protected function getSluggableConfig()
