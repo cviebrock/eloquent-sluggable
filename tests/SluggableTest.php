@@ -554,4 +554,60 @@ class SluggableTest extends TestCase {
 		$this->assertEquals('a-post-title', $post1->slug);
 	}
 
+    /**
+	 * Test findBySlug() scope method
+	 *
+	 * @test
+	 */
+	public function testFindBySlugOrId()
+	{
+		$post1 = $this->makePost('My first post');
+		$post1->save();
+
+		$post2 = $this->makePost('My second post');
+		$post2->save();
+
+		$post3 = $this->makePost('My third post');
+		$post3->save();
+
+		$post = Post::findBySlugOrId('my-second-post');
+
+		$this->assertEquals($post2->id, $post->id);
+
+        $post = Post::findBySlugOrId(3);
+
+		$this->assertEquals($post3->id, $post->id);
+	}
+
+    /**
+	 * Test findBySlugOrFail() scope method
+	 *
+	 * @test
+	 */
+	public function testFindBySlugOrIdOrFail()
+	{
+		$post1 = $this->makePost('My first post');
+		$post1->save();
+
+		$post2 = $this->makePost('My second post');
+		$post2->save();
+
+		$post3 = $this->makePost('My third post');
+		$post3->save();
+
+		$post = Post::findBySlugOrIdOrFail('my-second-post');
+		$this->assertEquals($post2->id, $post->id);
+
+        $post = Post::findBySlugOrIdOrFail(3);
+		$this->assertEquals($post3->id, $post->id);
+
+		try{
+			Post::findBySlugOrFail('my-fourth-post');
+			$this->fail('Not found exception not raised');
+		} catch (Exception $e) {
+			$this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException', $e);
+		}
+	}
+
+
 }
