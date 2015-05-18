@@ -252,4 +252,32 @@ trait SluggableTrait {
 		}
 		return $defaults;
 	}
+
+	/**
+	 * Simple find by Id if it's numeric or slug if not. Fail if not found.
+	 *
+	 * @return Model/Collection
+	 */
+
+	public function scopeFindBySlugOrIdOrFail($scope, $slug)
+    {
+        if((int) $slug > 0) {
+            return $scope->findOrFail($slug);
+        }
+        return $scope->findBySlugOrFail($slug);
+    }
+
+	/**
+	 * Simple find by Id if it's numeric or slug if not.
+	 *
+	 * @return Model/Collection
+	 */
+
+    public function scopeFindBySlugOrId($scope, $slug)
+    {
+        if((int) $slug > 0) {
+            return $scope->find($slug);
+        }
+	    return $scope->findBySlug($slug);
+    }
 }

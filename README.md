@@ -12,13 +12,14 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Updating your Eloquent Models](#eloquent)
 * [Using the Class](#usage)
 * [Configuration](#config)
+* [Route-model Binding](#route-model)
 * [Extending Sluggable](#extending)
 * [Bugs, Suggestions and Contributions](#bugs)
 * [Copyright and License](#copyright)
 
 
 > **NOTE** If you are using Laravel 4, then use the `2.x` branch or tagged `2.*` releases. Currently, `master` is only tested against Laravel 5.*.
- 
+
 
 <a name="background"></a>
 ## Background: What is a slug?
@@ -281,6 +282,32 @@ The default value is `false`: don't use caching. If you are already using a cach
 
 (If for whatever reason you want to clear out all of Sluggable's cache entries, then just run `Cache::tags('sluggable')->flush()`.)
 
+<a name="route-model"></a>
+##Route-model Binding
+
+To start retrieving Models using the slug or the Id, you can update `config/app.php` by adding an entry for the routing service provider.
+
+```php
+	'providers' => array(
+
+		// ...
+
+		'Cviebrock\EloquentSluggable\SluggableRoutingServiceProvider',
+
+	);
+```
+
+If you prefer finding the models within your Controller, or the routes file, you can use a couple of helper methods:
+
+```php
+    Post::findBySlugOrId('slug-or-id');
+```
+
+or
+
+```php
+    Post::findBySlugOrIdOrFail('slug-or-id');
+```
 
 <a name="extending"></a>
 ## Extending Sluggable
