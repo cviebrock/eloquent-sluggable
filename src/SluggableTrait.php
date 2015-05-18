@@ -186,7 +186,14 @@ trait SluggableTrait {
 
 
 	protected function usesSoftDeleting() {
-		return in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this));
+		$softDeleteStrait = 'Illuminate\Database\Eloquent\SoftDeletes';
+		$classes = array_merge([get_class($this)], class_parents($this));
+		foreach( $classes as $class ) {
+			if ( in_array($softDeleteStrait, class_uses($class)) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 
