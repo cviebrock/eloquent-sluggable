@@ -186,7 +186,7 @@ trait SluggableTrait {
 
 
 	protected function usesSoftDeleting() {
-		return in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this));
+		return method_exists($this,'BootSoftDeletes');
 	}
 
 
