@@ -285,16 +285,14 @@ The default value is `false`: don't use caching. If you are already using a cach
 <a name="route-model"></a>
 ##Route-model Binding
 
-To start retrieving Models using the slug or the Id, you can update `config/app.php` by adding an entry for the routing service provider.
+To start retrieving Models using the slug or the Id, you can update `/bootstap/app.php` by adding an entry to override the router.
+In the section titled 'Bind Important Interfaces' add the following:
 
 ```php
-	'providers' => array(
-
-		// ...
-
-		'Cviebrock\EloquentSluggable\SluggableRoutingServiceProvider',
-
-	);
+    $app->singleton(
+        'router',
+        '\Cviebrock\EloquentSluggable\SluggableRouter'
+    );
 ```
 
 If you prefer finding the models within your Controller, or the routes file, you can use a couple of helper methods:
