@@ -609,5 +609,31 @@ class SluggableTest extends TestCase {
 		}
 	}
 
+    /**
+     * Test findBySlug returns null when no record found
+     *
+     * @test
+     */
+    public function testFindBySlugReturnsNullForNoRecord()
+    {
+        $this->assertNull(Post::findBySlug('not a real record'));
+    }
+
+    /**
+     * Test Non static call for findBySlug is working
+     *
+     * @test
+     */
+
+    public function testNonStaticCallOfFindBySlug()
+    {
+        $post1 = $this->makePost('My first post');
+        $post1->save();
+
+        $post = Post::first();
+        $resultId = $post->findBySlug('my-first-post')->id;
+
+        $this->assertEquals($post1->id, $resultId);
+    }
 
 }
