@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 trait SluggableTrait {
@@ -180,7 +181,7 @@ trait SluggableTrait {
 		// get a list of all matching slugs
 		$list = $query->lists($save_to, $this->getKeyName());
 
-		return $list;
+		return $list instanceof Collection ? $list->all() : $list;
 	}
 
 
