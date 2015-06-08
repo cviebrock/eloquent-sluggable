@@ -261,7 +261,7 @@ trait SluggableTrait {
 
 	public function scopeFindBySlugOrIdOrFail($scope, $slug)
     {
-        if((int) $slug > 0) {
+        if(is_numeric($slug) && $slug > 0) {
             return $scope->findOrFail($slug);
         }
         return $scope->findBySlugOrFail($slug);
@@ -275,7 +275,7 @@ trait SluggableTrait {
 
     public function scopeFindBySlugOrId($scope, $slug)
     {
-        if((int) $slug > 0) {
+        if((is_numeric($slug) && $slug > 0) {
             return $scope->find($slug);
         }
 	    return $scope->findBySlug($slug);
