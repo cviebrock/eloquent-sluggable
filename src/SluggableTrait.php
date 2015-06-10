@@ -179,7 +179,12 @@ trait SluggableTrait {
 		}
 
 		// get a list of all matching slugs
-		$list = $query->lists($save_to, $this->getKeyName());
+		if(method_exists($query, 'all')){
+	            $list = $query->lists($save_to, $this->getKeyName())->all();
+	        }else{
+	            $list = $query->lists($save_to, $this->getKeyName());
+	        }
+
 
 		return $list;
 	}
