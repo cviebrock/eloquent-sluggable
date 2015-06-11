@@ -217,6 +217,27 @@ class SluggableTest extends TestCase {
 		$this->assertEquals('eltit-tsop-a', $post->slug);
 	}
 
+    /**
+     * Test building a slug using a custom suffix.
+     *
+     * @test
+     */
+    public function testCustomSuffix()
+    {
+        for ($i = 0; $i < 20; $i++) {
+            $post = new PostSuffix;
+            $post->title = 'A Post Title';
+            $post->subtitle = 'A Subtitle';
+            $post->save();
+
+            if ($i === 0) {
+                $this->assertEquals('a-post-title', $post->slug);
+            } else {
+                $this->assertEquals('a-post-title-' . chr($i + 96), $post->slug);
+            }
+        }
+    }
+
 	/**
 	 * Test building a slug using the __toString method
 	 *
