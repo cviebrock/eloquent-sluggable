@@ -1,9 +1,9 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 trait SluggableTrait {
-
 
 	protected function needsSlugging()
 	{
@@ -181,7 +181,7 @@ trait SluggableTrait {
 		// get a list of all matching slugs
 		$list = $query->lists($save_to, $this->getKeyName());
 
-		return $list;
+		return $list instanceof Collection ? $list->all() : $list;
 	}
 
 
@@ -227,20 +227,20 @@ trait SluggableTrait {
 		return $this->sluggify(true);
 	}
 
-	public function scopeWhereSlug($scope,$slug)
+	public function scopeWhereSlug($scope, $slug)
 	{
 		$config = $this->getSluggableConfig();
 		return $scope->where($config['save_to'],$slug);
 	}
 
-	public function scopeFindBySlug($scope,$slug)
+	public static function findBySlug($slug)
 	{
-		return $scope->whereSlug($slug)->first();
+		return self::whereSlug($slug)->first();
 	}
 
-	public function scopeFindBySlugOrFail($scope,$slug)
+	public static function findBySlugOrFail($slug)
 	{
-		return $scope->whereSlug($slug)->firstOrFail();
+		return self::whereSlug($slug)->firstOrFail();
 	}
 
 	protected function getSluggableConfig()
@@ -259,12 +259,12 @@ trait SluggableTrait {
 	 * @return Model/Collection
 	 */
 
-	public function scopeFindBySlugOrIdOrFail($scope, $slug)
+	public static function findBySlugOrIdOrFail($slug)
     {
-        if (is_numeric($slug) && $slug > 0) {
-            return $scope->findOrFail($slug);
+        if(is_numeric($slug) && $slug > 0) {
+            return self::findOrFail($slug);
         }
-        return $scope->findBySlugOrFail($slug);
+        return self::findBySlugOrFail($slug);
     }
 
 	/**
@@ -273,11 +273,11 @@ trait SluggableTrait {
 	 * @return Model/Collection
 	 */
 
-    public function scopeFindBySlugOrId($scope, $slug)
+    public static function findBySlugOrId($slug)
     {
-        if (is_numeric($slug) && $slug > 0) {
-            return $scope->find($slug);
+        if(is_numeric($slug) && $slug > 0) {
+            return self::find($slug);
         }
-	    return $scope->findBySlug($slug);
+	    return self::findBySlug($slug);
     }
 }
