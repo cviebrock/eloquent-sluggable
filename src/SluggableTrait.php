@@ -145,22 +145,32 @@ trait SluggableTrait {
 			return $slug;
 		}
 
+		$suffix = $this->generateSuffix($slug, $list);
 
-		// map our list to keep only the increments
-		$len = strlen($slug.$separator);
-		array_walk($list, function(&$value, $key) use ($len)
-		{
+		return $slug . $separator . $suffix;
+
+	}
+
+	/**
+	 * @param string $slug
+	 * @param array  $list
+	 *
+	 * @return string
+	 */
+	protected function generateSuffix($slug, $list)
+	{
+		$config = $this->getSluggableConfig();
+		$separator  = $config['separator'];
+		$len = strlen($slug . $separator);
+
+		array_walk($list, function (&$value, $key) use ($len) {
 			$value = intval(substr($value, $len));
 		});
 
 		// find the highest increment
 		rsort($list);
-		$increment = reset($list) + 1;
-
-		return $slug . $separator . $increment;
-
+		return reset($list) + 1;
 	}
-
 
 	protected function getExistingSlugs($slug)
 	{
