@@ -1,12 +1,22 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Cocur\Slugify\Slugify;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
+
+/**
+ * Class SluggableTrait
+ *
+ * @package Cviebrock\EloquentSluggable
+ */
 trait SluggableTrait {
 
-	protected function needsSlugging()
-	{
+	/**
+	 * Determines whether the model needs slugging.
+	 *
+	 * @return bool
+	 */
+	protected function needsSlugging() {
 		$config = $this->getSluggableConfig();
 		$save_to = $config['save_to'];
 		$on_update = $config['on_update'];
@@ -19,23 +29,24 @@ trait SluggableTrait {
 			return false;
 		}
 
-		return ( !$this->exists || $on_update );
+		return (!$this->exists || $on_update);
 	}
 
-
-	protected function getSlugSource()
-	{
+	/**
+	 * Get the source string for the slug.
+	 *
+	 * @return string
+	 */
+	protected function getSlugSource() {
 		$config = $this->getSluggableConfig();
 		$from = $config['build_from'];
 
-		if ( is_null($from) )
-		{
+		if (is_null($from)) {
 			return $this->__toString();
 		}
 
 		$source = array_map(
-			function($attribute)
-			{
+			function ($attribute) {
 				return $this->{$attribute};
 			},
 			(array) $from
@@ -44,90 +55,79 @@ trait SluggableTrait {
 		return join($source, ' ');
 	}
 
-
-
-	protected function generateSlug($source)
-	{
+	/**
+	 * Generate a slug from the given source string.
+	 *
+	 * @param string $source
+	 * @return string
+	 * @throws \UnexpectedValueException
+	 */
+	protected function generateSlug($source) {
 		$config = $this->getSluggableConfig();
-		$separator  = $config['separator'];
-		$method     = $config['method'];
+		$separator = $config['separator'];
+		$method = $config['method'];
 		$max_length = $config['max_length'];
 
-		if ( $method === null )
-		{
-			$slug = Str::slug($source, $separator);
-		}
-		elseif ( is_callable($method) )
-		{
+		if ($method === null) {
+			$slug = (new Slugify)->slugify($source, $separator);
+		} elseif (is_callable($method)) {
 			$slug = call_user_func($method, $source, $separator);
-		}
-		else
-		{
-			throw new \UnexpectedValueException("Sluggable method is not callable or null.");
+		} else {
+			throw new \UnexpectedValueException('Sluggable method is not callable or null.');
 		}
 
-		if (is_string($slug) && $max_length)
-		{
+		if (is_string($slug) && $max_length) {
 			$slug = substr($slug, 0, $max_length);
 		}
 
 		return $slug;
 	}
 
-
-	protected function validateSlug($slug)
-	{
+	/**
+	 * Checks that the given slug is not a reserved word.
+	 *
+	 * @param string $slug
+	 * @return string
+	 * @throws \UnexpectedValueException
+	 */
+	protected function validateSlug($slug) {
 		$config = $this->getSluggableConfig();
 		$reserved = $config['reserved'];
 
-		if ( $reserved === null ) return $slug;
+		if ($reserved === null) {
+			return $slug;
+		}
 
 		// check for reserved names
-		if ( $reserved instanceof \Closure )
-		{
+		if ($reserved instanceof \Closure) {
 			$reserved = $reserved($this);
 		}
 
-		if ( is_array($reserved) )
-		{
-			if ( in_array($slug, $reserved) )
-			{
+		if (is_array($reserved)) {
+			if (in_array($slug, $reserved)) {
 				return $slug . $config['separator'] . '1';
 			}
+
 			return $slug;
 		}
 
-		throw new \UnexpectedValueException("Sluggable reserved is not null, an array, or a closure that returns null/array.");
-
+		throw new \UnexpectedValueException('Sluggable reserved is not null, an array, or a closure that returns null/array.');
 	}
 
-	protected function makeSlugUnique($slug)
-	{
+	/**
+	 * Checks if the slug should be unique, and makes it so if needed.
+	 *
+	 * @param string $slug
+	 * @return string
+	 */
+	protected function makeSlugUnique($slug) {
 		$config = $this->getSluggableConfig();
-		if (!$config['unique']) return $slug;
-
-		$separator  = $config['separator'];
-		$use_cache  = $config['use_cache'];
-		$save_to    = $config['save_to'];
-
-		// if using the cache, check if we have an entry already instead
-		// of querying the database
-		if ( $use_cache )
-		{
-			$increment = \Cache::tags('sluggable')->get($slug);
-			if ( $increment === null )
-			{
-				\Cache::tags('sluggable')->put($slug, 0, $use_cache);
-			}
-			else
-			{
-				\Cache::tags('sluggable')->put($slug, ++$increment, $use_cache);
-				$slug .= $separator . $increment;
-			}
+		if (!$config['unique']) {
 			return $slug;
 		}
 
-		// no cache, so we need to check directly
+		$separator = $config['separator'];
+
 		// find all models where the slug is like the current one
 		$list = $this->getExistingSlugs($slug);
 
@@ -137,30 +137,29 @@ trait SluggableTrait {
 		// 	c) our slug is in the list and it's for our model
 		// ... we are okay
 		if (
-			count($list)===0 ||
+			count($list) === 0 ||
 			!in_array($slug, $list) ||
-			( array_key_exists($this->getKey(), $list) && $list[$this->getKey()]===$slug )
-		)
-		{
+			(array_key_exists($this->getKey(), $list) && $list[$this->getKey()] === $slug)
+		) {
 			return $slug;
 		}
 
 		$suffix = $this->generateSuffix($slug, $list);
 
 		return $slug . $separator . $suffix;
-
 	}
 
 	/**
+	 * Generate a unique suffix for the given slug (and list of existing, "similar" slugs.
+	 *
 	 * @param string $slug
-	 * @param array  $list
+	 * @param array $list
 	 *
 	 * @return string
 	 */
-	protected function generateSuffix($slug, $list)
-	{
+	protected function generateSuffix($slug, $list) {
 		$config = $this->getSluggableConfig();
-		$separator  = $config['separator'];
+		$separator = $config['separator'];
 		$len = strlen($slug . $separator);
 
 		array_walk($list, function (&$value, $key) use ($len) {
@@ -169,57 +168,77 @@ trait SluggableTrait {
 
 		// find the highest increment
 		rsort($list);
+
 		return reset($list) + 1;
 	}
 
-	protected function getExistingSlugs($slug)
-	{
+	/**
+	 * Get all existing slugs that are similar to the given slug.
+	 *
+	 * @param string $slug
+	 * @return array
+	 */
+	protected function getExistingSlugs($slug) {
 		$config = $this->getSluggableConfig();
-		$save_to         = $config['save_to'];
+		$save_to = $config['save_to'];
 		$include_trashed = $config['include_trashed'];
 
 		$instance = new static;
 
-		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
+		$query = $instance->where($save_to, 'LIKE', $slug . '%');
 
 		// include trashed models if required
-		if ( $include_trashed && $this->usesSoftDeleting() )
-		{
+		if ($include_trashed && $this->usesSoftDeleting()) {
 			$query = $query->withTrashed();
 		}
 
 		// get a list of all matching slugs
 		$list = $query->lists($save_to, $this->getKeyName());
 
+		// Laravel 5.0/5.1 check
 		return $list instanceof Collection ? $list->all() : $list;
 	}
 
-
+	/**
+	 * Does this model use softDeleting?
+	 *
+	 * @return bool
+	 */
 	protected function usesSoftDeleting() {
-		return method_exists($this,'BootSoftDeletes');
+		return method_exists($this, 'BootSoftDeletes');
 	}
 
-
-	protected function setSlug($slug)
-	{
+	/**
+	 * Set the slug manually.
+	 *
+	 * @param string $slug
+	 */
+	protected function setSlug($slug) {
 		$config = $this->getSluggableConfig();
 		$save_to = $config['save_to'];
-		$this->setAttribute( $save_to, $slug );
+		$this->setAttribute($save_to, $slug);
 	}
 
-
-	public function getSlug()
-	{
+	/**
+	 * Get the current slug.
+	 *
+	 * @return mixed
+	 */
+	public function getSlug() {
 		$config = $this->getSluggableConfig();
 		$save_to = $config['save_to'];
-		return $this->getAttribute( $save_to );
+
+		return $this->getAttribute($save_to);
 	}
 
-
-	public function sluggify($force=false)
-	{
-		if ($force || $this->needsSlugging())
-		{
+	/**
+	 * Manually slug the current model.
+	 *
+	 * @param bool $force
+	 * @return $this
+	 */
+	public function sluggify($force = false) {
+		if ($force || $this->needsSlugging()) {
 			$source = $this->getSlugSource();
 			$slug = $this->generateSlug($source);
 
@@ -232,62 +251,87 @@ trait SluggableTrait {
 		return $this;
 	}
 
-	public function resluggify()
-	{
+	/**
+	 * Force slugging of current model.
+	 *
+	 * @return SluggableTrait
+	 */
+	public function resluggify() {
 		return $this->sluggify(true);
 	}
 
-	public function scopeWhereSlug($scope, $slug)
-	{
+	/**
+	 * Query scope for finding a model by its slug.
+	 *
+	 * @param $scope
+	 * @param $slug
+	 * @return mixed
+	 */
+	public function scopeWhereSlug($scope, $slug) {
 		$config = $this->getSluggableConfig();
-		return $scope->where($config['save_to'],$slug);
+
+		return $scope->where($config['save_to'], $slug);
 	}
 
-	public static function findBySlug($slug)
-	{
+	/**
+	 * Find a model by slug.
+	 *
+	 * @param $slug
+	 * @return Model|null.
+	 */
+	public static function findBySlug($slug) {
 		return self::whereSlug($slug)->first();
 	}
 
-	public static function findBySlugOrFail($slug)
-	{
+	/**
+	 * Find a model by slug or fail.
+	 *
+	 * @param $slug
+	 * @return Model
+	 */
+	public static function findBySlugOrFail($slug) {
 		return self::whereSlug($slug)->firstOrFail();
 	}
 
-	protected function getSluggableConfig()
-	{
-		$defaults = \App::make('config')->get('sluggable');
-		if (property_exists($this, 'sluggable'))
-		{
- 			return array_merge($defaults, $this->sluggable);
+	/**
+	 * Get the default configuration and merge in any model-specific overrides.
+	 *
+	 * @return array
+	 */
+	protected function getSluggableConfig() {
+		$defaults = app('config')->get('sluggable');
+		if (property_exists($this, 'sluggable')) {
+			return array_merge($defaults, $this->sluggable);
 		}
+
 		return $defaults;
 	}
 
 	/**
 	 * Simple find by Id if it's numeric or slug if not. Fail if not found.
 	 *
-	 * @return Model/Collection
+	 * @param $slug
+	 * @return Model|Collection
 	 */
+	public static function findBySlugOrIdOrFail($slug) {
+		if (is_numeric($slug) && $slug > 0) {
+			return self::findOrFail($slug);
+		}
 
-	public static function findBySlugOrIdOrFail($slug)
-    {
-        if(is_numeric($slug) && $slug > 0) {
-            return self::findOrFail($slug);
-        }
-        return self::findBySlugOrFail($slug);
-    }
+		return self::findBySlugOrFail($slug);
+	}
 
 	/**
 	 * Simple find by Id if it's numeric or slug if not.
 	 *
-	 * @return Model/Collection
+	 * @param $slug
+	 * @return Model|Collection|null
 	 */
+	public static function findBySlugOrId($slug) {
+		if (is_numeric($slug) && $slug > 0) {
+			return self::find($slug);
+		}
 
-    public static function findBySlugOrId($slug)
-    {
-        if(is_numeric($slug) && $slug > 0) {
-            return self::find($slug);
-        }
-	    return self::findBySlug($slug);
-    }
+		return self::findBySlug($slug);
+	}
 }

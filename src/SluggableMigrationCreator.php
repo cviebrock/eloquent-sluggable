@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\MigrationCreator;
 
+
 class SluggableMigrationCreator extends MigrationCreator {
 
 	/**
@@ -16,34 +17,30 @@ class SluggableMigrationCreator extends MigrationCreator {
 	 *
 	 * @return string
 	 */
-	public function getStubPath()
-	{
+	public function getStubPath() {
 		return __DIR__ . '/../stubs';
 	}
 
 	/**
 	 * Get the migration stub file.
 	 *
-	 * @param  string  $table
-	 * @param  bool    $create
+	 * @param  string $table
+	 * @param  bool $create
 	 * @return string
 	 */
-	protected function getStub($table, $create)
-	{
-		return $this->files->get($this->getStubPath().'/migration.stub');
+	protected function getStub($table, $create) {
+		return $this->files->get($this->getStubPath() . '/migration.stub');
 	}
 
 	/**
 	 * Populate the place-holders in the migration stub.
 	 *
-	 * @param  string  $name
-	 * @param  string  $stub
-	 * @param  string  $table
-	 * @param  string  $column
+	 * @param  string $name
+	 * @param  string $stub
+	 * @param  string $table
 	 * @return string
 	 */
-	protected function populateStub($name, $stub, $table)
-	{
+	protected function populateStub($name, $stub, $table) {
 		$stub = parent::populateStub($name, $stub, $table);
 
 		return str_replace('{{column}}', $this->column, $stub);
@@ -52,9 +49,7 @@ class SluggableMigrationCreator extends MigrationCreator {
 	/**
 	 * @param string $column
 	 */
-	public function setColumn($column)
-	{
+	public function setColumn($column) {
 		$this->column = $column;
 	}
-
 }

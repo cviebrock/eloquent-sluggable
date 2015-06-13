@@ -1,9 +1,9 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
-use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputArgument;
+
 
 class SluggableTableCommand extends BaseCommand {
 
@@ -22,7 +22,7 @@ class SluggableTableCommand extends BaseCommand {
 	protected $description = 'Create a migration for the Sluggable database columns';
 
 	/**
-	 * @var \Cviebrock\EloquentSluggable
+	 * @var SluggableMigrationCreator
 	 */
 	protected $creator;
 
@@ -34,12 +34,10 @@ class SluggableTableCommand extends BaseCommand {
 	/**
 	 * Create a new migration sluggable instance.
 	 *
-	 * @param  \Cviebrock\EloquentSluggable  $creator
-	 * @param  \Illuminate\Foundation\Composer  $composer
-	 * @return void
+	 * @param SluggableMigrationCreator $creator
+	 * @param Composer $composer
 	 */
-	public function __construct(SluggableMigrationCreator $creator, Composer $composer)
-	{
+	public function __construct(SluggableMigrationCreator $creator, Composer $composer) {
 		parent::__construct();
 
 		$this->creator = $creator;
@@ -51,13 +49,12 @@ class SluggableTableCommand extends BaseCommand {
 	 *
 	 * @return void
 	 */
-	public function fire()
-	{
+	public function fire() {
 		$table = $this->input->getArgument('table');
 
 		$column = $this->input->getArgument('column');
 
-		$name = 'add_'.$table.'_'.$column.'_column';
+		$name = 'add_' . $table . '_' . $column . '_column';
 
 		// Now we are ready to write the migration out to disk. Once we've written
 		// the migration out, we will dump-autoload for the entire framework to
@@ -70,13 +67,12 @@ class SluggableTableCommand extends BaseCommand {
 	/**
 	 * Write the migration file to disk.
 	 *
-	 * @param  string  $name
-	 * @param  string  $table
-	 * @param  bool    $column
+	 * @param  string $name
+	 * @param  string $table
+	 * @param  bool $column
 	 * @return string
 	 */
-	protected function writeMigration($name, $table, $column)
-	{
+	protected function writeMigration($name, $table, $column) {
 		$path = $this->getMigrationPath();
 
 		$this->creator->setColumn($column);
@@ -91,12 +87,10 @@ class SluggableTableCommand extends BaseCommand {
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
-		return array(
-			array('table',  InputArgument::REQUIRED, 'The name of your sluggable table.'),
-			array('column', InputArgument::OPTIONAL, 'The name of your slugged column (defaults to "slug").', 'slug'),
-		);
+	protected function getArguments() {
+		return [
+			['table', InputArgument::REQUIRED, 'The name of your sluggable table.'],
+			['column', InputArgument::OPTIONAL, 'The name of your slugged column (defaults to "slug").', 'slug'],
+		];
 	}
-
 }

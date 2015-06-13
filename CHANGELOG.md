@@ -1,8 +1,10 @@
 # Change Log
 
-## 3.0.0 - 12-Jun-2015
+## 3.0.0-beta - 12-Jun-2015
 
 - Laravel 5.1 support (#141/#148 thanks @Keoghan, @Bouhnosaure)
+- Removed `use_cache` option and support
+- Use (Cocur\Slugify)[https://github.com/cocur/slugify] as default slugging method
 - Fix for `include_trashed` option not working for models that inherit the SoftDeletes trait (#136 thanks @ramirezd42)
 - Added `generateSuffix()` method so you could use different strategies other than integers for making incremental slugs (#129 thanks @EspadaV8)
 - Various scope and lookup fixes (thanks @xire28)

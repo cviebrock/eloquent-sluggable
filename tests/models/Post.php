@@ -1,43 +1,65 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * Class Post
+ */
 class Post extends Model implements SluggableInterface {
 
 	use SluggableTrait;
 
-  protected $table = 'posts';
+	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'posts';
 
-  public $timestamps = false;
+	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
 
-	protected $fillable = array('title','subtitle');
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['title', 'subtitle'];
 
-	protected $sluggable = array(
-		'build_from'      => 'title',
-		'save_to'         => 'slug',
-	);
-
+	/**
+	 * Sluggable configuration.
+	 *
+	 * @var array
+	 */
+	protected $sluggable = [
+		'build_from' => 'title',
+		'save_to' => 'slug',
+	];
 
 	/**
 	 * Helper to set slug options for tests.
 	 *
 	 * @param array $array Array of new slug options
 	 */
-	public function setSlugConfig($array)
-	{
-		foreach($array as $key=>$value)
-		{
+	public function setSlugConfig($array) {
+		foreach ($array as $key => $value) {
 			$this->sluggable[$key] = $value;
 		}
 	}
 
-
-	public function __toString()
-	{
+	/**
+	 * Convert the model to its string representation.
+	 *
+	 * @return string
+	 */
+	public function __toString() {
 		return $this->title;
 	}
-
 }

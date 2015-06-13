@@ -1,7 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-
 use Illuminate\Support\ServiceProvider;
+
 
 class SluggableServiceProvider extends ServiceProvider {
 
@@ -17,8 +17,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot() {
 		$this->handleConfigs();
 	}
 
@@ -27,8 +26,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function register()
-	{
+	public function register() {
 		$this->registerCreator();
 		$this->registerEvents();
 		$this->registerCommands();
@@ -37,8 +35,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	/**
 	 * Register the configuration.
 	 */
-	private function handleConfigs()
-	{
+	private function handleConfigs() {
 		$configPath = __DIR__ . '/../config/sluggable.php';
 		$this->publishes([$configPath => config_path('sluggable.php')]);
 		$this->mergeConfigFrom($configPath, 'sluggable');
@@ -49,10 +46,8 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	protected function registerCreator()
-	{
-		$this->app->singleton('sluggable.creator', function($app)
-		{
+	protected function registerCreator() {
+		$this->app->singleton('sluggable.creator', function ($app) {
 			return new SluggableMigrationCreator($app['files']);
 		});
 	}
@@ -62,12 +57,9 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function registerEvents()
-	{
-		$this->app['events']->listen('eloquent.saving*', function($model)
-		{
-			if ($model instanceof SluggableInterface)
-			{
+	public function registerEvents() {
+		$this->app['events']->listen('eloquent.saving*', function ($model) {
+			if ($model instanceof SluggableInterface) {
 				$model->sluggify();
 			}
 		});
@@ -78,10 +70,8 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function registerCommands()
-	{
-		$this->app['sluggable.table'] = $this->app->share(function($app)
-		{
+	public function registerCommands() {
+		$this->app['sluggable.table'] = $this->app->share(function ($app) {
 			// Once we have the migration creator registered, we will create the command
 			// and inject the creator. The creator is responsible for the actual file
 			// creation of the migrations, and may be extended by these developers.
@@ -100,9 +90,7 @@ class SluggableServiceProvider extends ServiceProvider {
 	 *
 	 * @return array
 	 */
-	public function provides()
-	{
+	public function provides() {
 		return ['sluggable.creator', 'sluggable.table'];
 	}
-
 }

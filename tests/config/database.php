@@ -4,8 +4,8 @@
  * Test against in-memory SQLite database
  */
 
-return array(
-  'driver'    => 'sqlite',
-  'database'  => ':memory:',
-  'prefix'    => ''
-);
+return [
+	'driver' => 'sqlite',
+	'database' => ':memory:',
+	'prefix' => ''
+];

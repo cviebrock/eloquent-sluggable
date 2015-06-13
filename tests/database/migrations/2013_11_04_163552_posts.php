@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
+
+/**
+ * Class Posts
+ */
 class Posts extends Migration {
 
 	/**
@@ -12,7 +17,7 @@ class Posts extends Migration {
 	public function up()
 	{
 
-		Schema::create('posts', function($table)
+		Schema::create('posts', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('title');

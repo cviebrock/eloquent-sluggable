@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="false"
->
-    <testsuites>
-        <testsuite name="Sluggable Test Suite">
-            <directory suffix=".php">./tests/</directory>
-        </testsuite>
-    </testsuites>
+<phpunit
+	backupGlobals="false"
+	backupStaticAttributes="false"
+	bootstrap="vendor/autoload.php"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	processIsolation="false"
+	stopOnFailure="true"
+	syntaxCheck="false">
+	<testsuites>
+		<testsuite name="Sluggable Test Suite">
+			<directory suffix=".php">./tests/</directory>
+		</testsuite>
+	</testsuites>
 </phpunit>

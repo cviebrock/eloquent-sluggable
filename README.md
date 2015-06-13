@@ -70,13 +70,10 @@ Aftwards, run `composer update` from your command line.
 Then, update `config/app.php` by adding an entry for the service provider.
 
 ```php
-	'providers' => array(
-
-		// ...
-
-		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
-
-	);
+'providers' => [
+    // ...
+    'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+];
 ```
 
 Finally, from the command line again, run `php artisan vendor:publish` to publish the default configuration file.
@@ -94,10 +91,10 @@ class Post extends Model implements SluggableInterface
 {
 	use SluggableTrait;
 
-	protected $sluggable = array(
+	protected $sluggable = [
 		'build_from' => 'title',
 		'save_to'    => 'slug',
-	);
+	];
 
 }
 ```
@@ -126,9 +123,9 @@ That's it ... your model is now "sluggable"!
 Saving a model is easy:
 
 ```php
-$post = new Post(array(
+$post = new Post([
 	'title' => 'My Awesome Blog Post',
-));
+]);
 
 $post->save();
 ```
@@ -168,7 +165,7 @@ Configuration was designed to be as flexible as possible. You can set up default
 By default, global configuration can be set in the `app/config/sluggable.php` file. If a configuration isn't set, then the package defaults from `vendor/cviebrock/eloquent-sluggable/config/sluggable.php` are used. Here is an example configuration, with all the default settings shown:
 
 ```php
-return array(
+return [
 	'build_from'      => null,
 	'save_to'         => 'slug',
 	'max_length'      => null,
@@ -178,8 +175,7 @@ return array(
 	'include_trashed' => false,
 	'on_update'       => false,
 	'reserved'        => null,
-	'use_cache'       => false,
-);
+];
 ```
 
 ### build_from
@@ -191,12 +187,11 @@ class Person extends Eloquent implements SluggableInterface
 {
 	use SluggableTrait;
 
-	protected $sluggable = array(
+	protected $sluggable = [
 		'build_from' => 'fullname',
-	);
+	]
 
-	public function getFullnameAttribute()
-	{
+	public function getFullnameAttribute() {
 		return $this->firstname . ' ' . $this->lastname;
 	}
 }
@@ -228,12 +223,12 @@ Note: If `unique` is enabled (which it is by default), and you anticipate having
 
 Defines the method used to turn the sluggable string into a slug. There are three possible options for this configuration:
 
-1. When `method` is null (the default setting), the package uses Laravel's `Str::slug()` method to create the slug.
+1. When `method` is null (the default setting), the package uses [Cocur/Slugify](https://github.com/cocur/slugify) to create the slug.
 
 2. When `method` is a callable, then that function or class method is used. The function/method should expect two parameters: the string to process, and a separator string. For example, to duplicate the default behaviour, you could do:
 
 ```php
-	'method' => array('Illuminate\\Support\\Str', 'slug'),
+	'method' => ['Illuminate\\Support\\Str', 'slug'],
 ```
 
 3. You can also define `method` as a closure (again, expecting two parameters):
@@ -272,15 +267,6 @@ A boolean. If it is `false` (the default value), then slugs will not be updated 
 
 An array of values that will never be allowed as slugs, e.g. to prevent collisions with existing routes or controller methods, etc.. This can be an array, or a closure that returns an array. Defaults to `null`: no reserved slug names.
 
-### use_cache
-
-When checking for uniqueness, the package will query the database for any existing models with the same or similar slugs, and then see if an increment is required. This means more DB usage, and could also lead to a race condition if you are saving a lot of models at the same time.
-
-Turning on `use_cache` will store the last generated increment using Laravel's cache so that your app can save those database requests.
-
-The default value is `false`: don't use caching. If you are already using a cache system that supports the `Cache::tags()` feature (i.e. anything except database and file caches), then you should really enable this setting. Change it to a positive integer, which equals the number of minutes to store slug information in the cache.
-
-(If for whatever reason you want to clear out all of Sluggable's cache entries, then just run `Cache::tags('sluggable')->flush()`.)
 
 <a name="route-model"></a>
 ##Route-model Binding

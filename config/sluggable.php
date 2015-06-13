@@ -1,7 +1,6 @@
 <?php
 
-
-return array(
+return [
 
 	/**
 	 * What attributes do we use to build the slug?
@@ -51,7 +50,7 @@ return array(
 	 *
 	 * Otherwise, this will be treated as a callable to be used.  e.g.:
 	 *
-	 * 		'method' => array('Str','slug'),
+	 *    'method' => array('Str','slug'),
 	 */
 	'method' => null,
 
@@ -92,36 +91,23 @@ return array(
 	 * Defaults to null (i.e. no reserved names).
 	 * Can be a static array, e.g.:
 	 *
-	 * 		'reserved' => array('add', 'delete'),
+	 *    'reserved' => array('add', 'delete'),
 	 *
 	 * or a closure that returns an array of reserved names.
 	 * If using a closure, it will accept one parameter: the model itself, and should
 	 * return an array of reserved names, or null. e.g.
 	 *
-	 * 		'reserved' => function( Model $model) {
-	 * 			return $model->some_method_that_returns_an_array();
-	 * 		}
+	 *    'reserved' => function( Model $model) {
+	 *      return $model->some_method_that_returns_an_array();
+	 *    }
 	 *
 	 * In the case of a slug that gets generated with one of these reserved names,
 	 * we will do:
 	 *
-	 *  	$slug .= $seperator + "1"
+	 *    $slug .= $seperator + "1"
 	 *
 	 * and continue from there.
 	 */
 	'reserved' => null,
 
-	/**
-	 * Whether or not to use Laravel's caching system to help generate
-	 * incremental slug.  Defaults to false.
-	 *
-	 * Set it to a positive integer to use the cache (the value is the
-	 * time to store slug increments in the cache).
-	 *
-	 * If you use this -- and we really recommend that you do, especially
-	 * if 'unique' is true -- then you must use a cache backend that
-	 * supports tags, i.e. not 'file' or 'database'.
-	 */
-	'use_cache' => false,
-
-);
+];
