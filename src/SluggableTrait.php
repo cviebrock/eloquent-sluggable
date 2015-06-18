@@ -162,6 +162,14 @@ trait SluggableTrait {
 		$separator = $config['separator'];
 		$len = strlen($slug . $separator);
 
+		// If the slug already exists, but belongs to
+		// our model, return the current suffix.
+		if ($this->id === array_search($this->slug, $list))
+		{
+			$suffix = explode($separator, $this->slug);
+			return end($suffix);
+		}
+
 		array_walk($list, function (&$value, $key) use ($len) {
 			$value = intval(substr($value, $len));
 		});

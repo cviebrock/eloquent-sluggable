@@ -576,7 +576,6 @@ class SluggableTest extends TestCase {
 	 *
 	 * @test
 	 */
-
 	public function testNonStaticCallOfFindBySlug() {
 		$post1 = $this->makePost('My first post');
 		$post1->save();
@@ -585,5 +584,27 @@ class SluggableTest extends TestCase {
 		$resultId = $post->findBySlug('my-first-post')->id;
 
 		$this->assertEquals($post1->id, $resultId);
+	}
+
+	/**
+	 * Test that the unique suffix does not increment when the title
+	 * is unchanged in models where 'on_update' is set to true.
+	 * 
+	 * @test
+	 */
+	public function testUniqueSuffixDoesNotIncrement()
+	{
+		$post1 = new Post(['title' => 'My Test Post']);
+		$post1->save(); // my-test-post
+
+		$post2 = new Post(['title' => 'My Test Post']);
+		$post2->save(); // my-test-post-1
+
+		$post2->setSlugConfig(['on_update' => true]);
+
+		$post2->dummy = 'Some update happens, and the unique value increments...';
+		$post2->save(); // before fix, my-test-post-2
+
+		$this->assertEquals($post2->slug, 'my-test-post-1'); // previously failed
 	}
 }
