@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.0 - xx-Jun-2015
+
+- Don't increment unique suffix if slug is unchanged (#108 thanks @kkiernan)
+
+
 ## 3.0.0-beta - 12-Jun-2015
 
 - Laravel 5.1 support (#141/#148 thanks @Keoghan, @Bouhnosaure)
