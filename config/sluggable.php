@@ -38,8 +38,8 @@ return [
 	'max_length' => null,
 
 	/**
-	 * If left to "null", then use Laravel's built-in Str::slug() method to
-	 * generate the slug (with the separator defined below).
+	 * If left to "null", then use the cocur/slugify package to generate the slug
+	 * (with the separator defined below).
 	 *
 	 * Set this to a closure that accepts two parameters (string and separator)
 	 * to define a custom slugger.  e.g.:
@@ -55,7 +55,7 @@ return [
 	'method' => null,
 
 	/**
-	 * Separator to use if using the default Str::slug() method.  Defaults to a hyphen.
+	 * Separator to use when generating slugs.  Defaults to a hyphen.
 	 */
 	'separator' => '-',
 
