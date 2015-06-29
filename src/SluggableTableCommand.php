@@ -54,7 +54,7 @@ class SluggableTableCommand extends BaseCommand {
 
 		$column = $this->input->getArgument('column');
 
-		$name = 'add_' . $table . '_' . $column . '_column';
+		$name = 'add_' . $column . '_to_' . $table . '_table';
 
 		// Now we are ready to write the migration out to disk. Once we've written
 		// the migration out, we will dump-autoload for the entire framework to
