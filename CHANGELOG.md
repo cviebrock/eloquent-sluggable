@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0 - xx-Jun-2015
+## 3.0.0 - 06-Jul-2015
 
 - Don't increment unique suffix if slug is unchanged (#108 thanks @kkiernan)
 
