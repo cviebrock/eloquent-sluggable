@@ -193,7 +193,11 @@ trait SluggableTrait {
 
 		$instance = new static;
 
-		$query = $instance->where($save_to, 'LIKE', $slug . '%');
+		//check for direct match or something that has a separator followed by a suffix
+		$query = $instance->where(function ($query) use ($save_to, $config, $slug) {
+			$query->where($save_to, $slug);
+			$query->orWhere($save_to, 'LIKE', $slug . $config['separator'] . '%');
+		});
 
 		// include trashed models if required
 		if ($include_trashed && $this->usesSoftDeleting()) {
