@@ -205,7 +205,7 @@ trait SluggableTrait {
 		}
 
 		// get a list of all matching slugs
-		$list = $query->lists($save_to, $this->getKeyName());
+		$list = $query->lists($save_to, $this->getKeyName())->all();
 
 		// Laravel 5.0/5.1 check
 		return $list instanceof Collection ? $list->all() : $list;
