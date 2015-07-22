@@ -270,7 +270,7 @@ An array of values that will never be allowed as slugs, e.g. to prevent collisio
 
 ### null_when_empty
 
-If you want a *null* slug when the source is empty, set this parameter to *true*
+If you want a `null` slug when the source is empty, set this parameter to `true`
 
 
 <a name="route-model"></a>
