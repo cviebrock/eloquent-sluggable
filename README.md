@@ -175,6 +175,7 @@ return [
 	'include_trashed' => false,
 	'on_update'       => false,
 	'reserved'        => null,
+	'null_when_empty' => false,
 ];
 ```
 
@@ -266,6 +267,10 @@ A boolean. If it is `false` (the default value), then slugs will not be updated 
 ### reserved
 
 An array of values that will never be allowed as slugs, e.g. to prevent collisions with existing routes or controller methods, etc.. This can be an array, or a closure that returns an array. Defaults to `null`: no reserved slug names.
+
+### null_when_empty
+
+If you want a *null* slug when the source is empty, set this parameter to *true*
 
 
 <a name="route-model"></a>
