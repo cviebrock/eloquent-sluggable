@@ -109,5 +109,32 @@ return [
 	 * and continue from there.
 	 */
 	'reserved' => null,
+    
+    
+        /**
+         * To define custum rule according to the value of certain column
+         * 
+         * example : 
+         *  
+         * 'custum_rules_for_slugify' => [
+         *
+         *          'country' => [ // column name
+         *
+         *           'TR' => [  // if the value of country column is 'TR', apply these rules
+         *
+         *              'Ö' => 'o', // For example this character is special for both Turkish and German alphabet
+         *              'ö' => 'o',
+         *              'Ü' => 'u',                    
+         *              'ü' => 'u',                    
+         *              'â' => 'a',
+         *           ],
+         *       ],
+         *   ],
+         *      
+         *  
+         */
+        'custum_rules_for_slugify' => null,
+           
+
 
 ];

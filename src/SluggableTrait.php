@@ -69,7 +69,10 @@ trait SluggableTrait {
 		$max_length = $config['max_length'];
 
 		if ($method === null) {
-			$slug = (new Slugify)->slugify($source, $separator);
+                        
+                        $slugify= $this->createNewSlugifyWithCustumRules();
+                        
+			$slug   = $slugify->slugify($source, $separator);
 		} elseif (is_callable($method)) {
 			$slug = call_user_func($method, $source, $separator);
 		} else {
@@ -227,7 +230,7 @@ trait SluggableTrait {
 	 */
 	protected function setSlug($slug) {
 		$config = $this->getSluggableConfig();
-		$save_to = $config['save_to'];
+		$save_to = $config['save_to'];          
 		$this->setAttribute($save_to, $slug);
 	}
 
@@ -237,9 +240,9 @@ trait SluggableTrait {
 	 * @return mixed
 	 */
 	public function getSlug() {
+            
 		$config = $this->getSluggableConfig();
-		$save_to = $config['save_to'];
-
+		$save_to = $config['save_to'];   
 		return $this->getAttribute($save_to);
 	}
 
@@ -346,4 +349,110 @@ trait SluggableTrait {
 
 		return self::findBySlug($slug);
 	}
+        
+        /**
+         * To create new instace of Slugify and if defined custom rules,
+         * add them..
+         * 
+         * @return \Cocur\Slugify\Slugify
+         */
+        protected function createNewSlugifyWithCustumRules()
+        {           
+            $rules  = $this->getCustomRulesForSlugify();    
+            
+            if (empty($rules)) {                
+                
+                return $this->newInstanceSlugify();      
+            }        
+            
+            $destroyFistDepth = array_collapse($rules);
+            
+            return $this->newInstanceSlugify()->addRules($destroyFistDepth);            
+        }
+        
+        /**
+         * To get custom rules for Slugify
+         * 
+         * @return array|null custom rules
+         */
+        private function getCustomRulesForSlugify() 
+        {          
+            if ( $this->isDefinedCustomRulesForSlugify() ) { return null; }           
+           
+            foreach ($this->getRulesForSlugify() as $column => $situations) {
+                
+                if (! array_key_exists($column, $this->attributes)) {
+                    
+                    continue;                
+                }
+                
+                if ($this->attributeEqualsToGivenValue($column, $situations)) {
+                    
+                    return array_values($situations);                  
+                }
+            }
+            
+        }
+        
+        /**
+         * To determine exist of custom rules for Slugify
+         * 
+         * @return bool
+         */
+        private function isDefinedCustomRulesForSlugify()
+        {            
+            $rules   = $this->getRulesForSlugify();                
+           
+            return empty($rules);             
+        }
+        
+        /**
+         * To determine what given the value of attribute equals to the first key in given array
+         *
+         * @param string    $attribute  attribute name
+         * @param array     $situations value of wanted comparing to attribute
+         * @return bool
+         */
+        private function attributeEqualsToGivenValue($attribute, array $situations=array())
+        {            
+            $value = key($situations);
+            
+            return $this->getAttribute($attribute) === $value;           
+        }       
+        
+        /**
+         * New Instance of Slugify
+         * 
+         * @return \Cocur\Slugify\Slugify
+         */
+        protected function newInstanceSlugify()
+        {                      
+            return new Slugify();            
+        }        
+        
+        /**
+         * To get config value for Slugify
+         * 
+         * @return array|null
+         */
+        protected function getRulesForSlugify()
+        {
+            return $this->getValueInSuggableConfig('custum_rules_for_slugify');
+        }           
+        
+        /**
+         * To get config bey given 'key'
+         * 
+         * @param string $key
+         * @return mixed|null
+         */
+        protected function getValueInSuggableConfig($key=null)
+        { 
+            if (is_null($key)) { return null; }
+            
+            $configs = $this->getSluggableConfig();
+            
+            return array_key_exists($key, $configs) ? $configs[$key] : null;            
+          
+        }
 }
