@@ -623,14 +623,13 @@ class SluggableTest extends TestCase {
                     
                     'custum_rules_for_slugify' => [
                         
-                        'subtitle' => [ // column name
+                        'subtitle' => [ // attribute name
                             
-                            'TR' => [  // if country column is 'TR', apply these rules
+                            'TR' => [  // if subtitle attribute is 'TR', apply these rules
                                 'Ö' => 'o',
                                 'ö' => 'o',
                                 'Ü' => 'u',                    
-                                'ü' => 'u',
-                                //'Ç' => 'C',
+                                'ü' => 'u',                          
                                 'Ğ' => 'G',
                                 'İ' => 'I',
                                 'Ş' => 'S',

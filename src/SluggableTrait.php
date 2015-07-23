@@ -70,7 +70,7 @@ trait SluggableTrait {
 
 		if ($method === null) {
                         
-                        $slugify= $this->createNewSlugifyWithCustumRules();
+                        $slugify= $this->createNewSlugifyWithCustomRules();
                         
 			$slug   = $slugify->slugify($source, $separator);
 		} elseif (is_callable($method)) {
@@ -356,7 +356,7 @@ trait SluggableTrait {
          * 
          * @return \Cocur\Slugify\Slugify
          */
-        protected function createNewSlugifyWithCustumRules()
+        protected function createNewSlugifyWithCustomRules()
         {           
             $rules  = $this->getCustomRulesForSlugify();    
             
