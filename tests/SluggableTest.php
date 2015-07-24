@@ -642,7 +642,7 @@ class SluggableTest extends TestCase {
                     ],
                 ];                
                
-		$post = $this->makePost('Gümüşhane', 'TR');
+		$post = $this->makePost('Gümüşhane', 'TR');// Gümüşhane is Turkish name..
                 
                 $post->setSlugConfig($newOption);
                 
@@ -661,7 +661,7 @@ class SluggableTest extends TestCase {
 	public function testCustomRules() 
         {       
                
-		$post = $this->makePost('Gümüşhane', 'TR'); // Gümüşhane is Turkish name..
+		$post = $this->makePost('Gümüşhane', 'TR'); 
                 
 		$post->save();
                 
@@ -707,7 +707,7 @@ class SluggableTest extends TestCase {
                 $post->setSlugConfig($newOption);
                 
 		$post->save();
-		$this->assertEquals('guemueshane', $post->slug); // That's correct!               
+		$this->assertEquals('guemueshane', $post->slug);    
         }
 
 }

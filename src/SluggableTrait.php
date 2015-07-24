@@ -437,7 +437,7 @@ trait SluggableTrait {
          */
         protected function getRulesForSlugify()
         {
-            return $this->getValueInSuggableConfig('custum_rules_for_slugify');
+            return $this->getKeyInSuggableConfig('custum_rules_for_slugify');
         }           
         
         /**
@@ -446,13 +446,12 @@ trait SluggableTrait {
          * @param string $key
          * @return mixed|null
          */
-        protected function getValueInSuggableConfig($key=null)
+        protected function getKeyInSuggableConfig($key=null)
         { 
             if (is_null($key)) { return null; }
             
             $configs = $this->getSluggableConfig();
             
-            return array_key_exists($key, $configs) ? $configs[$key] : null;            
-          
-        }
+            return array_key_exists($key, $configs) ? $configs[$key] : null;         
+        }        
 }
