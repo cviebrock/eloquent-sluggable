@@ -606,12 +606,11 @@ class SluggableTest extends TestCase {
 		$post2->save(); // before fix, my-test-post-2
 
 		$this->assertEquals($post2->slug, 'my-test-post-1'); // previously failed
-	}
-        
+	}        
         
         /**
 	 * Test that when using 'Cocur/Slugify' slug object,
-         * adding new custom rules for each defined situation 
+         * adding new custom rules for each defined situation          * 
          * 
          * More details : https://github.com/cviebrock/eloquent-sluggable/issues/164
 	 *
@@ -638,10 +637,10 @@ class SluggableTest extends TestCase {
                                 'ı' => 'i',
                                 'ş' => 's',
                                 'â' => 'a',
-                                ],
                             ],
                         ],
-                    ];                
+                    ],
+                ];                
                
 		$post = $this->makePost('Gümüşhane', 'TR');
                 
@@ -655,11 +654,11 @@ class SluggableTest extends TestCase {
 	 * Test that when using 'Cocur/Slugify' slug object,
          * adding new custom rules for each defined situation 
          * 
-         * More details : https://github.com/cviebrock/eloquent-sluggable/issues/164
+         * Testing it with no custom rules
 	 *
 	 * @test
 	 */
-	public function testWitoutCustomRules() 
+	public function testCustomRules() 
         {       
                
 		$post = $this->makePost('Gümüşhane', 'TR'); // Gümüşhane is Turkish name..
@@ -671,6 +670,44 @@ class SluggableTest extends TestCase {
                  * it guess Slugify creates slug for as german spacial characters..                
                  */
 		$this->assertEquals('guemueshane', $post->slug);               
+        }
+        
+        /**
+	 * Test that when using 'Cocur/Slugify' slug object,
+         * adding new custom rules for each defined situation 
+         * 
+         * Testing it with custom rules which is more than one
+
+	 * @test
+	 */
+	public function testAddingAlotOfCustomRules() 
+        {       
+                $newOption = [
+                    
+                    'custum_rules_for_slugify' => [
+                        
+                        'subtitle' => [ // attribute name
+                            
+                            'TR' => [ // if subtitle attribute is 'TR', apply these rules
+                              
+                                
+                                'ü' => 'ue',
+                             ],
+                             'DE' => [  // if subtitle attribute is 'DE', apply these rules
+                               
+                                 'ü' => 'ue',
+                               
+                            ],
+                        ],
+                    ],
+                ];                
+               
+		$post = $this->makePost('Gümüşhane', 'DE');
+                
+                $post->setSlugConfig($newOption);
+                
+		$post->save();
+		$this->assertEquals('guemueshane', $post->slug); // That's correct!               
         }
 
 }
