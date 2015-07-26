@@ -239,10 +239,70 @@ trait SluggableTrait {
 		return $instance->where( $config['save_to'], $slug )->get();
 	}
 
-	public static function findBySlug($slug)
-	{
-
-		return static::getBySlug($slug)->first();
+	/**
+	 * Query scope for finding a model by its slug.
+	 *
+	 * @param $scope
+	 * @param $slug
+	 * @return mixed
+	 */
+	public function scopeWhereSlug($scope, $slug) {
+		$config = $this->getSluggableConfig();
+		return $scope->where($config['save_to'], $slug);
 	}
+	/**
+	 * Find a model by slug.
+	 *
+	 * @param $slug
+	 * @return Model|null.
+	 */
+	public static function findBySlug($slug) {
+		return self::whereSlug($slug)->first();
+	}
+	/**
+	 * Find a model by slug or fail.
+	 *
+	 * @param $slug
+	 * @return Model
+	 */
+	public static function findBySlugOrFail($slug) {
+		return self::whereSlug($slug)->firstOrFail();
+	}
+	/**
+	 * Get the default configuration and merge in any model-specific overrides.
+	 *
+	 * @return array
+	 */
+	protected function getSluggableConfig() {
 
+		$config = \App::make('config')->get('eloquent-sluggable::config');
+		if (property_exists($this, 'sluggable')) {
+			$config = array_merge( $config, $this->sluggable );
+		}
+		return $config;
+	}
+	/**
+	 * Simple find by Id if it's numeric or slug if not. Fail if not found.
+	 *
+	 * @param $slug
+	 * @return Model|Collection
+	 */
+	public static function findBySlugOrIdOrFail($slug) {
+		if (is_numeric($slug) && $slug > 0) {
+			return self::findOrFail($slug);
+		}
+		return self::findBySlugOrFail($slug);
+	}
+	/**
+	 * Simple find by Id if it's numeric or slug if not.
+	 *
+	 * @param $slug
+	 * @return Model|Collection|null
+	 */
+	public static function findBySlugOrId($slug) {
+		if (is_numeric($slug) && $slug > 0) {
+			return self::find($slug);
+		}
+		return self::findBySlug($slug);
+	}
 }
