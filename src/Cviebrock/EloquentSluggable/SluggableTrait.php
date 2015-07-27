@@ -251,6 +251,20 @@ trait SluggableTrait {
 		return $scope->where($config['save_to'], $slug);
 	}
 	/**
+	 * Query scope for finding a model by its slug or id.
+	 *
+	 * @param $scope
+	 * @param $slug
+	 * @return mixed
+	 */
+	public function scopeWhereIdOrSlug($scope, $slug) {
+		$config = $this->getSluggableConfig();
+		if (is_numeric($slug) && $slug > 0) {
+			return $scope->where('id',$slug);
+		}
+		return $scope->where($config['save_to'], $slug);
+	}
+	/**
 	 * Find a model by slug.
 	 *
 	 * @param $slug
@@ -259,6 +273,7 @@ trait SluggableTrait {
 	public static function findBySlug($slug) {
 		return self::whereSlug($slug)->first();
 	}
+
 	/**
 	 * Find a model by slug or fail.
 	 *
