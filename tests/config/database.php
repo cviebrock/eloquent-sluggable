@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Test against in-memory SQLite database
+ * Test against in-memory SQLite database.
  */
 
 return [
-	'driver' => 'sqlite',
-	'database' => ':memory:',
-	'prefix' => ''
+    'driver'   => 'sqlite',
+    'database' => ':memory:',
+    'prefix'   => '',
 ];
