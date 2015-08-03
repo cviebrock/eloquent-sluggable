@@ -69,7 +69,9 @@ trait SluggableTrait {
 		$max_length = $config['max_length'];
 		$null_when_empty = $config['null_when_empty'];
 
-		if ($method === null) {
+		if($null_when_empty && empty($source)){
+			$slug = null;
+		}elseif ($method === null) {
 			$slug = (new Slugify)->slugify($source, $separator);
 		} elseif (is_callable($method)) {
 			$slug = call_user_func($method, $source, $separator);
@@ -80,11 +82,7 @@ trait SluggableTrait {
 		if (is_string($slug) && $max_length) {
 			$slug = substr($slug, 0, $max_length);
 		}
-
-		if($null_when_empty && empty($source)){
-			$slug = null;
-		}
-
+		
 		return $slug;
 	}
 
