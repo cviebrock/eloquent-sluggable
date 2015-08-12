@@ -109,10 +109,4 @@ return [
 	 * and continue from there.
 	 */
 	'reserved' => null,
-
-	/**
-	 * When the source field is empty, set slug at null
-	 * This avoids having slug like '-1', '-2' when unique is enabled
-	 */
-	'null_when_empty' => false,
 ];

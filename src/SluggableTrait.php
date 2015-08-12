@@ -67,9 +67,8 @@ trait SluggableTrait {
 		$separator = $config['separator'];
 		$method = $config['method'];
 		$max_length = $config['max_length'];
-		$null_when_empty = $config['null_when_empty'];
 
-		if($null_when_empty && empty($source)){
+		if(empty($source)){
 			$slug = null;
 		}elseif ($method === null) {
 			$slug = (new Slugify)->slugify($source, $separator);
@@ -82,7 +81,7 @@ trait SluggableTrait {
 		if (is_string($slug) && $max_length) {
 			$slug = substr($slug, 0, $max_length);
 		}
-		
+
 		return $slug;
 	}
 
