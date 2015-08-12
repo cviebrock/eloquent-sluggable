@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class {{class}} extends Migration {
+class DummyClass extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class {{class}} extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('{{table}}', function(Blueprint $table)
+		Schema::table('DummyTable', function(Blueprint $table)
 		{
-			$table->string('{{column}}')->nullable();
+			$table->string('DummyColumn')->nullable();
 		});
 	}
 
@@ -25,9 +25,9 @@ class {{class}} extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('{{table}}', function(Blueprint $table)
+		Schema::table('DummyTable', function(Blueprint $table)
 		{
-			$table->dropColumn('{{column}}');
+			$table->dropColumn('DummyColumn');
 		});
 	}
 
