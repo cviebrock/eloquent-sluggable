@@ -14,7 +14,7 @@ class DummyClass extends Migration {
 	{
 		Schema::table('DummyTable', function(Blueprint $table)
 		{
-			$table->string('{{column}}')->nullable();
+			$table->string('DummyColumn')->nullable();
 		});
 	}
 
@@ -27,7 +27,7 @@ class DummyClass extends Migration {
 	{
 		Schema::table('DummyTable', function(Blueprint $table)
 		{
-			$table->dropColumn('{{column}}');
+			$table->dropColumn('DummyColumn');
 		});
 	}
 
