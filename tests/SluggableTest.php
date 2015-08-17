@@ -75,6 +75,19 @@ class SluggableTest extends TestCase {
 	}
 
 	/**
+	 * Helper to create "Author" model for tests.
+	 *
+	 * @param $name
+	 * @return Author
+	 */
+	protected function makeAuthor($name) {
+		$author = new Author();
+		$author->name = $name;
+		$author->save();
+		return $author;
+	}
+
+	/**
 	 * Test basic slugging functionality.
 	 *
 	 * @test
@@ -589,7 +602,7 @@ class SluggableTest extends TestCase {
 	/**
 	 * Test that the unique suffix does not increment when the title
 	 * is unchanged in models where 'on_update' is set to true.
-	 * 
+	 *
 	 * @test
 	 */
 	public function testUniqueSuffixDoesNotIncrement()
@@ -606,5 +619,33 @@ class SluggableTest extends TestCase {
 		$post2->save(); // before fix, my-test-post-2
 
 		$this->assertEquals($post2->slug, 'my-test-post-1'); // previously failed
+	}
+
+	/**
+	 * Test generating slug from related model field.
+	 *
+	 * @test
+	 */
+	public function testSlugFromRelatedModel(){
+		$author = $this->makeAuthor('Arthur Conan Doyle');
+		$post = new PostWithRelation([
+			'title' => 'First'
+		]);
+		$post->author()->associate($author);
+		$post->save();
+		$this->assertEquals($post->slug, 'arthur-conan-doyle-first');
+	}
+
+	/**
+	 * Test generating slug when related model doesn't exists.
+	 *
+	 * @test
+	 */
+	public function testSlugFromRelatedModelNotExists(){
+		$post = new PostWithRelation([
+			'title' => 'First'
+		]);
+		$post->save();
+		$this->assertEquals($post->slug, 'first');
 	}
 }

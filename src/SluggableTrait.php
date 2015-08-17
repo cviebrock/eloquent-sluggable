@@ -51,23 +51,28 @@ trait SluggableTrait {
 
 	}
 
+	/**
+	 * Get value for slug.
+	 *
+	 * @param string $key
+	 * @return string|null
+	 */
+	protected function generateSource($key)
+	{
+		if(isset($this->{$key})) {
+			return $this->{$key};
+		}
 
-    protected function generateSource($key)
-    {
-        if(isset($this->{$key})) {
-            return $this->{$key};
-        }
+		$object = $this;
+		foreach (explode('.', $key) as $segment) {
+			if (! is_object($object) || !$tmp = $object->{$segment}) {
+				return NULL;
+			}
 
-        $object = $this;
-        foreach (explode('.', $key) as $segment) {
-            if (! is_object($object) || !$tmp = $object->{$segment}) {
-                return NULL;
-            }
-
-            $object = $object->{$segment};
-        }
-        return $object;
-    }
+			$object = $object->{$segment};
+		}
+		return $object;
+	}
 
 	/**
 	 * Generate a slug from the given source string.
