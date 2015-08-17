@@ -197,6 +197,30 @@ class Person extends Eloquent implements SluggableInterface
 }
 ```
 
+Also it can be link to related model's attribute in dot notation:
+
+```php
+class Book extends Eloquent implements SluggableInterface
+{
+	use SluggableTrait;
+
+	protected $sluggable = [
+		'build_from' => ['author.name', 'title']
+	];
+    
+    protected $fillable = ['title'];
+
+	public function author() {
+		return $this->belongsTo('Author');
+	}
+}
+...
+class Author extends Model
+{
+	protected $fillable = ['name'];
+}
+```
+
 If `build_from` is empty, false or null, then the value of `$model->__toString()` is used.
 
 ### save_to
