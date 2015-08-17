@@ -688,4 +688,15 @@ class SluggableTest extends TestCase
         $post->save();
         $this->assertEquals($post->slug, 'first');
     }
+
+    public function testEmptySourceGeneratesEmptySlug()
+    {
+        $post = new Post(['title' => 'My Test Post']);
+        $post->setSlugConfig([
+          'build_from' => 'subtitle'
+        ]);
+
+        $post->save();
+        $this->assertEquals($post->slug, null);
+    }
 }
