@@ -45,15 +45,29 @@ trait SluggableTrait {
 			return $this->__toString();
 		}
 
-		$source = array_map(
-			function ($attribute) {
-				return $this->{$attribute};
-			},
-			(array) $from
-		);
+		$source = array_map([$this, 'generateSource'], (array) $from);
 
 		return join($source, ' ');
+
 	}
+
+
+    protected function generateSource($key)
+    {
+        if(isset($this->{$key})) {
+            return $this->{$key};
+        }
+
+        $object = $this;
+        foreach (explode('.', $key) as $segment) {
+            if (! is_object($object) || !$tmp = $object->{$segment}) {
+                return NULL;
+            }
+
+            $object = $object->{$segment};
+        }
+        return $object;
+    }
 
 	/**
 	 * Generate a slug from the given source string.
