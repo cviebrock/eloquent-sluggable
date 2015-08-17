@@ -1,34 +1,34 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class {{class}} extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::table('{{table}}', function(Blueprint $table)
-		{
-			$table->string('{{column}}')->nullable();
-		});
-	}
+class {{class}} extends Migration
+{
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::table('{{table}}', function(Blueprint $table)
-		{
-			$table->dropColumn('{{column}}');
-		});
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('{{table}}', function (Blueprint $table) {
+            $table->string('{{column}}')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('{{table}}', function (Blueprint $table) {
+            $table->dropColumn('{{column}}');
+        });
+    }
 
 }

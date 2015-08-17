@@ -5,7 +5,7 @@
  */
 
 return [
-	'driver' => 'sqlite',
-	'database' => ':memory:',
-	'prefix' => ''
+    'driver' => 'sqlite',
+    'database' => ':memory:',
+    'prefix' => ''
 ];

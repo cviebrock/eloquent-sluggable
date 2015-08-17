@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.1.0 - xx-xxx-xxxx
+
+- If the source is empty, then set the slug to `null` (#162 thanks @PallMallShow)
+- Ability to use a model's relations in the `build_from` configuration (#171 thanks @blaxxi)
+
+
 ## 3.0.0 - 06-Jul-2015
 
 - Don't increment unique suffix if slug is unchanged (#108 thanks @kkiernan)
