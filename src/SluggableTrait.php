@@ -87,7 +87,9 @@ trait SluggableTrait {
 		$method = $config['method'];
 		$max_length = $config['max_length'];
 
-		if ($method === null) {
+		if(empty($source)){
+			$slug = null;
+		}elseif ($method === null) {
 			$slug = (new Slugify)->slugify($source, $separator);
 		} elseif (is_callable($method)) {
 			$slug = call_user_func($method, $source, $separator);
