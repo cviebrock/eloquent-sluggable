@@ -411,7 +411,7 @@ The actual slugging code. Usually implements whatever is defined in the `method`
 but could call out to other slugging libraries. Takes the source string (above) and 
 returns a string.  If the source string is empty, then the slug field will be set to `null`.
 
-## getSlugEngine()
+### getSlugEngine()
 
 Returns the default `Cocur/Slugify()` class (or any class that has a `slugify()` 
 method.  If you want to add custom rules to Slugify, this is where you can do it 
