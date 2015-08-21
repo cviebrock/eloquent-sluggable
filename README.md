@@ -11,6 +11,7 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Installation and Requirements](#installation)
 * [Updating your Eloquent Models](#eloquent)
 * [Using the Class](#usage)
+* [Events](#events)
 * [Configuration](#config)
 * [Route-model Binding](#route-model)
 * [Extending Sluggable](#extending)
