@@ -3,6 +3,11 @@
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * Class Author
+ *
+ * A test model used for the relationship tests.
+ */
 class Author extends Model
 {
 

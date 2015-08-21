@@ -94,7 +94,8 @@ trait SluggableTrait
         if (empty($source)) {
             $slug = null;
         } elseif ($method === null) {
-            $slug = (new Slugify)->slugify($source, $separator);
+            $slugEngine = $this->getSlugEngine();
+            $slug = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
         } else {
@@ -106,6 +107,17 @@ trait SluggableTrait
         }
 
         return $slug;
+    }
+
+    /**
+     * Return a class that has a 'slugify()` method, used to convert
+     * strings into slugs.
+     *
+     * @return Slugify
+     */
+    protected function getSlugEngine()
+    {
+        return new Slugify();
     }
 
     /**

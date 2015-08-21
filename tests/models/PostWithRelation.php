@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class PostWithRelation
+ *
+ * A test model used for the relationship tests.
+ */
 class PostWithRelation extends Post
 {
 

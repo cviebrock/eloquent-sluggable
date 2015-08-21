@@ -689,6 +689,11 @@ class SluggableTest extends TestCase
         $this->assertEquals($post->slug, 'first');
     }
 
+    /**
+     * Test that an empty slug source creates a null slug.
+     *
+     * @test
+     */
     public function testEmptySourceGeneratesEmptySlug()
     {
         $post = new Post(['title' => 'My Test Post']);
@@ -698,5 +703,19 @@ class SluggableTest extends TestCase
 
         $post->save();
         $this->assertEquals($post->slug, null);
+    }
+
+    /**
+     * Test using custom Slugify rules.
+     *
+     * @test
+     */
+    public function testCustomEngineRules()
+    {
+        $post = new PostCustomEngine([
+          'title' => 'The quick brown fox jumps over the lazy dog'
+        ]);
+        $post->save();
+        $this->assertEquals($post->slug, 'tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag');
     }
 }

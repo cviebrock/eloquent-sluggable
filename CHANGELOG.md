@@ -5,6 +5,7 @@
 - Convert code-base to PSR-2
 - If the source is empty, then set the slug to `null` (#162 thanks @PallMallShow)
 - Ability to use a model's relations in the `build_from` configuration (#171 thanks @blaxxi)
+- Added `getSlugEngine()` method so that the Cocur\Slugify class can be configured 
 
 
 ## 3.0.0 - 06-Jul-2015
