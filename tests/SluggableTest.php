@@ -610,7 +610,7 @@ class SluggableTest extends TestCase {
         
         /**
 	 * Test that when using 'Cocur/Slugify' slug object,
-         * adding new custom rules for each defined situation          * 
+         * adding new custom rules for each defined situation
          * 
          * More details : https://github.com/cviebrock/eloquent-sluggable/issues/164
 	 *
@@ -651,13 +651,13 @@ class SluggableTest extends TestCase {
         }
         
         /**
-	 * Test that when using 'Cocur/Slugify' slug object,
+         * Test that when using 'Cocur/Slugify' slug object,
          * adding new custom rules for each defined situation 
          * 
          * Testing it with no custom rules
-	 *
-	 * @test
-	 */
+         *
+         * @test
+         */
 	public function testCustomRules() 
         {                      
             $post = $this->makePost('Gümüşhane', 'TR'); 
@@ -672,13 +672,13 @@ class SluggableTest extends TestCase {
         }
         
         /**
-	 * Test that when using 'Cocur/Slugify' slug object,
+         * Test that when using 'Cocur/Slugify' slug object,
          * adding new custom rules for each defined situation 
          * 
          * Testing it with custom rules which is more than one
-
-	 * @test
-	 */
+         * 
+         * @test
+         */
 	public function testAddingAlotOfCustomRules() 
         {       
             $newOption = [
@@ -706,7 +706,7 @@ class SluggableTest extends TestCase {
             $post->setSlugConfig($newOption);
 
             $post->save();
-		$this->assertEquals('guemueshane', $post->slug);    
+            
+            $this->assertEquals('guemueshane', $post->slug);    
         }
-
 }

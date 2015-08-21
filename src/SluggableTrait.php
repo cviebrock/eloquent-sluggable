@@ -428,7 +428,7 @@ trait SluggableTrait {
         }           
         
         /**
-         * To get config bey given 'key'
+         * To get config in Suggable Config file by given 'key'
          * 
          * @param string $key
          * @return mixed|null
