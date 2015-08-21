@@ -301,6 +301,11 @@ trait SluggableTrait
      */
     public function sluggify($force = false)
     {
+
+        if ($this->fireModelEvent('slugging') === false) {
+            return $this;
+        }
+
         if ($force || $this->needsSlugging()) {
             $source = $this->getSlugSource();
             $slug = $this->generateSlug($source);
@@ -309,6 +314,9 @@ trait SluggableTrait
             $slug = $this->makeSlugUnique($slug);
 
             $this->setSlug($slug);
+
+            $this->fireModelEvent('slugged');
+
         }
 
         return $this;

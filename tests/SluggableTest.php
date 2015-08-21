@@ -718,4 +718,56 @@ class SluggableTest extends TestCase
         $post->save();
         $this->assertEquals($post->slug, 'tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag');
     }
+
+    /**
+     * Test that the "slugging" event is fired.
+     *
+     * @test
+     */
+    public function testSluggingEvent()
+    {
+        // test event to modify the model before slugging
+        Post::registerModelEvent('slugging', function($post) {
+            $post->title = 'Modified by event';
+        });
+
+        $post = new Post(['title' => 'My Test Post']);
+        $post->save();
+        $this->assertEquals($post->slug, 'modified-by-event');
+    }
+
+    /**
+     * Test that the "slugging" event can be cancelled.
+     *
+     * @test
+     */
+    public function testCancelSluggingEvent()
+    {
+        // test event to cancel the slugging
+        Post::registerModelEvent('slugging', function($post) {
+            return false;
+        });
+
+        $post = new Post(['title' => 'My Test Post']);
+        $post->save();
+        $this->assertEquals($post->slug, null);
+    }
+
+    /**
+     * Test that the "slugged" event is fired.
+     *
+     * @test
+     */
+    public function testSluggedEvent()
+    {
+        Post::registerModelEvent('slugged', function($post) {
+            $post->subtitle = 'I have been slugged!';
+        });
+
+        $post = new Post(['title' => 'My Test Post']);
+        $post->save();
+        $this->assertEquals($post->slug, 'my-test-post');
+        $this->assertEquals($post->subtitle, 'I have been slugged!');
+    }
+
 }

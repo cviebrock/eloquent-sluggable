@@ -182,6 +182,33 @@ If your slugs aren't unique, then use the `getBySlug()` method which will return
 Eloquent collection.
 
 
+<a name="events"></a>
+## Events
+
+Sluggable models will fire two Eloquent model events: "slugging" and "slugged".
+  
+The "slugging" event is fired just before the slug is generated.  If the callback 
+from this event returns false, then the slugging is not performed.
+
+The "slugged" event is fired just after a slug is generated.  It won't be called
+in the case where the model doesn't need slugging (as determined by the `needsSlugging()`
+method).
+
+You can hook into either of these events just like any other Eloquent model event:
+
+```php
+Post::registerModelEvent('slugging', function($post) {
+	if ($post->someCondition()) {
+		// the model won't be slugged
+		return false;
+	}
+});
+
+Post::registerModelEvent('slugged', function($post) {
+	Log::info('Post slugged: ' . $post->getSlug());
+});
+```
+
 
 <a name="config"></a>
 ## Configuration

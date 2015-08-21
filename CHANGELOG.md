@@ -7,6 +7,7 @@
 - Ability to use a model's relations in the `build_from` configuration (#171 thanks @blaxxi)
 - Added `getSlugEngine()` method so that the Cocur\Slugify class can be configured
 - Updated the migration stub for Laravel 5.1's PSR-2 changes (#174 thanks @39digits)
+- Added `slugging` and `slugged` Eloquent model events
 
 
 ## 3.0.0 - 06-Jul-2015
