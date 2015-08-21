@@ -52,7 +52,7 @@ class SluggableMigrationCreator extends MigrationCreator
     {
         $stub = parent::populateStub($name, $stub, $table);
 
-        return str_replace('{{column}}', $this->column, $stub);
+        return str_replace('DummyColumn', $this->column, $stub);
     }
 
     /**
