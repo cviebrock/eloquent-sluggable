@@ -618,36 +618,36 @@ class SluggableTest extends TestCase {
 	 */
 	public function testAddingCustomRules() 
         {       
-                $newOption = [
-                    
-                    'custum_rules_for_slugify' => [
-                        
-                        'subtitle' => [ // attribute name
-                            
-                            'TR' => [  // if subtitle attribute is 'TR', apply these rules
-                                'Ö' => 'o',
-                                'ö' => 'o',
-                                'Ü' => 'u',                    
-                                'ü' => 'u',                          
-                                'Ğ' => 'G',
-                                'İ' => 'I',
-                                'Ş' => 'S',
-                                'ç' => 'c',
-                                'ğ' => 'g',
-                                'ı' => 'i',
-                                'ş' => 's',
-                                'â' => 'a',
-                            ],
+            $newOption = [
+
+                'custum_rules_for_slugify' => [
+
+                    'subtitle' => [ // attribute name
+
+                        'TR' => [  // if subtitle attribute is 'TR', apply these rules
+                            'Ö' => 'o',
+                            'ö' => 'o',
+                            'Ü' => 'u',                    
+                            'ü' => 'u',                          
+                            'Ğ' => 'G',
+                            'İ' => 'I',
+                            'Ş' => 'S',
+                            'ç' => 'c',
+                            'ğ' => 'g',
+                            'ı' => 'i',
+                            'ş' => 's',
+                            'â' => 'a',
                         ],
                     ],
-                ];                
-               
-		$post = $this->makePost('Gümüşhane', 'TR');// Gümüşhane is Turkish name..
-                
-                $post->setSlugConfig($newOption);
-                
-		$post->save();
-		$this->assertEquals('gumushane', $post->slug); // That's correct!               
+                ],
+            ];                
+
+            $post = $this->makePost('Gümüşhane', 'TR');// Gümüşhane is Turkish name..
+
+            $post->setSlugConfig($newOption);
+
+            $post->save();
+            $this->assertEquals('gumushane', $post->slug); // That's correct!               
         }
         
         /**
@@ -659,17 +659,16 @@ class SluggableTest extends TestCase {
 	 * @test
 	 */
 	public function testCustomRules() 
-        {       
-               
-		$post = $this->makePost('Gümüşhane', 'TR'); 
-                
-		$post->save();
-                
-                /**
-                 * This time custom rules not defined,
-                 * it guess Slugify creates slug for as german spacial characters..                
-                 */
-		$this->assertEquals('guemueshane', $post->slug);               
+        {                      
+            $post = $this->makePost('Gümüşhane', 'TR'); 
+
+            $post->save();
+
+            /**
+             * This time custom rules not defined,
+             * it guess Slugify creates slug for as german spacial characters..                
+             */
+            $this->assertEquals('guemueshane', $post->slug);               
         }
         
         /**
@@ -682,31 +681,31 @@ class SluggableTest extends TestCase {
 	 */
 	public function testAddingAlotOfCustomRules() 
         {       
-                $newOption = [
-                    
-                    'custum_rules_for_slugify' => [
-                        
-                        'subtitle' => [ // attribute name
-                            
-                            'TR' => [ // if subtitle attribute is 'TR', apply these rules
-                              
-                                
-                                'ü' => 'ue',
-                             ],
-                             'DE' => [  // if subtitle attribute is 'DE', apply these rules
-                               
-                                 'ü' => 'ue',
-                               
-                            ],
+            $newOption = [
+
+                'custum_rules_for_slugify' => [
+
+                    'subtitle' => [ // attribute name
+
+                        'TR' => [ // if subtitle attribute is 'TR', apply these rules
+
+
+                            'ü' => 'ue',
+                         ],
+                         'DE' => [  // if subtitle attribute is 'DE', apply these rules
+
+                             'ü' => 'ue',
+
                         ],
                     ],
-                ];                
-               
-		$post = $this->makePost('Gümüşhane', 'DE');
-                
-                $post->setSlugConfig($newOption);
-                
-		$post->save();
+                ],
+            ];                
+
+            $post = $this->makePost('Gümüşhane', 'DE');
+
+            $post->setSlugConfig($newOption);
+
+            $post->save();
 		$this->assertEquals('guemueshane', $post->slug);    
         }
 

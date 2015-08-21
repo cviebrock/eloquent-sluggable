@@ -356,15 +356,15 @@ trait SluggableTrait {
          * 
          * @return \Cocur\Slugify\Slugify
          */
-        protected function createNewSlugifyWithCustomRules()
+        public function createNewSlugifyWithCustomRules()
         {           
             $rules  = $this->getCustomRulesForSlugify();    
             
-            if (empty($rules)) {                
+            if (is_null($rules) || empty($rules)) {                
                 
                 return $this->newInstanceSlugify();      
             }        
-            
+         
             $destroyFistDepth = array_collapse($rules);
             
             return $this->newInstanceSlugify()->addRules($destroyFistDepth);            
@@ -375,11 +375,9 @@ trait SluggableTrait {
          * 
          * @return array|null custom rules
          */
-        private function getCustomRulesForSlugify() 
-        {          
-            if ( $this->isDefinedCustomRulesForSlugify() ) { return null; }           
-           
-            foreach ($this->getRulesForSlugify() as $column => $situations) {
+        public function getCustomRulesForSlugify() 
+        {              
+            foreach ((array) $this->getRulesForSlugify() as $column => $situations) {
                 
                 if (! array_key_exists($column, $this->attributes)) {
                     
@@ -388,22 +386,11 @@ trait SluggableTrait {
                 
                 if ($this->attributeEqualsToGivenValue($column, $situations)) {
                     
+                   
                     return array_values($situations);                  
                 }
             }
             
-        }
-        
-        /**
-         * To determine exist of custom rules for Slugify
-         * 
-         * @return bool
-         */
-        private function isDefinedCustomRulesForSlugify()
-        {            
-            $rules   = $this->getRulesForSlugify();                
-           
-            return empty($rules);             
         }
         
         /**
@@ -413,7 +400,7 @@ trait SluggableTrait {
          * @param array     $situations value of wanted comparing to attribute
          * @return bool
          */
-        private function attributeEqualsToGivenValue($attribute, array $situations=array())
+        protected function attributeEqualsToGivenValue($attribute, array $situations=array())
         {            
             $value = key($situations);
             
@@ -425,7 +412,7 @@ trait SluggableTrait {
          * 
          * @return \Cocur\Slugify\Slugify
          */
-        protected function newInstanceSlugify()
+        public function newInstanceSlugify()
         {                      
             return new Slugify();            
         }        
@@ -452,6 +439,6 @@ trait SluggableTrait {
             
             $configs = $this->getSluggableConfig();
             
-            return array_key_exists($key, $configs) ? $configs[$key] : null;         
+            return array_get($configs, $key, null); 
         }        
 }
