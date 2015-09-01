@@ -569,6 +569,9 @@ class SluggableTest extends TestCase
 
         $post3 = $this->makePost('My third post');
         $post3->save();
+        
+        $post4 = $this->makePost(5);
+        $post4->save();
 
         $post = Post::findBySlugOrId('my-second-post');
 
@@ -577,6 +580,10 @@ class SluggableTest extends TestCase
         $post = Post::findBySlugOrId(3);
 
         $this->assertEquals($post3->id, $post->id);
+        
+        $post = Post::findBySlugOrId(5);
+
+        $this->assertEquals($post4->id, $post->id);
     }
 
     /**
@@ -594,12 +601,18 @@ class SluggableTest extends TestCase
 
         $post3 = $this->makePost('My third post');
         $post3->save();
+        
+        $post4 = $this->makePost(5);
+        $post4->save();
 
         $post = Post::findBySlugOrIdOrFail('my-second-post');
         $this->assertEquals($post2->id, $post->id);
 
         $post = Post::findBySlugOrIdOrFail(3);
         $this->assertEquals($post3->id, $post->id);
+        
+        $post = Post::findBySlugOrIdOrFail(5);
+		$this->assertEquals($post4->id, $post->id);
 
         try {
             Post::findBySlugOrFail('my-fourth-post');

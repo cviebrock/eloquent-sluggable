@@ -391,11 +391,11 @@ trait SluggableTrait
      */
     public static function findBySlugOrIdOrFail($slug)
     {
-        if (is_numeric($slug) && $slug > 0) {
+        if (!$result = self::findBySlug($slug)) {
             return self::findOrFail($slug);
         }
-
-        return self::findBySlugOrFail($slug);
+		
+        return $result;
     }
 
     /**
@@ -404,12 +404,12 @@ trait SluggableTrait
      * @param $slug
      * @return Model|Collection|null
      */
-    public static function findBySlugOrId($slug)
-    {
-        if (is_numeric($slug) && $slug > 0) {
+    public static function findBySlugOrId($slug) {
+
+        if (!$result = self::findBySlug($slug)) {
             return self::find($slug);
         }
-
-        return self::findBySlug($slug);
+		
+        return $result;
     }
 }
