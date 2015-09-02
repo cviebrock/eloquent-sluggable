@@ -8,6 +8,7 @@
 - Added `getSlugEngine()` method so that the Cocur\Slugify class can be configured
 - Updated the migration stub for Laravel 5.1's PSR-2 changes (#174 thanks @39digits)
 - Added `slugging` and `slugged` Eloquent model events
+- Fix for `findBySlugOrId()` methods when the slug is numeric (#161 thanks @canvural)
 
 
 ## 3.0.0 - 06-Jul-2015
