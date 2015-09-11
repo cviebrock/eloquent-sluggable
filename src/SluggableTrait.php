@@ -61,6 +61,9 @@ trait SluggableTrait
      */
     protected function generateSource($key)
     {
+        $key_alternatives = explode('|',$key);
+        $key = $key_alternatives[0];
+        
         if (isset($this->{$key})) {
             return $this->{$key};
         }
@@ -68,7 +71,10 @@ trait SluggableTrait
         $object = $this;
         foreach (explode('.', $key) as $segment) {
             if (!is_object($object) || !$tmp = $object->{$segment}) {
-                return null;
+                if(!empty($key_alternatives[1]))
+                    return $this->generateSource($key_alternatives[1]);
+                else
+                    return null;
             }
 
             $object = $object->{$segment};
