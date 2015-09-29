@@ -333,6 +333,21 @@ trait SluggableTrait
     }
 
     /**
+     * Generate a unique slug for a given string.
+     * 
+     * @param  string $fromString
+     * @return string
+     */
+    public static function createSlug($fromString)
+    {
+        $model = new self();
+        $slug = $model->generateSlug($fromString);
+        $slug = $model->validateSlug($slug);
+        
+        return $model->makeSlugUnique($slug);
+    }
+
+    /**
      * Query scope for finding a model by its slug.
      *
      * @param $scope

@@ -668,8 +668,7 @@ class SluggableTest extends TestCase
         $post2->dummy = 'Some update happens, and the unique value increments...';
         $post2->save(); // before fix, my-test-post-2
 
-        $this->assertEquals($post2->slug,
-          'my-test-post-1'); // previously failed
+        $this->assertEquals('my-test-post-1', $post2->slug); // previously failed
     }
 
     /**
@@ -685,7 +684,7 @@ class SluggableTest extends TestCase
         ]);
         $post->author()->associate($author);
         $post->save();
-        $this->assertEquals($post->slug, 'arthur-conan-doyle-first');
+        $this->assertEquals('arthur-conan-doyle-first', $post->slug);
     }
 
     /**
@@ -699,7 +698,7 @@ class SluggableTest extends TestCase
           'title' => 'First'
         ]);
         $post->save();
-        $this->assertEquals($post->slug, 'first');
+        $this->assertEquals('first', $post->slug);
     }
 
     /**
@@ -715,7 +714,7 @@ class SluggableTest extends TestCase
         ]);
 
         $post->save();
-        $this->assertEquals($post->slug, null);
+        $this->assertEquals(null, $post->slug);
     }
 
     /**
@@ -729,7 +728,7 @@ class SluggableTest extends TestCase
           'title' => 'The quick brown fox jumps over the lazy dog'
         ]);
         $post->save();
-        $this->assertEquals($post->slug, 'tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag');
+        $this->assertEquals('tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag', $post->slug);
     }
 
     /**
@@ -746,7 +745,7 @@ class SluggableTest extends TestCase
 
         $post = new Post(['title' => 'My Test Post']);
         $post->save();
-        $this->assertEquals($post->slug, 'modified-by-event');
+        $this->assertEquals('modified-by-event', $post->slug);
     }
 
     /**
@@ -763,7 +762,7 @@ class SluggableTest extends TestCase
 
         $post = new Post(['title' => 'My Test Post']);
         $post->save();
-        $this->assertEquals($post->slug, null);
+        $this->assertEquals(null, $post->slug);
     }
 
     /**
@@ -779,8 +778,30 @@ class SluggableTest extends TestCase
 
         $post = new Post(['title' => 'My Test Post']);
         $post->save();
-        $this->assertEquals($post->slug, 'my-test-post');
-        $this->assertEquals($post->subtitle, 'I have been slugged!');
+        $this->assertEquals('my-test-post', $post->slug);
+        $this->assertEquals('I have been slugged!', $post->subtitle);
     }
 
+    /**
+     * Test that we can generate a slug statically.
+     * 
+     * @test
+     */
+    public function testStaticSlugGenerator()
+    {
+        $this->assertEquals('my-test-post', Post::createSlug('My Test Post'));
+    }
+
+    /**
+     * Test that we generate unique slugs in a static context.
+     * 
+     * @test
+     */
+    public function testStaticSlugGeneratorWhenEntriesExist()
+    {
+        $post = Post::create(['title' => 'My Test Post']);
+
+        $this->assertEquals('my-test-post', $post->slug);
+        $this->assertEquals('my-test-post-1', Post::createSlug('My Test Post'));
+    }
 }
