@@ -182,6 +182,12 @@ This is basically a wrapper for `Post::where('slug-field','=','my-slug')->first(
 If your slugs aren't unique, then use the `getBySlug()` method which will return an 
 Eloquent collection.
 
+You can also use the static method `Post::createSlug('My First Post')` to generate 
+a slug for a given string, without actually creating or saving an associated model.
+This would be useful for Ajax-y controllers or the like, where you want to show a 
+user what the unique slug _would_ be for a given input, before actually creating
+a model.
+
 
 <a name="events"></a>
 ## Events
