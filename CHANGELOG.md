@@ -9,6 +9,7 @@
 - Updated the migration stub for Laravel 5.1's PSR-2 changes (#174 thanks @39digits)
 - Added `slugging` and `slugged` Eloquent model events
 - Fix for `findBySlugOrId()` methods when the slug is numeric (#161 thanks @canvural)
+- Add static method `Model::createSlug('some string')` (#185 thanks @phroggyy)
 
 
 ## 3.0.0 - 06-Jul-2015
