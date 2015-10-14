@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.1.0 - xx-xxx-xxxx
+## 3.1.0 - 14-Oct-2015
 
 - Convert code-base to PSR-2
 - If the source is empty, then set the slug to `null` (#162 thanks @PallMallShow)
