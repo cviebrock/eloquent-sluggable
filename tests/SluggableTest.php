@@ -51,7 +51,7 @@ class SluggableTest extends TestCase
      */
     protected function getPackageProviders($app)
     {
-        return ['Cviebrock\EloquentSluggable\SluggableServiceProvider'];
+        return [Cviebrock\EloquentSluggable\SluggableServiceProvider::class];
     }
 
     /**
@@ -444,7 +444,7 @@ class SluggableTest extends TestCase
             Post::findBySlugOrFail('my-fourth-post');
             $this->fail('Not found exception not raised');
         } catch (Exception $e) {
-            $this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException',
+            $this->assertInstanceOf(Illuminate\Database\Eloquent\ModelNotFoundException::class,
               $e);
         }
     }
@@ -615,7 +615,7 @@ class SluggableTest extends TestCase
             Post::findBySlugOrFail('my-fourth-post');
             $this->fail('Not found exception not raised');
         } catch (Exception $e) {
-            $this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException',
+            $this->assertInstanceOf(Illuminate\Database\Eloquent\ModelNotFoundException::class,
               $e);
         }
     }
