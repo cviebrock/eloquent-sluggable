@@ -17,11 +17,8 @@ class SluggableTest extends TestCase
     {
         parent::setUp();
 
-        // Create an artisan object for calling migrations
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
-
         // Call migrations specific to our tests, e.g. to seed the db
-        $artisan->call('migrate', [
+        $this->artisan('migrate', [
           '--database' => 'testbench',
           '--path' => '../tests/database/migrations',
         ]);
@@ -54,7 +51,7 @@ class SluggableTest extends TestCase
      */
     protected function getPackageProviders($app)
     {
-        return ['Cviebrock\EloquentSluggable\SluggableServiceProvider'];
+        return [Cviebrock\EloquentSluggable\SluggableServiceProvider::class];
     }
 
     /**
@@ -447,7 +444,7 @@ class SluggableTest extends TestCase
             Post::findBySlugOrFail('my-fourth-post');
             $this->fail('Not found exception not raised');
         } catch (Exception $e) {
-            $this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException',
+            $this->assertInstanceOf(Illuminate\Database\Eloquent\ModelNotFoundException::class,
               $e);
         }
     }
@@ -618,7 +615,7 @@ class SluggableTest extends TestCase
             Post::findBySlugOrFail('my-fourth-post');
             $this->fail('Not found exception not raised');
         } catch (Exception $e) {
-            $this->assertInstanceOf('Illuminate\Database\Eloquent\ModelNotFoundException',
+            $this->assertInstanceOf(Illuminate\Database\Eloquent\ModelNotFoundException::class,
               $e);
         }
     }
