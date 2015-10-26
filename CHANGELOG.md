@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.1.1 - 26-Oct-2015
+
+- Fix missing class reference (#192)
+- Clean up migration code (#191 thanks @natzim)
+- Fix when using magic getters (#188 thanks @ChrisReid)
+
 ## 3.1.0 - 14-Oct-2015
 
 - Convert code-base to PSR-2
