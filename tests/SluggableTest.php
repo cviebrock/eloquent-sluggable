@@ -17,11 +17,8 @@ class SluggableTest extends TestCase
     {
         parent::setUp();
 
-        // Create an artisan object for calling migrations
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
-
         // Call migrations specific to our tests, e.g. to seed the db
-        $artisan->call('migrate', [
+        $this->artisan('migrate', [
           '--database' => 'testbench',
           '--path' => '../tests/database/migrations',
         ]);
