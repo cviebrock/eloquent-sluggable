@@ -2,7 +2,6 @@
 
 use Illuminate\Support\ServiceProvider;
 
-
 /**
  * Class SluggableServiceProvider
  *
@@ -10,7 +9,6 @@ use Illuminate\Support\ServiceProvider;
  */
 class SluggableServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *

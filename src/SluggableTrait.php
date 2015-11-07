@@ -3,7 +3,6 @@
 use Cocur\Slugify\Slugify;
 use Illuminate\Support\Collection;
 
-
 /**
  * Class SluggableTrait
  *
@@ -11,7 +10,6 @@ use Illuminate\Support\Collection;
  */
 trait SluggableTrait
 {
-
     /**
      * Determines whether the model needs slugging.
      *
@@ -301,7 +299,6 @@ trait SluggableTrait
      */
     public function sluggify($force = false)
     {
-
         if ($this->fireModelEvent('slugging') === false) {
             return $this;
         }
@@ -420,7 +417,6 @@ trait SluggableTrait
      */
     public static function findBySlugOrId($slug)
     {
-
         if (!$result = self::findBySlug($slug)) {
             return self::find($slug);
         }

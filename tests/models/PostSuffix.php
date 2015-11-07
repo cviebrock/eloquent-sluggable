@@ -7,7 +7,6 @@
  */
 class PostSuffix extends Post
 {
-
     /**
      * Sluggable configuration.
      *

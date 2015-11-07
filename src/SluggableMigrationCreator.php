@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\MigrationCreator;
 
-
 /**
  * Class SluggableMigrationCreator
  *
@@ -10,7 +9,6 @@ use Illuminate\Database\Migrations\MigrationCreator;
  */
 class SluggableMigrationCreator extends MigrationCreator
 {
-
     /**
      * Slug column name
      *

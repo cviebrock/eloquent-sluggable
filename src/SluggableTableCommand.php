@@ -4,7 +4,6 @@ use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputArgument;
 
-
 /**
  * Class SluggableTableCommand
  *
@@ -12,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class SluggableTableCommand extends BaseCommand
 {
-
     /**
      * The console command name.
      *

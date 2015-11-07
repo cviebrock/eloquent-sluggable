@@ -7,7 +7,6 @@
  */
 interface SluggableInterface
 {
-
     public function getSlug();
 
     public function sluggify($force = false);

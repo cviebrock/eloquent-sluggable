@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * Class Author
  *
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-
     /**
      * Indicates if the model should be timestamped.
      *
@@ -24,5 +22,4 @@ class Author extends Model
      * @var array
      */
     protected $fillable = ['name'];
-
 }

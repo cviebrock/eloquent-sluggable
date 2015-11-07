@@ -2,7 +2,6 @@
 
 use Cocur\Slugify\Slugify;
 
-
 /**
  * Class PostCustomEngine
  *
@@ -10,7 +9,6 @@ use Cocur\Slugify\Slugify;
  */
 class PostCustomEngine extends Post
 {
-
     protected function getSlugEngine()
     {
         $engine = new Slugify();
@@ -22,5 +20,4 @@ class PostCustomEngine extends Post
 
         return $engine;
     }
-
 }

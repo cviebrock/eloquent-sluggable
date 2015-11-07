@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * Class PostNotSluggable
  *
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PostNotSluggable extends Model
 {
-
     /**
      * The table associated with the model.
      *

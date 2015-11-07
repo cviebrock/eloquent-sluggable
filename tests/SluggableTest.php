@@ -3,13 +3,11 @@
 use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase;
 
-
 /**
  * Class SluggableTest
  */
 class SluggableTest extends TestCase
 {
-
     /**
      * Setup the test environment.
      */

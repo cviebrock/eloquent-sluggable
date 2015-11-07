@@ -7,7 +7,6 @@
  */
 class PostWithRelation extends Post
 {
-
     /**
      * Sluggable configuration.
      *
@@ -27,5 +26,4 @@ class PostWithRelation extends Post
     {
         return $this->belongsTo('Author');
     }
-
 }
