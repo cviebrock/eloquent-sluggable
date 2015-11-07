@@ -48,7 +48,7 @@ trait SluggableTrait
             return $this->__toString();
         }
 
-        $source = array_map([$this, 'generateSource'], (array) $from);
+        $source = array_map([$this, 'generateSource'], (array)$from);
 
         return join($source, ' ');
     }
@@ -316,7 +316,6 @@ trait SluggableTrait
             $this->setSlug($slug);
 
             $this->fireModelEvent('slugged');
-
         }
 
         return $this;
@@ -334,7 +333,7 @@ trait SluggableTrait
 
     /**
      * Generate a unique slug for a given string.
-     * 
+     *
      * @param  string $fromString
      * @return string
      */
@@ -343,7 +342,7 @@ trait SluggableTrait
         $model = new self();
         $slug = $model->generateSlug($fromString);
         $slug = $model->validateSlug($slug);
-        
+
         return $model->makeSlugUnique($slug);
     }
 
@@ -365,7 +364,7 @@ trait SluggableTrait
      * Find a model by slug.
      *
      * @param $slug
-     * @return Model|null.
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public static function findBySlug($slug)
     {
@@ -376,7 +375,7 @@ trait SluggableTrait
      * Find a model by slug or fail.
      *
      * @param $slug
-     * @return Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public static function findBySlugOrFail($slug)
     {
@@ -402,14 +401,14 @@ trait SluggableTrait
      * Simple find by Id if it's numeric or slug if not. Fail if not found.
      *
      * @param $slug
-     * @return Model|Collection
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
     public static function findBySlugOrIdOrFail($slug)
     {
         if (!$result = self::findBySlug($slug)) {
             return self::findOrFail($slug);
         }
-		
+
         return $result;
     }
 
@@ -417,14 +416,15 @@ trait SluggableTrait
      * Simple find by Id if it's numeric or slug if not.
      *
      * @param $slug
-     * @return Model|Collection|null
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|null
      */
-    public static function findBySlugOrId($slug) {
+    public static function findBySlugOrId($slug)
+    {
 
         if (!$result = self::findBySlug($slug)) {
             return self::find($slug);
         }
-		
+
         return $result;
     }
 }

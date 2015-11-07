@@ -566,7 +566,7 @@ class SluggableTest extends TestCase
 
         $post3 = $this->makePost('My third post');
         $post3->save();
-        
+
         $post4 = $this->makePost(5);
         $post4->save();
 
@@ -577,7 +577,7 @@ class SluggableTest extends TestCase
         $post = Post::findBySlugOrId(3);
 
         $this->assertEquals($post3->id, $post->id);
-        
+
         $post = Post::findBySlugOrId(5);
 
         $this->assertEquals($post4->id, $post->id);
@@ -598,7 +598,7 @@ class SluggableTest extends TestCase
 
         $post3 = $this->makePost('My third post');
         $post3->save();
-        
+
         $post4 = $this->makePost(5);
         $post4->save();
 
@@ -607,9 +607,9 @@ class SluggableTest extends TestCase
 
         $post = Post::findBySlugOrIdOrFail(3);
         $this->assertEquals($post3->id, $post->id);
-        
+
         $post = Post::findBySlugOrIdOrFail(5);
-		$this->assertEquals($post4->id, $post->id);
+        $this->assertEquals($post4->id, $post->id);
 
         try {
             Post::findBySlugOrFail('my-fourth-post');
@@ -736,7 +736,7 @@ class SluggableTest extends TestCase
     public function testSluggingEvent()
     {
         // test event to modify the model before slugging
-        Post::registerModelEvent('slugging', function($post) {
+        Post::registerModelEvent('slugging', function ($post) {
             $post->title = 'Modified by event';
         });
 
@@ -753,7 +753,7 @@ class SluggableTest extends TestCase
     public function testCancelSluggingEvent()
     {
         // test event to cancel the slugging
-        Post::registerModelEvent('slugging', function($post) {
+        Post::registerModelEvent('slugging', function ($post) {
             return false;
         });
 
@@ -769,7 +769,7 @@ class SluggableTest extends TestCase
      */
     public function testSluggedEvent()
     {
-        Post::registerModelEvent('slugged', function($post) {
+        Post::registerModelEvent('slugged', function ($post) {
             $post->subtitle = 'I have been slugged!';
         });
 
@@ -781,7 +781,7 @@ class SluggableTest extends TestCase
 
     /**
      * Test that we can generate a slug statically.
-     * 
+     *
      * @test
      */
     public function testStaticSlugGenerator()
@@ -791,7 +791,7 @@ class SluggableTest extends TestCase
 
     /**
      * Test that we generate unique slugs in a static context.
-     * 
+     *
      * @test
      */
     public function testStaticSlugGeneratorWhenEntriesExist()

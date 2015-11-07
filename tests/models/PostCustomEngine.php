@@ -1,4 +1,5 @@
 <?php
+
 use Cocur\Slugify\Slugify;
 
 
@@ -10,15 +11,16 @@ use Cocur\Slugify\Slugify;
 class PostCustomEngine extends Post
 {
 
-  protected function getSlugEngine() {
-    $engine = new Slugify();
+    protected function getSlugEngine()
+    {
+        $engine = new Slugify();
 
-    $engine->addRule('e', 'a');
-    $engine->addRule('i', 'a');
-    $engine->addRule('o', 'a');
-    $engine->addRule('u', 'a');
+        $engine->addRule('e', 'a');
+        $engine->addRule('i', 'a');
+        $engine->addRule('o', 'a');
+        $engine->addRule('u', 'a');
 
-    return $engine;
-  }
+        return $engine;
+    }
 
 }
