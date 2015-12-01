@@ -329,6 +329,14 @@ Returns all existing slugs that are "similar" to the given one.  Should return a
 Writes the (generated, valid, and unique) slug to the model's attributes.
 
 
+## Generate slugs for existing tables
+
+Run the command:
+    
+    php artisan slugs:create App\ModelName
+
+To overwrite existing slugs, pass in the `--force` argument.
+
 
 <a name="upgrading"></a>
 ## Upgrading From a 1.x Version
