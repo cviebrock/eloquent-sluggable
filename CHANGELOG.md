@@ -1,8 +1,15 @@
 # Change Log
 
+## 3.1.3 - 07-Dec-2015
+
+- Fix for PostgreSQL and findBySlugOrId() (#205 thanks @Jaspur)
+
 ## 3.1.2 - 07-Nov-2015
 
 - Fix some namespacing issues in docblocks (#195)
+- Streamline artisan migrate call (#191 thanks @ntzm)
+- Fix bug when using magic getters (#188 thanks @ChrisReid)
+- Add a static slug generator (#185 thanks @phroggyy)
 - Lots of PSR-2 fixes
 
 ## 3.1.1 - 26-Oct-2015
