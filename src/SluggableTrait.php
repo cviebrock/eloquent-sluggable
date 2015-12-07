@@ -403,7 +403,7 @@ trait SluggableTrait
     public static function findBySlugOrIdOrFail($slug)
     {
         if (!$result = self::findBySlug($slug)) {
-            return self::findOrFail($slug);
+            return self::findOrFail((int)$slug);
         }
 
         return $result;
