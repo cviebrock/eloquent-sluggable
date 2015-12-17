@@ -1,6 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Cocur\Slugify\Slugify;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 /**
