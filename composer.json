@@ -16,9 +16,9 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "illuminate/config": "5.*",
-    "illuminate/database": "5.*",
-    "illuminate/support": "5.*",
+    "illuminate/config": "~5.2",
+    "illuminate/database": "~5.2",
+    "illuminate/support": "~5.2",
     "cocur/slugify": "~1.4"
   },
   "require-dev": {
