@@ -19,11 +19,11 @@
     "illuminate/config": "5.*",
     "illuminate/database": "5.*",
     "illuminate/support": "5.*",
-    "cocur/slugify": "1.1.*"
+    "cocur/slugify": "~1.4"
   },
   "require-dev": {
     "phpunit/phpunit": "4.*",
-    "orchestra/testbench": "3.0.*"
+    "orchestra/testbench": "~3.0"
   },
   "autoload": {
     "psr-4": {
