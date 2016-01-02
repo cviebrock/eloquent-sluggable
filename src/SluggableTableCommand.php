@@ -1,7 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
-use Illuminate\Foundation\Composer;
+use Illuminate\Support\Composer;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
