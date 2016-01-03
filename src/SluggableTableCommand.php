@@ -1,7 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
-use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
@@ -31,24 +30,14 @@ class SluggableTableCommand extends BaseCommand
     protected $creator;
 
     /**
-     * @var \Illuminate\Foundation\Composer
-     */
-    protected $composer;
-
-    /**
      * Create a new migration sluggable instance.
      *
      * @param SluggableMigrationCreator $creator
-     * @param Composer $composer
      */
-    public function __construct(
-      SluggableMigrationCreator $creator,
-      Composer $composer
-    ) {
+    public function __construct(SluggableMigrationCreator $creator) {
         parent::__construct();
 
         $this->creator = $creator;
-        $this->composer = $composer;
     }
 
     /**
@@ -65,11 +54,11 @@ class SluggableTableCommand extends BaseCommand
         $name = 'add_' . $column . '_to_' . $table . '_table';
 
         // Now we are ready to write the migration out to disk. Once we've written
-        // the migration out, we will dump-autoload for the entire framework to
-        // make sure that the migrations are registered by the class loaders.
+        // the migration out, we will remind the user to `composer dump-autoload`
+        // to make sure that the migrations are registered by the class loaders.
         $this->writeMigration($name, $table, $column);
 
-        $this->composer->dumpAutoloads();
+        $this->line('<info>Don\'t forget to run</info> composer dump-autoload <info>to register the migration.</info>');
     }
 
     /**

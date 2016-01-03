@@ -72,8 +72,8 @@ automatically, with minimal configuration at the start.
 
 First, you'll need to require the package with Composer:
 
-```bash
-$ composer require cviebrock/eloquent-sluggable
+```sh
+composer require cviebrock/eloquent-sluggable
 ```
 
 > **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running 
@@ -121,7 +121,7 @@ Of course, your database will need a column in which to store the slug. You can 
 this manually, or use the built-in artisan command to create a migration for you. 
 For example:
 
-```
+```sh
 php artisan sluggable:table posts
 ```
 
@@ -129,11 +129,19 @@ Running that command will create a migration that adds a column named "slug" to 
 posts table. If you want to use a different name for the slug column, you can provide 
 that as a second argument:
 
-```
+```sh
 php artisan sluggable:table posts slug_column
 ```
 
 Be sure to set your model's `save_to` configuration to match the column name.
+
+After generating the migration, you will need to rebuild composer's auto-loader
+and run the migration:
+
+```sh
+composer dump-autoload
+php artisan migrate
+```
 
 That's it ... your model is now "sluggable"!
 

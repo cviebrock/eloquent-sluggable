@@ -1,5 +1,9 @@
 # Change Log
 
+## 3.1.4 - 03-Jan-2016
+
+- Compatible with Laravel 5.2 (by removing calls to composer from migrate command)
+
 ## 3.1.3 - 07-Dec-2015
 
 - Fix for PostgreSQL and findBySlugOrId() (#205 thanks @Jaspur)
