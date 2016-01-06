@@ -22,7 +22,7 @@ trait SluggableTrait
         $save_to = $config['save_to'];
         $on_update = $config['on_update'];
 
-        if(empty($this->generateSlug($this->$config['build_from']))) {
+        if(empty($this->generateSlug($this->getSlugSource()))) {
             return false;
         }
 
