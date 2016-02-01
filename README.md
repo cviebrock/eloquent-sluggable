@@ -1,8 +1,6 @@
 # Eloquent-Sluggable
 
-<p class="facebox-danger" markdown="1">
- :bangbang: **The `rewrite` branch is unstable. Don't use it.**
-</p>
+>{.facebox-danger} :bangbang: **The `rewrite` branch is unstable. Don't use it.**
 
 Easy creation of slugs for your Eloquent models in Laravel 5.
 
