@@ -1,5 +1,9 @@
 # Eloquent-Sluggable
 
+<p class="facebox-danger" markdown="1">
+ :bangbang: **The `rewrite` branch is unstable. Don't use it.**
+</p>
+
 Easy creation of slugs for your Eloquent models in Laravel 5.
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg)](https://travis-ci.org/cviebrock/eloquent-sluggable)
