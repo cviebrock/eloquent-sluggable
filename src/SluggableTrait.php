@@ -364,9 +364,12 @@ trait SluggableTrait
      * @param $slug
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public static function findBySlug($slug)
+    public static function findBySlug($slug, $relations = null)
     {
-        return self::whereSlug($slug)->first();
+        $query = self::whereSlug($slug);
+        if($relations)
+            $query->with($relations);
+        return $query->first();
     }
 
     /**
@@ -375,9 +378,12 @@ trait SluggableTrait
      * @param $slug
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public static function findBySlugOrFail($slug)
+    public static function findBySlugOrFail($slug, $relations = null)
     {
-        return self::whereSlug($slug)->firstOrFail();
+        $query = self::whereSlug($slug);
+        if($relations)
+            $query->with($relations);
+        return $query->firstOrFail();
     }
 
     /**
