@@ -1,13 +1,14 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Illuminate\Support\ServiceProvider;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class SluggableServiceProvider
+ * Class ServiceProvider
  *
  * @package Cviebrock\EloquentSluggable
  */
-class SluggableServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.

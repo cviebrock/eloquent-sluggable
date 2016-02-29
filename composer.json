@@ -16,9 +16,9 @@
   ],
   "require": {
     "php": ">=5.5",
-    "illuminate/config": "^5.0",
-    "illuminate/database": "^5.0",
-    "illuminate/support": "^5.0",
+    "illuminate/config": "~5.1|~5.2",
+    "illuminate/database": "~5.1|~5.2",
+    "illuminate/support": "~5.1|~5.2",
     "cocur/slugify": "^1.1"
   },
   "require-dev": {
@@ -27,7 +27,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Cviebrock\\EloquentSluggable\\": "src/"
+      "Cviebrock\\EloquentSluggable\\": "src/",
+      "Tests\\": "tests/"
     }
   }
 }

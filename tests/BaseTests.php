@@ -1,93 +1,14 @@
-<?php
+<?php namespace Tests;
 
 use Illuminate\Support\Str;
-use Orchestra\Testbench\TestCase;
+use Test\Models\Post;
+
 
 /**
  * Class SluggableTest
  */
-class SluggableTest extends TestCase
+class BaseTests extends TestCase
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        // Call migrations specific to our tests, e.g. to seed the db
-        $this->artisan('migrate', [
-          '--database' => 'testbench',
-          '--path' => '../tests/database/migrations',
-        ]);
-    }
-
-    /**
-     * Define environment setup.
-     *
-     * @param  Illuminate\Foundation\Application $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        // reset base path to point to our package's src directory
-        $app['path.base'] = __DIR__ . '/../src';
-
-        // set up database configuration
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
-          'driver' => 'sqlite',
-          'database' => ':memory:',
-          'prefix' => '',
-        ]);
-    }
-
-    /**
-     * Get Sluggable package providers.
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return ['Cviebrock\EloquentSluggable\SluggableServiceProvider'];
-    }
-
-    /**
-     * Helper to create "Post" model for tests.
-     *
-     * @param string $title
-     * @param string|null $subtitle
-     * @param string|null $slug
-     * @return Post
-     */
-    protected function makePost($title, $subtitle = null, $slug = null)
-    {
-        $post = new Post;
-        $post->title = $title;
-        if ($subtitle) {
-            $post->subtitle = $subtitle;
-        }
-        if ($slug) {
-            $post->slug = $slug;
-        }
-
-        return $post;
-    }
-
-    /**
-     * Helper to create "Author" model for tests.
-     *
-     * @param $name
-     * @return Author
-     */
-    protected function makeAuthor($name)
-    {
-        $author = new Author();
-        $author->name = $name;
-        $author->save();
-
-        return $author;
-    }
 
     /**
      * Test basic slugging functionality.
@@ -96,8 +17,9 @@ class SluggableTest extends TestCase
      */
     public function testSimpleSlug()
     {
-        $post = $this->makePost('My First Post');
-        $post->save();
+        $post = Post::create([
+          'title' => 'My First Post'
+        ]);
         $this->assertEquals('my-first-post', $post->slug);
     }
 
@@ -108,8 +30,9 @@ class SluggableTest extends TestCase
      */
     public function testAccentedCharacters()
     {
-        $post = $this->makePost('My Dinner With André & François');
-        $post->save();
+        $post = Post::create([
+          'title' => 'My Dinner With André & François'
+        ]);
         $this->assertEquals('my-dinner-with-andre-francois', $post->slug);
     }
 
@@ -120,8 +43,9 @@ class SluggableTest extends TestCase
      */
     public function testRenameSlugWithoutUpdate()
     {
-        $post = $this->makePost('My First Post');
-        $post->save();
+        $post = Post::create([
+          'title' => 'My First Post'
+        ]);
         $post->title = 'A New Title';
         $post->save();
         $this->assertEquals('my-first-post', $post->slug);
@@ -134,11 +58,12 @@ class SluggableTest extends TestCase
      */
     public function testRenameSlugWithUpdate()
     {
-        $post = $this->makePost('My First Post');
+        $post = Post::create([
+          'title' => 'My First Post'
+        ]);
         $post->setSlugConfig([
           'on_update' => true
         ]);
-        $post->save();
         $post->title = 'A New Title';
         $post->save();
         $this->assertEquals('a-new-title', $post->slug);
@@ -152,8 +77,9 @@ class SluggableTest extends TestCase
     public function testUnique()
     {
         for ($i = 0; $i < 20; $i++) {
-            $post = $this->makePost('A post title');
-            $post->save();
+            $post = Post::create([
+              'title' => 'A post title'
+            ]);
             if ($i == 0) {
                 $this->assertEquals('a-post-title', $post->slug);
             } else {
@@ -169,7 +95,10 @@ class SluggableTest extends TestCase
      */
     public function testMultipleSource()
     {
-        $post = $this->makePost('A Post Title', 'A Subtitle');
+        $post = Post::create([
+          'title' => 'A Post Title',
+          'subtitle' => 'A Subtitle'
+        ]);
         $post->setSlugConfig([
           'build_from' => ['title', 'subtitle']
         ]);
@@ -184,7 +113,10 @@ class SluggableTest extends TestCase
      */
     public function testCustomMethod()
     {
-        $post = $this->makePost('A Post Title', 'A Subtitle');
+        $post = Post::create([
+          'title' => 'A Post Title',
+          'subtitle' => 'A Subtitle'
+        ]);
         $post->setSlugConfig([
           'method' => function ($string, $separator) {
               return strrev(Str::slug($string, $separator));

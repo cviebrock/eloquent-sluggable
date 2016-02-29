@@ -18,19 +18,7 @@ return [
      * Defaults to null, which uses the toString() method on your model.
      */
 
-    'build_from' => null,
-
-    /**
-     * What field to we store the slug in?  Defaults to "slug".
-     * You need to configure this when building the SQL for your database, e.g.:
-     *
-     * Schema::create('users', function($table)
-     * {
-     *    $table->string('slug');
-     * });
-     */
-
-    'save_to' => 'slug',
+    'source' => null,
 
     /**
      * The maximum length of a generated slug.  Defaults to "null", which means
@@ -38,7 +26,7 @@ return [
      * want to make sure your slugs aren't too long.
      */
 
-    'max_length' => null,
+    'maxLength' => null,
 
     /**
      * If left to "null", then use the cocur/slugify package to generate the slug
@@ -83,7 +71,7 @@ return [
      * If set to "true", then uniqueness is enforced across trashed and existing models.
      */
 
-    'include_trashed' => false,
+    'includeTrashed' => false,
 
     /**
      * Whether to update the slug value when a model is being
@@ -91,7 +79,7 @@ return [
      * means slugs are not updated.
      */
 
-    'on_update' => false,
+    'onUpdate' => false,
 
     /**
      * An array of slug names that can never be used for this model,
