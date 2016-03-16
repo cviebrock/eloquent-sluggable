@@ -362,22 +362,24 @@ trait SluggableTrait
      * Find a model by slug.
      *
      * @param $slug
+     * @param array  $columns
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public static function findBySlug($slug)
+    public static function findBySlug($slug, array $columns = ['*'])
     {
-        return self::whereSlug($slug)->first();
+        return self::whereSlug($slug)->first($columns);
     }
 
     /**
      * Find a model by slug or fail.
      *
      * @param $slug
+     * @param array  $columns
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public static function findBySlugOrFail($slug)
+    public static function findBySlugOrFail($slug, array $columns = ['*'])
     {
-        return self::whereSlug($slug)->firstOrFail();
+        return self::whereSlug($slug)->firstOrFail($columns);
     }
 
     /**
@@ -399,12 +401,13 @@ trait SluggableTrait
      * Simple find by Id if it's numeric or slug if not. Fail if not found.
      *
      * @param $slug
+     * @param array  $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
-    public static function findBySlugOrIdOrFail($slug)
+    public static function findBySlugOrIdOrFail($slug, array $columns = ['*'])
     {
-        if (!$result = self::findBySlug($slug)) {
-            return self::findOrFail((int)$slug);
+        if (!$result = self::findBySlug($slug, $columns)) {
+            return self::findOrFail((int)$slug, $columns);
         }
 
         return $result;
@@ -414,12 +417,13 @@ trait SluggableTrait
      * Simple find by Id if it's numeric or slug if not.
      *
      * @param $slug
+     * @param array  $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|null
      */
-    public static function findBySlugOrId($slug)
+    public static function findBySlugOrId($slug, array $columns = ['*'])
     {
-        if (!$result = self::findBySlug($slug)) {
-            return self::find($slug);
+        if (!$result = self::findBySlug($slug, $columns)) {
+            return self::find($slug, $columns);
         }
 
         return $result;
