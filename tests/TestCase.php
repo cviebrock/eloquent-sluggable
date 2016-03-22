@@ -8,9 +8,10 @@ use Orchestra\Testbench\TestCase as Orchestra;
  */
 abstract class TestCase extends Orchestra
 {
-
     /**
      * Setup the test environment.
+     *
+     * @return void
      */
     public function setUp()
     {
@@ -19,14 +20,18 @@ abstract class TestCase extends Orchestra
         // Call migrations specific to our tests, e.g. to seed the db
         $this->artisan('migrate', [
           '--database' => 'testbench',
-          '--path' => __DIR__ . '../resources/database/migrations',
+          '--realpath' => realpath(__DIR__ . '/../resources/database/migrations'),
         ]);
+
+        $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:rollback');
+        });
     }
 
     /**
      * Define environment setup.
      *
-     * @param  Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)

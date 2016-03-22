@@ -3,9 +3,8 @@
 use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Events\Slugged;
 use Cviebrock\EloquentSluggable\Events\Slugging;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 
 /**
@@ -83,18 +82,14 @@ class SlugService
      * @param string $attribute
      * @param array $config
      * @param bool $force
-     * @param string $source
      * @return null|string
      */
-    public function buildSlug($attribute, array $config, $force = null, $source = null)
+    public function buildSlug($attribute, array $config, $force = null)
     {
         $slug = null;
 
         if ($force || $this->needsSlugging($attribute, $config)) {
-
-            if ($source !== null) {
-                $source = $this->getSlugSource($config['source']);
-            }
+            $source = $this->getSlugSource($config['source']);
 
             if ($source) {
                 $slug = $this->generateSlug($source, $config);
@@ -282,8 +277,10 @@ class SlugService
         if (
           count($list) === 0 ||
           !in_array($slug, $list) ||
-          (array_key_exists($this->model->getKey(),
-              $list) && $list[$this->model->getKey()] === $slug)
+          (
+            array_key_exists($this->model->getKey(), $list) &&
+            $list[$this->model->getKey()] === $slug
+          )
         ) {
             return $slug;
         }
@@ -350,10 +347,9 @@ class SlugService
         }
 
         // get a list of all matching slugs
-        $list = $query->pluck($attribute, $this->getKeyName());
+        $list = $query->pluck($attribute, $this->model->getKeyName());
 
-        // Laravel 5.0/5.1 check
-        return $list instanceof Collection ? $list->all() : $list;
+        return $list->all();
     }
 
     /**

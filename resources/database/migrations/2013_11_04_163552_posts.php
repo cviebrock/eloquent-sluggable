@@ -23,7 +23,7 @@ class Posts extends Migration
             $table->string('subtitle')->nullable();
             $table->string('slug')->nullable();
             $table->string('dummy')->nullable();
-            $table->integer('author_id')->nullable()->indexed();
+            $table->integer('author_id')->nullable();
             $table->softDeletes();
         });
     }

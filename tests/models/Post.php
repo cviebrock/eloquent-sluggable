@@ -34,18 +34,6 @@ class Post extends Model
     protected $fillable = ['title', 'subtitle'];
 
     /**
-     * Helper to set slug options for tests.
-     *
-     * @param array $array Array of new slug options
-     */
-    public function setSlugConfig($array)
-    {
-        foreach ($array as $key => $value) {
-            $this->sluggable[$key] = $value;
-        }
-    }
-
-    /**
      * Convert the model to its string representation.
      *
      * @return string
