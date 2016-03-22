@@ -1,7 +1,7 @@
 <?php namespace Tests;
 
 use Illuminate\Support\Str;
-use Test\Models\Post;
+use Tests\Models\Post;
 
 
 /**

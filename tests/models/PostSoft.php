@@ -1,6 +1,7 @@
-<?php namespace Test\Models;
+<?php namespace Tests\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 /**
  * Class PostSoft

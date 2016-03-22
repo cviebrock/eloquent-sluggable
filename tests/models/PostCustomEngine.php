@@ -1,4 +1,4 @@
-<?php namespace Test\Models;
+<?php namespace Tests\Models;
 
 use Cocur\Slugify\Slugify;
 
