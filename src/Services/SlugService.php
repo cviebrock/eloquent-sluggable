@@ -38,10 +38,8 @@ class SlugService
      */
     public function slug($force = false)
     {
-        if (event(new Slugging($this->model)) === false) {
-            return;
-        }
-
+//        event(new Slugging($this->model));
+        
         foreach ($this->model->sluggable() as $attribute => $config) {
             if (is_numeric($attribute)) {
                 $attribute = $config;
@@ -340,13 +338,16 @@ class SlugService
     /**
      * Generate a unique slug for a given string.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model|string $model
      * @param string $attribute
      * @param string $fromString
      * @return string
      */
-    public static function createSlug(Model $model, $attribute, $fromString)
+    public static function createSlug($model, $attribute, $fromString)
     {
+        if (is_string($model)) {
+            $model = new $model;
+        }
         $instance = new self($model);
 
         $config = array_get($model->sluggable(), $attribute);

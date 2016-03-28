@@ -1,5 +1,7 @@
 <?php namespace Tests;
 
+use Cviebrock\EloquentSluggable\Events\Slugged;
+use Cviebrock\EloquentSluggable\Events\Slugging;
 use Tests\Models\Post;
 
 
@@ -14,16 +16,16 @@ class EventTests extends TestCase
      *
      * @test
      */
-    public function testSluggingEvent()
+    public function testEventsAreFired()
     {
-        // test event to modify the model before slugging
-        Post::registerModelEvent('slugging', function ($post) {
-            $post->title = 'Modified by event';
-        });
+        $this->expectsEvents([
+            Slugging::class,
+            Slugged::class
+        ]);
 
-        $post = new Post(['title' => 'My Test Post']);
-        $post->save();
-        $this->assertEquals('modified-by-event', $post->slug);
+        Post::create([
+            'title' => 'My Test Post'
+        ]);
     }
 
     /**
@@ -33,13 +35,22 @@ class EventTests extends TestCase
      */
     public function testCancelSluggingEvent()
     {
-        // test event to cancel the slugging
-        Post::registerModelEvent('slugging', function ($post) {
+        $this->app['events']->listen(Slugging::class, function($event) {
             return false;
         });
 
-        $post = new Post(['title' => 'My Test Post']);
-        $post->save();
+        $this->expectsEvents([
+            Slugging::class,
+        ]);
+
+        $this->doesntExpectEvents([
+            Slugged::class,
+        ]);
+
+        $post = Post::create([
+            'title' => 'My Test Post'
+        ]);
+        dd($post);
         $this->assertEquals(null, $post->slug);
     }
 
@@ -50,12 +61,13 @@ class EventTests extends TestCase
      */
     public function testSluggedEvent()
     {
-        Post::registerModelEvent('slugged', function ($post) {
-            $post->subtitle = 'I have been slugged!';
-        });
+        //        Post::registerModelEvent('slugged', function ($post) {
+        //            $post->subtitle = 'I have been slugged!';
+        //        });
 
-        $post = new Post(['title' => 'My Test Post']);
-        $post->save();
+        $post = Post::create([
+            'title' => 'My Test Post'
+        ]);
         $this->assertEquals('my-test-post', $post->slug);
         $this->assertEquals('I have been slugged!', $post->subtitle);
     }

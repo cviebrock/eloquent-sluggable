@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Tests\Models\Post;
 
 
@@ -16,7 +17,8 @@ class StaticTests extends TestCase
      */
     public function testStaticSlugGenerator()
     {
-        $this->assertEquals('my-test-post', Post::createSlug('My Test Post'));
+        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
+        $this->assertEquals('my-test-post', $slug);
     }
 
     /**
@@ -27,8 +29,9 @@ class StaticTests extends TestCase
     public function testStaticSlugGeneratorWhenEntriesExist()
     {
         $post = Post::create(['title' => 'My Test Post']);
-
         $this->assertEquals('my-test-post', $post->slug);
-        $this->assertEquals('my-test-post-1', Post::createSlug('My Test Post'));
+
+        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
+        $this->assertEquals('my-test-post-1', $slug);
     }
 }
