@@ -1,8 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable\Services;
 
 use Cocur\Slugify\Slugify;
-use Cviebrock\EloquentSluggable\Events\Slugged;
-use Cviebrock\EloquentSluggable\Events\Slugging;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -22,22 +20,17 @@ class SlugService
     protected $model;
 
     /**
-     * SlugService constructor.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
      * Slug the current model.
      *
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @param bool $force
      */
-    public function slug($force = false)
+    public function slug(Model $model, $force = false)
     {
+        $this->setModel($model);
+
+        $attributes = [];
+
         foreach ($this->model->sluggable() as $attribute => $config) {
             if (is_numeric($attribute)) {
                 $attribute = $config;
@@ -49,7 +42,11 @@ class SlugService
             $slug = $this->buildSlug($attribute, $config, $force);
 
             $this->model->setAttribute($attribute, $slug);
+
+            $attributes[] = $attribute;
         }
+
+        return $this->model->isDirty($attributes);
     }
 
     /**
@@ -344,7 +341,7 @@ class SlugService
         if (is_string($model)) {
             $model = new $model;
         }
-        $instance = new self($model);
+        $instance = (new self())->setModel($model);
 
         $config = array_get($model->sluggable(), $attribute);
         $config = $instance->getConfiguration($config);
@@ -356,6 +353,15 @@ class SlugService
         }
 
         return $slug;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function setModel(Model $model)
+    {
+        return $this->model = $model;
     }
 
 }

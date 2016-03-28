@@ -20,8 +20,8 @@ class EventTests extends TestCase
     public function testEventsAreFired()
     {
         $this->expectsEvents([
-            Slugging::class,
-            Slugged::class
+            'eloquent.' . Slugging::class . ': ' . Post::class,
+            'eloquent.' . Slugged::class . ': ' . Post::class,
         ]);
 
         Post::create([

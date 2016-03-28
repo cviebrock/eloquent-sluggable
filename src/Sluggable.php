@@ -20,16 +20,7 @@ trait Sluggable
      */
     public static function bootSluggable()
     {
-        static::saving(function (Model $model) {
-
-            if ($model->fireModelEvent(Slugging::class) === false) {
-                return false;
-            }
-
-            (new SlugService($model))->slug();
-
-            $model->fireModelEvent(Slugged::class);
-        });
+        static::observe(app(SluggableObserver::class));
     }
 
     /**
@@ -41,7 +32,7 @@ trait Sluggable
     public function replicate(array $except = null)
     {
         $instance = parent::replicate($except);
-        (new SlugService($instance))->slug(true);
+        (new SlugService())->slug($instance, true);
 
         return $instance;
     }
