@@ -38,8 +38,6 @@ class SlugService
      */
     public function slug($force = false)
     {
-//        event(new Slugging($this->model));
-        
         foreach ($this->model->sluggable() as $attribute => $config) {
             if (is_numeric($attribute)) {
                 $attribute = $config;
@@ -52,8 +50,6 @@ class SlugService
 
             $this->model->setAttribute($attribute, $slug);
         }
-
-        event(new Slugged($this->model));
     }
 
     /**

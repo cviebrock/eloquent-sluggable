@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\Events\Slugged;
 use Cviebrock\EloquentSluggable\Events\Slugging;
+use Tests\Listeners\AbortSlugging;
 use Tests\Models\Post;
 
 
@@ -35,9 +36,7 @@ class EventTests extends TestCase
      */
     public function testCancelSluggingEvent()
     {
-        $this->app['events']->listen(Slugging::class, function($event) {
-            return false;
-        });
+        $this->app['events']->listen(Slugging::class, AbortSlugging::class);
 
         $this->expectsEvents([
             Slugging::class,
@@ -50,7 +49,6 @@ class EventTests extends TestCase
         $post = Post::create([
             'title' => 'My Test Post'
         ]);
-        dd($post);
         $this->assertEquals(null, $post->slug);
     }
 
@@ -61,10 +59,6 @@ class EventTests extends TestCase
      */
     public function testSluggedEvent()
     {
-        //        Post::registerModelEvent('slugged', function ($post) {
-        //            $post->subtitle = 'I have been slugged!';
-        //        });
-
         $post = Post::create([
             'title' => 'My Test Post'
         ]);

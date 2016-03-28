@@ -1,6 +1,9 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Cviebrock\EloquentSluggable\Events\Slugged;
+use Cviebrock\EloquentSluggable\Events\Slugging;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Database\Eloquent\Model;
 
 
 /**
@@ -17,15 +20,22 @@ trait Sluggable
      */
     public static function bootSluggable()
     {
-        static::saving(function ($model) {
+        static::saving(function (Model $model) {
+
+            if ($model->fireModelEvent(Slugging::class) === false) {
+                return false;
+            }
+
             (new SlugService($model))->slug();
+
+            $model->fireModelEvent(Slugged::class);
         });
     }
 
     /**
      * Clone the model into a new, non-existing instance.
      *
-     * @param  array|null  $except
+     * @param  array|null $except
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function replicate(array $except = null)
