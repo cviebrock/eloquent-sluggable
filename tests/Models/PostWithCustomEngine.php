@@ -2,17 +2,17 @@
 
 use Cocur\Slugify\Slugify;
 
+
 /**
  * Class PostCustomEngine
  *
- * A test model that loads the Slugify class with custom rules.
+ * A test model that customizes the Slugify engine with custom rules.
  */
-class PostCustomEngine extends Post
+class PostWithCustomEngine extends Post
 {
-    protected function getSlugEngine()
-    {
-        $engine = new Slugify();
 
+    public function customizeSlugEngine(Slugify $engine)
+    {
         $engine->addRule('e', 'a');
         $engine->addRule('i', 'a');
         $engine->addRule('o', 'a');

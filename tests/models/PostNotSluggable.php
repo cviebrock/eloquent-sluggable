@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PostNotSluggable extends Model
 {
+
     /**
      * The table associated with the model.
      *
@@ -29,4 +30,14 @@ class PostNotSluggable extends Model
      * @var array
      */
     protected $fillable = ['title', 'subtitle'];
+
+    /**
+     * Convert the model to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

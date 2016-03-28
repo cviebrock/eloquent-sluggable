@@ -65,6 +65,17 @@ return [
     'unique' => true,
 
     /**
+     * If you are enforcing unique slugs, the default is to add an
+     * incremental value to the end of the base slug.  Alternatively, you
+     * can change this value to a closure that accepts three parameters:
+     * the base slug, the separator, and a Collection of the other
+     * "similar" slugs.  The closure should return the new unique
+     * suffix to append to the slug.
+     */
+    
+    'uniqueSuffix' => null,
+
+    /**
      * Should we include the trashed items when generating a unique slug?
      * This only applies if the softDelete property is set for the Eloquent model.
      * If set to "false", then a new slug could duplicate one that exists on a trashed model.
@@ -72,14 +83,6 @@ return [
      */
 
     'includeTrashed' => false,
-
-    /**
-     * Whether to update the slug value when a model is being
-     * re-saved (i.e. already exists).  Defaults to false, which
-     * means slugs are not updated.
-     */
-
-    'onUpdate' => false,
 
     /**
      * An array of slug names that can never be used for this model,

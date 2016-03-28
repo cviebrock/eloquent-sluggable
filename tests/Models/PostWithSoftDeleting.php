@@ -4,11 +4,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 /**
- * Class PostSoft
+ * Class PostWithSoftDeleting
  *
  * A test model that uses the Sluggable package and uses Laravel's SoftDeleting trait.
  */
-class PostSoft extends Post
+class PostWithSoftDeleting extends Post
 {
+
     use SoftDeletes;
 }

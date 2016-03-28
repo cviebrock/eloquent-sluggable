@@ -5,6 +5,7 @@ use Cviebrock\EloquentSluggable\Events\Slugged;
 use Cviebrock\EloquentSluggable\Events\Slugging;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -54,9 +55,7 @@ class SlugService
             $this->model->setAttribute($attribute, $slug);
         }
 
-        if ($this->saveModel()) {
-            event(new Slugged($this->model));
-        }
+        event(new Slugged($this->model));
     }
 
     /**
@@ -86,7 +85,7 @@ class SlugService
      */
     public function buildSlug($attribute, array $config, $force = null)
     {
-        $slug = null;
+        $slug = $this->model->getAttribute($attribute);
 
         if ($force || $this->needsSlugging($attribute, $config)) {
             $source = $this->getSlugSource($config['source']);
@@ -106,16 +105,6 @@ class SlugService
     }
 
     /**
-     * Save the model to the database.
-     *
-     * @return bool
-     */
-    protected function saveModel()
-    {
-        return $this->model->save();
-    }
-
-    /**
      * Determines whether the model needs slugging.
      *
      * @param string $attribute
@@ -132,7 +121,7 @@ class SlugService
             return false;
         }
 
-        return (!$this->model->exists || $config['onUpdate']);
+        return (!$this->model->exists);
     }
 
     /**
@@ -147,34 +136,11 @@ class SlugService
             return $this->model->__toString();
         }
 
-        $source = array_map([$this, 'generateSource'], (array)$from);
+        $sourceStrings = array_map(function($key) {
+            return array_get($this->model, $key);
+        }, (array)$from);
 
-        return join($source, ' ');
-    }
-
-    /**
-     * Iterate over the model properties to generate the source string.
-     *
-     * @param string $key
-     * @return string|null
-     */
-    protected function generateSource($key)
-    {
-        $value = $this->model;
-
-        if (isset($value->{$key})) {
-            return $value->{$key};
-        }
-
-        foreach (explode('.', $key) as $segment) {
-            if (!is_object($value) || !$tmp = $value->{$segment}) {
-                return null;
-            }
-
-            $value = $value->{$segment};
-        }
-
-        return $value;
+        return join($sourceStrings, ' ');
     }
 
     /**
@@ -214,12 +180,20 @@ class SlugService
      */
     protected function getSlugEngine()
     {
-        static $slugEngine;
-        if (!$slugEngine) {
-            $slugEngine = new Slugify();
+        static $slugEngines = [];
+
+        $modelClass = get_class($this->model);
+
+        if (!array_key_exists($modelClass, $slugEngines)) {
+            $engine = new Slugify();
+            if (method_exists($this->model, 'customizeSlugEngine')) {
+                $engine = $this->model->customizeSlugEngine($engine);
+            }
+
+            $slugEngines[$modelClass] = $engine;
         }
 
-        return $slugEngine;
+        return $slugEngines[$modelClass];
     }
 
     /**
@@ -275,17 +249,22 @@ class SlugService
         // 	c) our slug is in the list and it's for our model
         // ... we are okay
         if (
-          count($list) === 0 ||
-          !in_array($slug, $list) ||
+          $list->count() === 0 ||
+          $list->contains($slug) === false ||
           (
-            array_key_exists($this->model->getKey(), $list) &&
-            $list[$this->model->getKey()] === $slug
+            $list->has($this->model->getKey()) &&
+            $list->get($this->model->getKey()) === $slug
           )
         ) {
             return $slug;
         }
 
-        $suffix = $this->generateSuffix($slug, $separator, $list);
+        $method = $config['uniqueSuffix'];
+        if ($method !== null) {
+            $suffix = $method($slug, $separator, $list);
+        } else {
+            $suffix = $this->generateSuffix($slug, $separator, $list);
+        }
 
         return $slug . $separator . $suffix;
     }
@@ -295,29 +274,27 @@ class SlugService
      *
      * @param string $slug
      * @param string $separator
-     * @param array $list
+     * @param \Illuminate\Support\Collection $list
      * @return string
      */
-    protected function generateSuffix($slug, $separator, array $list)
+    protected function generateSuffix($slug, $separator, Collection $list)
     {
         $len = strlen($slug . $separator);
 
         // If the slug already exists, but belongs to
         // our model, return the current suffix.
-        if ($this->model->getKey() === array_search($slug, $list)) {
+        if ($list->search($slug) === $this->model->getKey()) {
             $suffix = explode($separator, $slug);
 
             return end($suffix);
         }
 
-        array_walk($list, function (&$value, $key) use ($len) {
-            $value = intval(substr($value, $len));
+        $list->transform(function ($value, $key) use ($len) {
+            return intval(substr($value, $len));
         });
 
-        // find the highest increment
-        rsort($list);
-
-        return reset($list) + 1;
+        // find the highest value and return one greater.
+        return $list->max() + 1;
     }
 
     /**
@@ -326,7 +303,7 @@ class SlugService
      * @param string $slug
      * @param string $attribute
      * @param array $config
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getExistingSlugs($slug, $attribute, array $config)
     {
@@ -342,14 +319,12 @@ class SlugService
         });
 
         // include trashed models if required
-        if ($includeTrashed && $this->model->usesSoftDeleting()) {
+        if ($includeTrashed && $this->usesSoftDeleting()) {
             $query->withTrashed();
         }
 
-        // get a list of all matching slugs
-        $list = $query->pluck($attribute, $this->model->getKeyName());
-
-        return $list->all();
+        // get the list of all matching slugs
+        return $query->pluck($attribute, $this->model->getKeyName());
     }
 
     /**

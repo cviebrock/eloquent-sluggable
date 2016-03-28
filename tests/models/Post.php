@@ -31,7 +31,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'subtitle'];
+    protected $fillable = ['title', 'subtitle', 'slug', 'dummy', 'author_id'];
 
     /**
      * Convert the model to its string representation.
@@ -51,7 +51,9 @@ class Post extends Model
     public function sluggable()
     {
         return [
-          'slug'
+            'slug' => [
+                'source' => 'title'
+            ]
         ];
     }
 }
