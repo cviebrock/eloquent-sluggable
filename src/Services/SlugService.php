@@ -281,7 +281,7 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function ($value, $key) use ($len) {
+        $list->transform(function($value, $key) use ($len) {
             return intval(substr($value, $len));
         });
 
@@ -305,7 +305,7 @@ class SlugService
         $query = $this->model->newQuery();
 
         //check for direct match or something that has a separator followed by a suffix
-        $query->where(function (Builder $q) use ($attribute, $slug, $separator) {
+        $query->where(function(Builder $q) use ($attribute, $slug, $separator) {
             $q->where($attribute, $slug)
               ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
         });
