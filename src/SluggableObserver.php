@@ -32,7 +32,7 @@ class SluggableObserver
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @return bool
+     * @return boolean|null
      */
     public function saving(Model $model)
     {
@@ -41,8 +41,8 @@ class SluggableObserver
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param $event
-     * @return bool
+     * @param string $event
+     * @return boolean|null
      */
     protected function generateSlug(Model $model, $event)
     {

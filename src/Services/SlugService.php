@@ -130,7 +130,7 @@ class SlugService
 
         $sourceStrings = array_map(function($key) {
             return array_get($this->model, $key);
-        }, (array)$from);
+        }, (array) $from);
 
         return join($sourceStrings, ' ');
     }
