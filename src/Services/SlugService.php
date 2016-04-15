@@ -24,6 +24,7 @@ class SlugService
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param bool $force
+     * @return bool
      */
     public function slug(Model $model, $force = false)
     {

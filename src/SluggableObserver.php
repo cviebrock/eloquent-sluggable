@@ -32,6 +32,7 @@ class SluggableObserver
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
+     * @return bool
      */
     public function saving(Model $model)
     {
@@ -41,10 +42,17 @@ class SluggableObserver
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param $event
+     * @return bool
      */
     protected function generateSlug(Model $model, $event)
     {
-        return $this->slugService->slug($model);
+        // If the "slugging" event returns a value, abort
+        if ($this->fireSluggingEvent($model, $event) !== null) {
+            return;
+        }
+        $wasSlugged = $this->slugService->slug($model);
+
+        $this->fireSluggedEvent($model, $wasSlugged);
     }
 
     /**
@@ -56,8 +64,9 @@ class SluggableObserver
      */
     protected function fireSluggingEvent(Model $model, $event)
     {
-        return $this->events->until('eloquent.slugging: '.get_class($model), [$model, $event]);
+        return $this->events->until('eloquent.slugging: ' . get_class($model), [$model, $event]);
     }
+
     /**
      * Fire the namespaced post-validation event.
      *
@@ -67,6 +76,6 @@ class SluggableObserver
      */
     protected function fireSluggedEvent(Model $model, $status)
     {
-        $this->events->fire('eloquent.slugged: '.get_class($model), [$model, $status]);
+        $this->events->fire('eloquent.slugged: ' . get_class($model), [$model, $status]);
     }
 }

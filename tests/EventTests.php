@@ -1,7 +1,5 @@
 <?php namespace Tests;
 
-use Cviebrock\EloquentSluggable\Events\Slugged;
-use Cviebrock\EloquentSluggable\Events\Slugging;
 use Tests\Listeners\AbortSlugging;
 use Tests\Models\Post;
 
@@ -19,13 +17,13 @@ class EventTests extends TestCase
      */
     public function testEventsAreFired()
     {
-        $this->expectsEvents([
-            'eloquent.' . Slugging::class . ': ' . Post::class,
-            'eloquent.' . Slugged::class . ': ' . Post::class,
-        ]);
-
         Post::create([
             'title' => 'My Test Post'
+        ]);
+
+        $this->expectsEvents([
+            'eloquent.slugging: ' . Post::class,
+            'eloquent.slugged: ' . Post::class,
         ]);
     }
 
@@ -36,19 +34,20 @@ class EventTests extends TestCase
      */
     public function testCancelSluggingEvent()
     {
-        $this->app['events']->listen(Slugging::class, AbortSlugging::class);
-
-        $this->expectsEvents([
-            Slugging::class,
-        ]);
-
-        $this->doesntExpectEvents([
-            Slugged::class,
-        ]);
+        $this->app['events']->listen('eloquent.slugging: ' . Post::class, AbortSlugging::class);
 
         $post = Post::create([
             'title' => 'My Test Post'
         ]);
+
+        $this->expectsEvents([
+            'eloquent.slugging: ' . Post::class,
+        ]);
+
+        $this->doesntExpectEvents([
+            'eloquent.slugged: ' . Post::class,
+        ]);
+
         $this->assertEquals(null, $post->slug);
     }
 
@@ -62,6 +61,7 @@ class EventTests extends TestCase
         $post = Post::create([
             'title' => 'My Test Post'
         ]);
+
         $this->assertEquals('my-test-post', $post->slug);
         $this->assertEquals('I have been slugged!', $post->subtitle);
     }
