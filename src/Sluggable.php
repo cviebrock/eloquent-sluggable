@@ -1,9 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Cviebrock\EloquentSluggable\Events\Slugged;
-use Cviebrock\EloquentSluggable\Events\Slugging;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Database\Eloquent\Model;
 
 
 /**
@@ -20,16 +17,29 @@ trait Sluggable
      */
     public static function bootSluggable()
     {
-        static::saving(function (Model $model) {
+        static::observe(app(SluggableObserver::class));
+    }
 
-            if ($model->fireModelEvent(Slugging::class) === false) {
-                return false;
-            }
+    /**
+     * Register a slugging model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     * @return void
+     */
+    public static function slugging($callback)
+    {
+        static::registerModelEvent('slugging', $callback);
+    }
 
-            (new SlugService($model))->slug();
-
-            $model->fireModelEvent(Slugged::class);
-        });
+    /**
+     * Register a slugged model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     * @return void
+     */
+    public static function slugged($callback)
+    {
+        static::registerModelEvent('slugged', $callback);
     }
 
     /**
@@ -41,7 +51,7 @@ trait Sluggable
     public function replicate(array $except = null)
     {
         $instance = parent::replicate($except);
-        (new SlugService($instance))->slug(true);
+        (new SlugService())->slug($instance, true);
 
         return $instance;
     }

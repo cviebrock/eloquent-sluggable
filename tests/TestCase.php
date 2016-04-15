@@ -1,13 +1,17 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
+use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 
 /**
- * Class SluggableTest
+ * Class TestCase
+ *
+ * @package Tests
  */
 abstract class TestCase extends Orchestra
 {
+
     /**
      * Setup the test environment.
      *
@@ -19,8 +23,8 @@ abstract class TestCase extends Orchestra
 
         // Call migrations specific to our tests, e.g. to seed the db
         $this->artisan('migrate', [
-          '--database' => 'testbench',
-          '--realpath' => realpath(__DIR__ . '/../resources/database/migrations'),
+            '--database' => 'testbench',
+            '--realpath' => realpath(__DIR__ . '/../resources/database/migrations'),
         ]);
 
         $this->beforeApplicationDestroyed(function () {
@@ -42,9 +46,9 @@ abstract class TestCase extends Orchestra
         // set up database configuration
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-          'driver' => 'sqlite',
-          'database' => ':memory:',
-          'prefix' => '',
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
         ]);
     }
 
@@ -56,7 +60,23 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-          \Cviebrock\EloquentSluggable\ServiceProvider::class
+            \Cviebrock\EloquentSluggable\ServiceProvider::class
         ];
+    }
+
+    /**
+     * Mock the event dispatcher so all events are silenced and collected.
+     *
+     * @return $this
+     */
+    protected function withoutEvents()
+    {
+        $mock = Mockery::mock('Illuminate\Contracts\Events\Dispatcher');
+
+        $mock->shouldReceive('fire', 'until');
+
+        $this->app->instance('events', $mock);
+
+        return $this;
     }
 }

@@ -1,11 +1,13 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 
 /**
- * Class SluggableTest
+ * Class StaticTests
+ *
+ * @package Tests
  */
 class StaticTests extends TestCase
 {

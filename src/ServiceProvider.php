@@ -3,6 +3,7 @@
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
+
 /**
  * Class ServiceProvider
  *
@@ -10,6 +11,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  */
 class ServiceProvider extends BaseServiceProvider
 {
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -27,7 +29,6 @@ class ServiceProvider extends BaseServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/config/sluggable.php' => config_path('sluggable.php'),
         ], 'config');
-
     }
 
     /**
@@ -39,8 +40,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../resources/config/sluggable.php', 'sluggable');
 
-        $this->app->singleton(SlugService::class);
-
+        $this->app->singleton(SluggableObserver::class, function ($app) {
+            return new SluggableObserver(new SlugService(), $app['events']);
+        });
     }
 
 }

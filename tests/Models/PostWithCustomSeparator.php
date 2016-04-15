@@ -1,7 +1,7 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class PostSuffix
+ * Class PostWithCustomSeparator
  *
  * A test model that uses a custom suffix generation method.
  */

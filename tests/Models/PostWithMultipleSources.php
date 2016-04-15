@@ -1,7 +1,7 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class Post
+ * Class PostWithMultipleSources
  */
 class PostWithMultipleSources extends Post
 {
@@ -14,9 +14,9 @@ class PostWithMultipleSources extends Post
     public function sluggable()
     {
         return [
-          'slug' => [
-            'source' => ['title', 'subtitle'],
-          ]
+            'slug' => [
+                'source' => ['title', 'subtitle'],
+            ]
         ];
     }
 }

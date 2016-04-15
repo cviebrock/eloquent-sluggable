@@ -1,8 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable\Services;
 
 use Cocur\Slugify\Slugify;
-use Cviebrock\EloquentSluggable\Events\Slugged;
-use Cviebrock\EloquentSluggable\Events\Slugging;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -22,22 +20,18 @@ class SlugService
     protected $model;
 
     /**
-     * SlugService constructor.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
      * Slug the current model.
      *
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @param bool $force
+     * @return bool
      */
-    public function slug($force = false)
+    public function slug(Model $model, $force = false)
     {
+        $this->setModel($model);
+
+        $attributes = [];
+
         foreach ($this->model->sluggable() as $attribute => $config) {
             if (is_numeric($attribute)) {
                 $attribute = $config;
@@ -49,7 +43,11 @@ class SlugService
             $slug = $this->buildSlug($attribute, $config, $force);
 
             $this->model->setAttribute($attribute, $slug);
+
+            $attributes[] = $attribute;
         }
+
+        return $this->model->isDirty($attributes);
     }
 
     /**
@@ -132,7 +130,7 @@ class SlugService
 
         $sourceStrings = array_map(function($key) {
             return array_get($this->model, $key);
-        }, (array)$from);
+        }, (array) $from);
 
         return join($sourceStrings, ' ');
     }
@@ -283,7 +281,7 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function ($value, $key) use ($len) {
+        $list->transform(function($value, $key) use ($len) {
             return intval(substr($value, $len));
         });
 
@@ -307,7 +305,7 @@ class SlugService
         $query = $this->model->newQuery();
 
         //check for direct match or something that has a separator followed by a suffix
-        $query->where(function (Builder $q) use ($attribute, $slug, $separator) {
+        $query->where(function(Builder $q) use ($attribute, $slug, $separator) {
             $q->where($attribute, $slug)
               ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
         });
@@ -344,7 +342,7 @@ class SlugService
         if (is_string($model)) {
             $model = new $model;
         }
-        $instance = new self($model);
+        $instance = (new self())->setModel($model);
 
         $config = array_get($model->sluggable(), $attribute);
         $config = $instance->getConfiguration($config);
@@ -356,6 +354,16 @@ class SlugService
         }
 
         return $slug;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return $this
+     */
+    public function setModel(Model $model)
+    {
+        $this->model = $model;
+        return $this;
     }
 
 }

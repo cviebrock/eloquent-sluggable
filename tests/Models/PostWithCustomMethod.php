@@ -1,10 +1,10 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Support\Str;
 
 
 /**
- * Class Post
+ * Class PostWithCustomMethod
  */
 class PostWithCustomMethod extends Post
 {

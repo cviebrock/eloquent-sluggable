@@ -1,7 +1,7 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class Post
+ * Class PostWithMaxLength
  */
 class PostWithMaxLength extends Post
 {

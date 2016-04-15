@@ -1,10 +1,15 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
-use Tests\Models\PostWithIncludeTrashed;
-use Tests\Models\PostWithSoftDeleting;
-use Tests\Models\PostWithSoftDeletingIncludeTrashed;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithIncludeTrashed;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeleting;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeletingIncludeTrashed;
 
 
+/**
+ * Class SoftDeleteTests
+ *
+ * @package Tests
+ */
 class SoftDeleteTests extends TestCase
 {
 

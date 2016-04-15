@@ -1,10 +1,10 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Support\Collection;
 
 
 /**
- * Class PostSuffix
+ * Class PostWithCustomSuffix
  *
  * A test model that uses a custom suffix generation method.
  */
@@ -19,13 +19,14 @@ class PostWithCustomSuffix extends Post
     public function sluggable()
     {
         return [
-          'slug' => [
-              'source' => 'title',
-              'uniqueSuffix' => function($slug, $separator, Collection $list) {
-                  $size = count($list);
-                  return chr($size + 96);
-              }
-          ]
+            'slug' => [
+                'source' => 'title',
+                'uniqueSuffix' => function ($slug, $separator, Collection $list) {
+                    $size = count($list);
+
+                    return chr($size + 96);
+                }
+            ]
         ];
     }
 }
