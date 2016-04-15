@@ -29,7 +29,14 @@
   "autoload": {
     "psr-4": {
       "Cviebrock\\EloquentSluggable\\": "src/",
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "phpunit"
   }
 }

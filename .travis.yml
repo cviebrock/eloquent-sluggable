@@ -16,6 +16,7 @@ matrix:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction --dev $PREFER_LOWEST
+  - travis_retry composer dump_autoload
 
 script:
   - phpunit
