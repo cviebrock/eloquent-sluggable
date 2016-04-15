@@ -1,6 +1,6 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
-use Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 
 /**

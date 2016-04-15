@@ -1,7 +1,7 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 
 /**

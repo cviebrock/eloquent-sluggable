@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;

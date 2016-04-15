@@ -1,7 +1,7 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
-use Tests\Listeners\AbortSlugging;
-use Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Listeners\AbortSlugging;
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 
 /**

@@ -8,14 +8,14 @@ php:
   - 7.0
   - hhvm
 
-# matrix:
-#  include:
-#    - php: 5.6
-#      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+matrix:
+  include:
+    - php: 5.6
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
 
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction --dev $PREFER_LOWEST
 
 script:
-  - phpunit
+  - vendor/bin/phpunit

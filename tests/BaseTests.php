@@ -1,19 +1,19 @@
-<?php namespace Tests;
+<?php namespace Cviebrock\EloquentSluggable\Tests;
 
-use Tests\Models\Author;
-use Tests\Models\Post;
-use Tests\Models\PostNotSluggable;
-use Tests\Models\PostShortConfig;
-use Tests\Models\PostWithCustomEngine;
-use Tests\Models\PostWithCustomMethod;
-use Tests\Models\PostWithCustomSeparator;
-use Tests\Models\PostWithCustomSource;
-use Tests\Models\PostWithCustomSuffix;
-use Tests\Models\PostWithMaxLength;
-use Tests\Models\PostWithMultipleSources;
-use Tests\Models\PostWithNoSource;
-use Tests\Models\PostWithRelation;
-use Tests\Models\PostWithReservedSlug;
+use Cviebrock\EloquentSluggable\Tests\Models\Author;
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\PostNotSluggable;
+use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfig;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSources;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithNoSource;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithRelation;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithReservedSlug;
 
 
 /**

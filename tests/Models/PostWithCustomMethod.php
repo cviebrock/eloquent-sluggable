@@ -1,4 +1,4 @@
-<?php namespace Tests\Models;
+<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Support\Str;
 
