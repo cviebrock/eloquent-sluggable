@@ -19,4 +19,4 @@ before_script:
   - travis_retry composer dump-autoload
 
 script:
-  - phpunit
+  - vendor/bin/phpunit
