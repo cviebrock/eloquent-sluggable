@@ -28,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Cviebrock\\EloquentSluggable\\": "src/",
+      "Cviebrock\\EloquentSluggable\\": "src/"
     }
   },
   "autoload-dev": {
