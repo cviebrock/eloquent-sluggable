@@ -5,7 +5,9 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 
 /**
- * Class SluggableTest
+ * Class TestCase
+ *
+ * @package Tests
  */
 abstract class TestCase extends Orchestra
 {

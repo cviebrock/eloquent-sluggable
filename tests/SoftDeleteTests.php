@@ -5,6 +5,11 @@ use Tests\Models\PostWithSoftDeleting;
 use Tests\Models\PostWithSoftDeletingIncludeTrashed;
 
 
+/**
+ * Class SoftDeleteTests
+ *
+ * @package Tests
+ */
 class SoftDeleteTests extends TestCase
 {
 

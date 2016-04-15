@@ -5,7 +5,9 @@ use Tests\Models\Post;
 
 
 /**
- * Class SluggableTest
+ * Class StaticTests
+ *
+ * @package Tests
  */
 class StaticTests extends TestCase
 {

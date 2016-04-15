@@ -17,7 +17,9 @@ use Tests\Models\PostWithReservedSlug;
 
 
 /**
- * Class SluggableTest
+ * Class BaseTests
+ *
+ * @package Tests
  */
 class BaseTests extends TestCase
 {
