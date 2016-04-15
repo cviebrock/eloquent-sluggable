@@ -128,9 +128,9 @@ class SlugService
             return $this->model->__toString();
         }
 
-        $sourceStrings = array_map(function($key) {
+        $sourceStrings = array_map(function ($key) {
             return array_get($this->model, $key);
-        }, (array) $from);
+        }, (array)$from);
 
         return join($sourceStrings, ' ');
     }
@@ -241,12 +241,12 @@ class SlugService
         // 	c) our slug is in the list and it's for our model
         // ... we are okay
         if (
-          $list->count() === 0 ||
-          $list->contains($slug) === false ||
-          (
-            $list->has($this->model->getKey()) &&
-            $list->get($this->model->getKey()) === $slug
-          )
+            $list->count() === 0 ||
+            $list->contains($slug) === false ||
+            (
+                $list->has($this->model->getKey()) &&
+                $list->get($this->model->getKey()) === $slug
+            )
         ) {
             return $slug;
         }
@@ -281,7 +281,7 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function($value, $key) use ($len) {
+        $list->transform(function ($value, $key) use ($len) {
             return intval(substr($value, $len));
         });
 
@@ -305,9 +305,9 @@ class SlugService
         $query = $this->model->newQuery();
 
         //check for direct match or something that has a separator followed by a suffix
-        $query->where(function(Builder $q) use ($attribute, $slug, $separator) {
+        $query->where(function (Builder $q) use ($attribute, $slug, $separator) {
             $q->where($attribute, $slug)
-              ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
+                ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
         });
 
         // include trashed models if required
@@ -363,6 +363,7 @@ class SlugService
     public function setModel(Model $model)
     {
         $this->model = $model;
+
         return $this;
     }
 
