@@ -4,7 +4,7 @@ use Illuminate\Support\Str;
 
 
 /**
- * Class Post
+ * Class PostWithCustomMethod
  */
 class PostWithCustomMethod extends Post
 {

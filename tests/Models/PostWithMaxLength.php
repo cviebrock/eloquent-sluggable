@@ -1,7 +1,7 @@
 <?php namespace Tests\Models;
 
 /**
- * Class Post
+ * Class PostWithMaxLength
  */
 class PostWithMaxLength extends Post
 {

@@ -1,10 +1,7 @@
 <?php namespace Tests\Models;
 
-use Illuminate\Support\Collection;
-
-
 /**
- * Class PostSuffix
+ * Class PostWithNoSource
  *
  * A test model that uses a custom suffix generation method.
  */
@@ -19,9 +16,9 @@ class PostWithNoSource extends Post
     public function sluggable()
     {
         return [
-          'slug' => [
-              'source' => null
-          ]
+            'slug' => [
+                'source' => null
+            ]
         ];
     }
 }

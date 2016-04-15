@@ -1,10 +1,7 @@
 <?php namespace Tests\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-
 /**
- * Class PostWithSoftDeleting
+ * Class PostWithIncludeTrashed
  *
  * A test model that uses the Sluggable package and "includeTrashed",
  * but doesn't use Laravel's SoftDeleting trait.

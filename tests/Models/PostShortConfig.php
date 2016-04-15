@@ -1,7 +1,7 @@
 <?php namespace Tests\Models;
 
 /**
- * Class Post
+ * Class PostShortConfig
  */
 class PostShortConfig extends Post
 {
