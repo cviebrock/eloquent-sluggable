@@ -358,11 +358,12 @@ class SlugService
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return $this
      */
     public function setModel(Model $model)
     {
-        return $this->model = $model;
+        $this->model = $model;
+        return $this;
     }
 
 }
