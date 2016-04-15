@@ -2,8 +2,15 @@ filter:
   excluded_paths:
     - 'tests/*'
 checks:
-  php: true
   php:
+    spaces:
+      before_parentheses:
+        closure_definition: false
+    upper_lower_casing:
+      keywords:
+        general: lower
+      constants:
+        true_false_null: lower
     code_rating: true
     remove_extra_empty_lines: true
     remove_php_closing_tag: true
