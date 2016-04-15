@@ -14,9 +14,12 @@ class EventTests extends TestCase
      * Test that the "slugging" event is fired.
      *
      * @test
+     * @todo Figure out how to accurately test Eloquent model events
      */
     public function testEventsAreFired()
     {
+        $this->markTestIncomplete('Event tests are not yet reliable.');
+
         Post::create([
             'title' => 'My Test Post'
         ]);
@@ -31,9 +34,12 @@ class EventTests extends TestCase
      * Test that the "slugging" event can be cancelled.
      *
      * @test
+     * @todo Figure out how to accurately test Eloquent model events
      */
     public function testCancelSluggingEvent()
     {
+        $this->markTestIncomplete('Event tests are not yet reliable.');
+
         $this->app['events']->listen('eloquent.slugging: ' . Post::class, AbortSlugging::class);
 
         $post = Post::create([
@@ -55,9 +61,12 @@ class EventTests extends TestCase
      * Test that the "slugged" event is fired.
      *
      * @test
+     * @todo Figure out how to accurately test Eloquent model events
      */
     public function testSluggedEvent()
     {
+        $this->markTestIncomplete('Event tests are not yet reliable.');
+
         $post = Post::create([
             'title' => 'My Test Post'
         ]);
