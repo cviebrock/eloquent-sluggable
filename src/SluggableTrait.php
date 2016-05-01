@@ -109,7 +109,7 @@ trait SluggableTrait
     }
 
     /**
-     * Return a class that has a 'slugify()` method, used to convert
+     * Return a class that has a `slugify()` method, used to convert
      * strings into slugs.
      *
      * @return Slugify
