@@ -22,6 +22,10 @@ trait SluggableTrait
         $save_to = $config['save_to'];
         $on_update = $config['on_update'];
 
+        if(empty($this->generateSlug($this->getSlugSource()))) {
+            return false;
+        }
+
         if (empty($this->attributes[$save_to])) {
             return true;
         }
