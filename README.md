@@ -485,6 +485,14 @@ key-value array of existing slugs, where the values are the Eloquent model's slu
 Writes the (generated, valid, and unique) slug to the model's attributes.
 
 
+## Generate slugs for existing tables
+
+Run the command:
+    
+    php artisan slugs:create App\ModelName
+
+To overwrite existing slugs, pass in the `--force` argument.
+
 
 
 <a name="bugs"></a>
