@@ -799,4 +799,17 @@ class SluggableTest extends TestCase
         $this->assertEquals('my-test-post', $post->slug);
         $this->assertEquals('my-test-post-1', Post::createSlug('My Test Post'));
     }
+
+    public function testCanReturnNewInstanceOfModelIfNotFound()
+    {
+        $fakeSlug= \Faker\Factory::create()->slug();
+
+        $post = Post::findBySlugOrNew($fakeSlug);
+
+        $this->assertInstanceOf(Post::class,$post);
+        $this->assertNull($post->id);
+        $this->assertNull($post->title);
+        $this->assertNull($post->slug);
+
+    }
 }

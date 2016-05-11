@@ -428,4 +428,21 @@ trait SluggableTrait
 
         return $result;
     }
+
+    /**
+     * Find a model by slug or create new instance of model.
+     *
+     * @param $slug
+     * @param array  $columns
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function findBySlugOrNew($slug, array $columns = ['*'])
+    {
+        $model =  self::findBySlug($slug,$columns);
+
+        if(is_null($model)){
+            return (new self);
+        }
+        return $model;
+    }
 }
