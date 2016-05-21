@@ -77,6 +77,13 @@ return [
     'unique' => true,
 
     /**
+     * Extra unique slug params
+     *
+     * Example site_id, client_id ...
+     */
+    'uniqueParams' => [],
+
+    /**
      * Should we include the trashed items when generating a unique slug?
      * This only applies if the softDelete property is set for the Eloquent model.
      * If set to "false", then a new slug could duplicate one that exists on a trashed model.
