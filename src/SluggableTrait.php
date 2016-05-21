@@ -245,6 +245,11 @@ trait SluggableTrait
               $slug . $config['separator'] . '%');
         });
 
+        // extras
+        foreach ($config['uniqueParams'] as $param) {
+            $query->where($param, $this->{$param});
+        }
+
         // include trashed models if required
         if ($include_trashed && $this->usesSoftDeleting()) {
             $query = $query->withTrashed();
