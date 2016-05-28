@@ -428,14 +428,4 @@ trait SluggableTrait
 
         return $result;
     }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return $this->getSluggableConfig()['save_to'];
-    }
 }
