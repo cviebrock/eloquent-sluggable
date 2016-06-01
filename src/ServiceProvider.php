@@ -3,7 +3,6 @@
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-
 /**
  * Class ServiceProvider
  *

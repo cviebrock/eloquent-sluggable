@@ -3,7 +3,6 @@
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * Class Post
  */

@@ -4,7 +4,6 @@ use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithUniqueSlugConstraints;
 
-
 /**
  * Class UniqueTests
  *
@@ -59,6 +58,7 @@ class UniqueTests extends TestCase
 
     /**
      * Test
+     *
      * @test
      */
     public function testCustomUniqueQueryScope()

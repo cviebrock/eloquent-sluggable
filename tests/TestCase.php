@@ -3,7 +3,6 @@
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
 
-
 /**
  * Class TestCase
  *

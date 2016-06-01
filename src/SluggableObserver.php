@@ -4,7 +4,6 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
 
-
 class SluggableObserver
 {
 

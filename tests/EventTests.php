@@ -3,7 +3,6 @@
 use Cviebrock\EloquentSluggable\Tests\Listeners\AbortSlugging;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
-
 /**
  * Class EventTests
  *

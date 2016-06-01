@@ -1,10 +1,8 @@
 <?php namespace Cviebrock\EloquentSluggable\Services;
 
 use Cocur\Slugify\Slugify;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-
 
 /**
  * Class SlugService

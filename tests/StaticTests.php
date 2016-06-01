@@ -3,7 +3,6 @@
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
-
 /**
  * Class StaticTests
  *

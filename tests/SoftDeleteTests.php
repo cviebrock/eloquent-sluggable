@@ -4,7 +4,6 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithIncludeTrashed;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeleting;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeletingIncludeTrashed;
 
-
 /**
  * Class SoftDeleteTests
  *

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
  * Class PostWithSoftDeleting
  *

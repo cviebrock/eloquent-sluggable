@@ -17,7 +17,6 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithNoSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithRelation;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithReservedSlug;
 
-
 /**
  * Class BaseTests
  *

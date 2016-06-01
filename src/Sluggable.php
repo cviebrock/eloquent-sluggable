@@ -4,7 +4,6 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * Class Sluggable
  *
