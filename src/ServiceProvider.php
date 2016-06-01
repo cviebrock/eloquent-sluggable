@@ -43,5 +43,4 @@ class ServiceProvider extends BaseServiceProvider
             return new SluggableObserver(new SlugService(), $app['events']);
         });
     }
-
 }
