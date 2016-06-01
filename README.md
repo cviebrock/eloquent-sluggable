@@ -33,7 +33,8 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Copyright and License](#copyright-and-license)
 
 
-> **NOTE** If you are using Laravel 4, then use the `2.x` branch or tagged `2.*` releases. Currently, `master` is only tested against Laravel 5.*.
+> **NOTE** If you are using Laravel 4, then use the `2.x` branch or tagged `2.*` releases. 
+> Currently, the `master` branch is only tested against Laravel 5.1 and 5.2.
 
 
 ## Background: What is a slug?
@@ -61,7 +62,7 @@ friendlier:
 
     http://example.com/post/my-dinner-with-andre-francois
 
-A URL like that will make users happier (readable, easier to type, etc.).
+A URL like that will make users happier (it's readable, easier to type, etc.).
 
 For more information, you might want to read 
 [this](http://en.wikipedia.org/wiki/Slug_(web_publishing)#Slug) description on Wikipedia.
@@ -76,19 +77,19 @@ added to the end of the slug:
 
 This keeps URLs unique.
 
-The **Eloquent-Sluggable** package for Laravel 5 will handle all of this for you 
-automatically, with minimal configuration at the start.
+The **Eloquent-Sluggable** package for Laravel 5 aims to handle all of this for you 
+automatically, with minimal configuration.
 
 
 ## Installation
 
-First, you'll need to require the package with Composer:
+First, you'll need to install the package via Composer:
 
 ```shell
 $ composer require cviebrock/eloquent-sluggable
 ```
 
-> **NOTE**: Eloquent-Sluggable now uses traits, so you will need to be running PHP 5.4 or higher.
+> **NOTE**: Eloquent-Sluggable uses traits, so you will need to be running PHP 5.4 or higher.
 
 Then, update `config/app.php` by adding an entry for the service provider.
 
@@ -137,7 +138,7 @@ class Post extends Model
 ```
 
 Of course, your model and database will need a column in which to store the slug. 
-You will need to add this manually in a migration.
+You will need to add this manually via a migration.
 
 (Previous versions of the package included an `artisan sluggable:table` command to
 assist you.  This has been deprecated because it's easy enough to generate your own
@@ -263,20 +264,40 @@ return [
 For individual models, configuration is handled in the `sluggable()` method that you
 need to implement.  That method should return an indexed array where the keys represent
 the fields where the slug value is stored and the values are the configuration for that
-field.  Unlike previous versions of the package, this means you can now create 
-multiple slugs for the same model, based on different source strings.  For example:
+field.
 
-    public function sluggable()
-    {
-        return [
-            'title-slug' => [
-                'source' => 'title'
-            ],
-            'author-slug' => [
-                'source' => ['author.firstname', 'author.lastname']
-            ],
-        ];
-    }
+```php
+public function sluggable()
+{
+    return [
+        'title-slug' => [
+            'source' => 'title'
+        ],
+        'author-slug' => [
+            'source' => ['author.firstname', 'author.lastname']
+        ],
+    ];
+}
+```
+  
+Unlike previous versions of the package, this now means you can now create 
+multiple slugs for the same model, based on different source strings and with
+different configuration options.  For example:
+
+```php
+public function sluggable()
+{
+    return [
+        'title-slug' => [
+            'source' => 'title'
+        ],
+        'author-slug' => [
+            'source' => ['author.firstname', 'author.lastname'],
+            'separator' => '_'
+        ],
+    ];
+}
+```
 
 ### source
 
@@ -363,15 +384,15 @@ should expect two parameters: the string to process, and a separator string.
 For example, to duplicate the default behaviour, you could do:
 
 ```php
-    'method' => ['Illuminate\\Support\\Str', 'slug'],
+'method' => ['Illuminate\\Support\\Str', 'slug'],
 ```
 
 3. You can also define `method` as a closure (again, expecting two parameters):
 
 ```php
-    'method' => function ($string, $separator) {
-        return strtolower(preg_replace('/[^a-z]+/i', $separator, $string));
-    },
+'method' => function ($string, $separator) {
+    return strtolower(preg_replace('/[^a-z]+/i', $separator, $string));
+},
 ```
 
 Any other values for `method` will throw an exception.
@@ -408,11 +429,11 @@ that hasn't been used by any of the slugs in the collection.  For example, if yo
 to use letters instead of numbers as a suffix, this is one way to achieve that:
 
 ```php
-    'uniqueSuffix' => function ($slug, $separator, Collection $list) {
-        $size = count($list);
+'uniqueSuffix' => function ($slug, $separator, Collection $list) {
+    $size = count($list);
 
-        return chr($size + 96);
-    }
+    return chr($size + 96);
+}
 ```
 
 ### includeTrashed
@@ -427,6 +448,23 @@ so soft-deleted models don't count when checking for uniqueness.
 An array of values that will never be allowed as slugs, e.g. to prevent collisions 
 with existing routes or controller methods, etc.. This can be an array, or a closure 
 that returns an array. Defaults to `null`: no reserved slug names.
+
+
+
+## Short Configuration
+
+The package supports a really short configuration syntax, if you are truly lazy:
+
+```php
+public function sluggable() {
+    return [
+        'slug'
+    ]
+];
+```
+
+This will use all the default options from `app/config/sluggable.php`, use the model's
+`__toString()` method as the source, and store the slug in the `slug` field.
 
 
 
