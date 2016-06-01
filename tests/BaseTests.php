@@ -9,6 +9,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSources;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithNoSource;
@@ -344,5 +345,19 @@ class BaseTests extends TestCase
         ]);
         $post->save();
         $this->assertEquals('tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag', $post->slug);
+    }
+
+    /**
+     * Test if using an empty separator works (issue 256).
+     *
+     * @test
+     */
+    public function testEmptySeparator()
+    {
+        $post = new PostWithEmptySeparator([
+            'title' => 'My Test Post'
+        ]);
+        $post->save();
+        $this->assertEquals('mytestpost', $post->slug);
     }
 }
