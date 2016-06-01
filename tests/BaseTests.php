@@ -11,6 +11,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugs;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSources;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithNoSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithRelation;
@@ -359,5 +360,17 @@ class BaseTests extends TestCase
         ]);
         $post->save();
         $this->assertEquals('mytestpost', $post->slug);
+    }
+
+    public function testMultipleSlugs()
+    {
+        $post = new PostWithMultipleSlugs([
+            'title' => 'My Test Post',
+            'subtitle' => 'My Subtitle',
+        ]);
+        $post->save();
+
+        $this->assertEquals('my-test-post', $post->slug);
+        $this->assertEquals('my.subtitle', $post->dummy);
     }
 }
