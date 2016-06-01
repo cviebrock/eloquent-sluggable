@@ -83,12 +83,12 @@ class SlugService
             $source = $this->getSlugSource($config['source']);
 
             if ($source) {
-                $slug = $this->generateSlug($source, $config);
+                $slug = $this->generateSlug($source, $config, $attribute);
 
-                $slug = $this->validateSlug($slug, $config);
+                $slug = $this->validateSlug($slug, $config, $attribute);
 
                 if ($config['unique']) {
-                    $slug = $this->makeSlugUnique($slug, $attribute, $config);
+                    $slug = $this->makeSlugUnique($slug, $config, $attribute);
                 }
             }
         }
@@ -140,9 +140,10 @@ class SlugService
      *
      * @param string $source
      * @param array $config
+     * @param string $attribute
      * @return string
      */
-    protected function generateSlug($source, array $config)
+    protected function generateSlug($source, array $config, $attribute)
     {
         $separator = $config['separator'];
         $method = $config['method'];
@@ -154,7 +155,7 @@ class SlugService
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
         } else {
-            throw new \UnexpectedValueException('Sluggable method is not callable or null.');
+            throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
         }
 
         if (is_string($slug) && $maxLength) {
@@ -193,9 +194,10 @@ class SlugService
      *
      * @param string $slug
      * @param array $config
+     * @param string $attribute
      * @return string
      */
-    protected function validateSlug($slug, array $config)
+    protected function validateSlug($slug, array $config, $attribute)
     {
         $separator = $config['separator'];
         $reserved = $config['reserved'];
@@ -217,18 +219,18 @@ class SlugService
             return $slug;
         }
 
-        throw new \UnexpectedValueException('Sluggable reserved is not null, an array, or a closure that returns null/array.');
+        throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
     }
 
     /**
      * Checks if the slug should be unique, and makes it so if needed.
      *
      * @param string $slug
-     * @param string $attribute
      * @param array $config
+     * @param string $attribute
      * @return string
      */
-    protected function makeSlugUnique($slug, $attribute, array $config)
+    protected function makeSlugUnique($slug, array $config, $attribute)
     {
         $separator = $config['separator'];
 
@@ -252,10 +254,12 @@ class SlugService
         }
 
         $method = $config['uniqueSuffix'];
-        if ($method !== null) {
-            $suffix = $method($slug, $separator, $list);
-        } else {
+        if ($method === null) {
             $suffix = $this->generateSuffix($slug, $separator, $list);
+        } else if (is_callable($method)) {
+            $suffix = call_user_func($method, $slug, $separator, $list);
+        } else {
+            throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
         }
 
         return $slug . $separator . $suffix;
@@ -347,10 +351,10 @@ class SlugService
         $config = array_get($model->sluggable(), $attribute);
         $config = $instance->getConfiguration($config);
 
-        $slug = $instance->generateSlug($fromString, $config);
-        $slug = $instance->validateSlug($slug, $config);
+        $slug = $instance->generateSlug($fromString, $config, $attribute);
+        $slug = $instance->validateSlug($slug, $config, $attribute);
         if ($config['unique']) {
-            $slug = $instance->makeSlugUnique($slug, $attribute, $config);
+            $slug = $instance->makeSlugUnique($slug, $config, $attribute);
         }
 
         return $slug;
@@ -366,5 +370,4 @@ class SlugService
 
         return $this;
     }
-
 }

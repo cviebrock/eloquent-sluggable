@@ -1,18 +1,19 @@
 # Change Log
 
-## x.x.x - xx-xxx-2016
+## 4.0.0-beta - 01-Jun-2016
 
 - Major revision
-  - Model configuration is now handled in a `sluggable()` method
+  - Model configuration is now handled in a `sluggable()` method.
     on the model instead of a property, and configuration options are now camelCase
-  - Ability to generate more than one slug per model
+  - Ability to generate more than one slug per model.
   - Removed all `findBy...()` scope/methods (can't really be used when a model
-    has multiple slugs ... plus the code is easy to implement in the model)
+    has multiple slugs ... plus the code is easy enough to implement in the model).
   - Removed `onUpdate` configuration option.  If you want to re-generate a slug
     on update, then set the model's slug to `null` before saving.  Otherwise, existing
     slugs will never be overwritten.
   - `createSlug()` is no longer a static method on the model, but is a public method
-    on the _SlugService_ class, with a different method signature (see docs)
+    on the _SlugService_ class, with a different method signature (see docs).
+  - Several bug fixes.
   
 
 ## 3.1.4 - 03-Jan-2016
