@@ -150,7 +150,7 @@ class SlugService
         $maxLength = $config['maxLength'];
 
         if ($method === null) {
-            $slugEngine = $this->getSlugEngine();
+            $slugEngine = $this->getSlugEngine($attribute);
             $slug = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
@@ -171,22 +171,22 @@ class SlugService
      *
      * @return Slugify
      */
-    protected function getSlugEngine()
+    protected function getSlugEngine($attribute)
     {
         static $slugEngines = [];
 
-        $modelClass = get_class($this->model);
+        $key = get_class($this->model) . '.' . $attribute;
 
-        if (!array_key_exists($modelClass, $slugEngines)) {
+        if (!array_key_exists($key, $slugEngines)) {
             $engine = new Slugify();
             if (method_exists($this->model, 'customizeSlugEngine')) {
-                $engine = $this->model->customizeSlugEngine($engine);
+                $engine = $this->model->customizeSlugEngine($engine, $attribute);
             }
 
-            $slugEngines[$modelClass] = $engine;
+            $slugEngines[$key] = $engine;
         }
 
-        return $slugEngines[$modelClass];
+        return $slugEngines[$key];
     }
 
     /**
@@ -303,16 +303,15 @@ class SlugService
      */
     protected function getExistingSlugs($slug, $attribute, array $config)
     {
-        $separator = $config['separator'];
         $includeTrashed = $config['includeTrashed'];
 
-        $query = $this->model->newQuery();
+        $query = $this->model->newQuery()
+            ->findSimilarSlugs($this->model, $attribute, $config, $slug);
 
-        //check for direct match or something that has a separator followed by a suffix
-        $query->where(function (Builder $q) use ($attribute, $slug, $separator) {
-            $q->where($attribute, $slug)
-                ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
-        });
+        // use the model scope to find similar slugs
+        if (method_exists($this->model, 'scopeWithUniqueSlugConstraints')) {
+            $query->withUniqueSlugConstraints($this->model, $attribute, $config, $slug);
+        }
 
         // include trashed models if required
         if ($includeTrashed && $this->usesSoftDeleting()) {

@@ -1,6 +1,8 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests;
 
+use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithUniqueSlugConstraints;
 
 
 /**
@@ -55,4 +57,41 @@ class UniqueTests extends TestCase
         $this->assertEquals('a-post-title', $post3->slug);
     }
 
+    /**
+     * Test
+     * @test
+     */
+    public function testCustomUniqueQueryScope()
+    {
+        $authorBob = Author::create(['name' => 'Bob']);
+        $authorPam = Author::create(['name' => 'Pam']);
+
+        // Bob's first post
+        $post = new PostWithUniqueSlugConstraints(['title' => 'My first post']);
+        $post->author()->associate($authorBob);
+        $post->save();
+
+        $this->assertEquals('my-first-post', $post->slug);
+
+        // Bob's second post with same title is made unique
+        $post = new PostWithUniqueSlugConstraints(['title' => 'My first post']);
+        $post->author()->associate($authorBob);
+        $post->save();
+
+        $this->assertEquals('my-first-post-1', $post->slug);
+
+        // Pam's first post with same title is scoped to her
+        $post = new PostWithUniqueSlugConstraints(['title' => 'My first post']);
+        $post->author()->associate($authorPam);
+        $post->save();
+
+        $this->assertEquals('my-first-post', $post->slug);
+
+        // Pam's second post with same title is scoped to her and made unique
+        $post = new PostWithUniqueSlugConstraints(['title' => 'My first post']);
+        $post->author()->associate($authorPam);
+        $post->save();
+
+        $this->assertEquals('my-first-post-1', $post->slug);
+    }
 }

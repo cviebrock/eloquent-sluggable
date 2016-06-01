@@ -11,7 +11,12 @@ use Cocur\Slugify\Slugify;
 class PostWithCustomEngine extends Post
 {
 
-    public function customizeSlugEngine(Slugify $engine)
+    /**
+     * @param \Cocur\Slugify\Slugify $engine
+     * @param string $attribute
+     * @return \Cocur\Slugify\Slugify
+     */
+    public function customizeSlugEngine(Slugify $engine, $attribute)
     {
         $engine->addRule('e', 'a');
         $engine->addRule('i', 'a');

@@ -1,6 +1,8 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 
 /**
@@ -46,7 +48,7 @@ trait Sluggable
      * Clone the model into a new, non-existing instance.
      *
      * @param  array|null $except
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function replicate(array $except = null)
     {
@@ -54,6 +56,24 @@ trait Sluggable
         (new SlugService())->slug($instance, true);
 
         return $instance;
+    }
+
+    /**
+     * Query scope for finding "similar" slugs, used to determine uniqueness.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $attribute
+     * @param array $config
+     * @param string $slug
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFindSimilarSlugs(Builder $query, Model $model, $attribute, $config, $slug)
+    {
+        $separator = $config['separator'];
+
+        return $query->where($attribute, '=', $slug)
+            ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
     }
 
     /**
