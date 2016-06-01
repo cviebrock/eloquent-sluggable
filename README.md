@@ -1,7 +1,5 @@
 # Eloquent-Sluggable
 
-> :bangbang: **The `rewrite` branch is unstable. Don't use it.**
-
 Easy creation of slugs for your Eloquent models in Laravel 5.
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable?format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
