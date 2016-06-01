@@ -13,7 +13,8 @@
     slugs will never be overwritten.
   - `createSlug()` is no longer a static method on the model, but is a public method
     on the _SlugService_ class, with a different method signature (see docs).
-  - Several bug fixes.
+  - Several bug fixes
+- See [UPGRADING.md] for details.
   
 
 ## 3.1.4 - 03-Jan-2016
