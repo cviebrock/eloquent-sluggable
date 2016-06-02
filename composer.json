@@ -15,14 +15,14 @@
     }
   ],
   "require": {
-    "php": ">=5.5",
-    "illuminate/config": "~5.1|~5.2",
-    "illuminate/database": "~5.1|~5.2",
-    "illuminate/support": "~5.1|~5.2",
+    "php": "^5.5.9 || ^7.0",
+    "illuminate/config": "5.1.* || 5.2.* || 5.3.*",
+    "illuminate/database": "5.1.* || 5.2.* || 5.3.*",
+    "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
     "cocur/slugify": "^1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.0",
+    "phpunit/phpunit": "^4.8 || ^5.0",
     "orchestra/testbench": "^3.0",
     "mockery/mockery": "^0.9.4"
   },
