@@ -75,3 +75,20 @@ migrations if you need to add columns to your database tables to store slug valu
 
 Route Model Binding has been removed from the package.  You are encouraged to handle this yourself
 in the `RootServiceProvider::boot` method as described in the [Laravel Documentation](https://laravel.com/docs/5.2/routing#route-model-binding)
+
+Because the package now supports multiple slugs per model, the `findBySlug()` and other `findBy*`
+methods have been removed from the package, as has the `whereSlug()` query scope.  You should 
+just update your code to use standard Eloquent methods to find your models, specifying which 
+fields to search by:
+
+```php
+// OLD
+$posts = Post::whereSlug($input)->get();
+$post = Post::findBySlugOrFail($input);
+$post = Post::findBySlugOrIdOrFail($input);
+
+// NEW
+$posts = Post::where('slug',$input)->get();
+$post = Post::where('slug', $input)->firstOrFail();
+$post = Post::where('slug', $input)->get() ?: Post::findOrFail((int)$input);
+```
