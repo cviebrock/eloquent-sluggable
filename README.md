@@ -189,7 +189,7 @@ return array(
 
 ### build_from
 
-This is the field or array of fields from which to build the slug. Each `$model->field` is contactenated (with space separation) to build the sluggable string.  This can be model attribues (i.e. fields in the database) or custom getters.  So, for example, this works:
+This is the field or array of fields from which to build the slug. Each `$model->field` is concatenated (with space separation) to build the sluggable string.  This can be model attribues (i.e. fields in the database) or custom getters.  So, for example, this works:
 
 ```php
 class Person extends Eloquent implements SluggableInterface {
