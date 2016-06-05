@@ -94,14 +94,14 @@ Then, update `config/app.php` by adding an entry for the service provider.
 ```php
 'providers' => [
     // ...
-    Cviebrock\EloquentSluggable\ServiceProvider::class,
+    Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
 ];
 ```
 
 Finally, from the command line again, publish the default configuration file:
 
 ```shell
-php artisan vendor:publish --provider="Cviebrock\EloquentSluggable\ServiceProvider"
+php artisan vendor:publish --provider="Cviebrock\EloquentSluggable\SluggableServiceProvider"
 ```
 
 
