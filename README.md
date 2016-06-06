@@ -84,10 +84,11 @@ automatically, with minimal configuration.
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require cviebrock/eloquent-sluggable
+$ composer require cviebrock/eloquent-sluggable:~4.0@dev
 ```
 
-> **NOTE**: Eloquent-Sluggable uses traits, so you will need to be running PHP 5.4 or higher.
+> **NOTE**: Eloquent-Sluggable uses traits and requires Laravel 5.1 or later,
+> so you will need to be running PHP 5.5.9 or higher.
 
 Then, update `config/app.php` by adding an entry for the service provider.
 
