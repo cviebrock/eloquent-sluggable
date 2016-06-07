@@ -3,7 +3,6 @@
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * Class SlugService
@@ -168,6 +167,7 @@ class SlugService
      * Return a class that has a `slugify()` method, used to convert
      * strings into slugs.
      *
+     * @param string $attribute
      * @return Slugify
      */
     protected function getSlugEngine($attribute)
@@ -378,7 +378,7 @@ class SlugService
     /**
      * Determine the version of Laravel (or the Illuminate components) that we are running.
      *
-     * @return mixed|string
+     * @return string
      */
     protected function getApplicationVersion()
     {
