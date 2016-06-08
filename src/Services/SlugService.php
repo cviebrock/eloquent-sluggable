@@ -318,13 +318,11 @@ class SlugService
         }
 
         // get the list of all matching slugs
-        // (need to do this check because of changes in Query Builder between 5.1 and 5.2)
-        // @todo refactor this to universally working code
-        if (version_compare($this->getApplicationVersion(), '5.2', '>=')) {
-            return $query->pluck($attribute, $this->model->getKeyName());
-        } else {
-            return $query->lists($attribute, $this->model->getKeyName());
-        }
+        $results = $query->addSelect([$attribute, $this->model->getKeyName()])
+            ->get();
+
+        // key the results and return
+        return $results->pluck($attribute, $this->model->getKeyName());
     }
 
     /**
@@ -373,24 +371,5 @@ class SlugService
         $this->model = $model;
 
         return $this;
-    }
-
-    /**
-     * Determine the version of Laravel (or the Illuminate components) that we are running.
-     *
-     * @return string
-     */
-    protected function getApplicationVersion()
-    {
-        static $version;
-
-        if (!$version) {
-            $version = app()->version();
-            // parse out Lumen version
-            if (preg_match('/Lumen \((.*?)\)/i', $version, $matches)) {
-                $version = $matches[1];
-            }
-        }
-        return $version;
     }
 }

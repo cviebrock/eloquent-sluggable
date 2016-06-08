@@ -3,6 +3,7 @@
 ## 4.0.0 - xx-Jun-2016
 
 - Fix for Laravel 5.1 (#263 thanks @roshangautam and @andregaldino).
+- Update `Cocur\Slugify` to `^2.1` (#269 thanks @shadoWalker89).
 
 
 ## 4.0.0-beta - 01-Jun-2016
