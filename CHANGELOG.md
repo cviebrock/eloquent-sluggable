@@ -1,6 +1,6 @@
 # Change Log
 
-## 4.0.0 - xx-Jun-2016
+## 4.0.0 - 10-Jun-2016
 
 - Fix for Laravel 5.1 (#263 thanks @roshangautam and @andregaldino).
 - Update `Cocur\Slugify` to `^2.1` (#269 thanks @shadoWalker89).
@@ -19,7 +19,9 @@
     slugs will never be overwritten.
   - `createSlug()` is no longer a static method on the model, but is a public method
     on the _SlugService_ class, with a different method signature (see docs).
-  - Several bug fixes
+  - Removed artisan command to add slug column to tables.  You will need to do this
+    (pretty simple) task yourself now. 
+  - Several bug fixes.
 - See [UPGRADING.md] for details.
   
 
