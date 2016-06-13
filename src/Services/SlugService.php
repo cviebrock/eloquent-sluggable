@@ -127,7 +127,7 @@ class SlugService
         }
 
         $sourceStrings = array_map(function ($key) {
-            return array_get($this->model, $key);
+            return data_get($this->model, $key);
         }, (array)$from);
 
         return join($sourceStrings, ' ');
@@ -318,8 +318,9 @@ class SlugService
         }
 
         // get the list of all matching slugs
-        $results = $query->addSelect([$attribute, $this->model->getKeyName()])
-            ->get();
+        $results = $query->select([$attribute, $this->model->getKeyName()])
+            ->get()
+            ->toBase();
 
         // key the results and return
         return $results->pluck($attribute, $this->model->getKeyName());

@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.0.1 - 13-Jun-2016
+
+- Fixed several bugs related to Laravel 5.1 and collections (#263, #274).
+
+
 ## 4.0.0 - 10-Jun-2016
 
 - Fix for Laravel 5.1 (#263 thanks @roshangautam and @andregaldino).

@@ -71,8 +71,10 @@ trait Sluggable
     {
         $separator = $config['separator'];
 
-        return $query->where($attribute, '=', $slug)
-            ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
+        return $query->where(function(Builder $q) use ($attribute, $slug, $separator) {
+            $q->where($attribute, '=', $slug)
+                ->orWhere($attribute, 'LIKE', $slug . $separator . '%');
+        });
     }
 
     /**
