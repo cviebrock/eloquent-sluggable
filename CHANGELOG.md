@@ -4,8 +4,10 @@
 
 - Added  `SluggableScopeHelpers` trait which restores some of the scoping and query
   functionality of the 3.x version of the package (#280, thanks @unstoppablecarl and @Keoghan).
+- Added the `onUpdate` configuration option back to the package.
 - Updated the documentation to show usage of the `SluggableScopeHelpers` trait, and
   how to use route model binding with slugs.
+  
 
 
 ## 4.0.1 - 13-Jun-2016

@@ -65,21 +65,6 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that renaming the sluggable fields doesn't update the slug if on_update is false.
-     *
-     * @test
-     */
-    public function testRenameSlugWithoutUpdate()
-    {
-        $post = Post::create([
-            'title' => 'My First Post'
-        ]);
-        $post->title = 'A New Title';
-        $post->save();
-        $this->assertEquals('my-first-post', $post->slug);
-    }
-
-    /**
      * Test building a slug from multiple attributes.
      *
      * @test

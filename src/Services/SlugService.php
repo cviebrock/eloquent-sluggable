@@ -103,7 +103,10 @@ class SlugService
      */
     protected function needsSlugging($attribute, array $config)
     {
-        if (empty($this->model->getAttributeValue($attribute))) {
+        if (
+            empty($this->model->getAttributeValue($attribute)) ||
+            $config['onUpdate'] === true
+        ) {
             return true;
         }
 

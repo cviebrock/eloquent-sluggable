@@ -6,8 +6,8 @@
 
 The configuration array has changed slightly between versions:
 
-* In your `app/config/sluggable.php` configuration file, remove the `save_to` and `on_update` 
-  parameters as they are no longer used.  Rename `build_from` to `source`, and convert the other
+* In your `app/config/sluggable.php` configuration file, remove the `save_to`  
+  parameter as it is no longer used.  Rename `build_from` to `source`, and convert the other
   parameters from snake_case to lower camelCase (e.g. `include_trashed` -> `includeTrashed`).
 * Your models no longer need to implement `Cviebrock\EloquentSluggable\SluggableInterface`.
 * Your models should now use the trait `Cviebrock\EloquentSluggable\Sluggable` instead of 

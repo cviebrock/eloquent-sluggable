@@ -18,6 +18,7 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
     * [includeTrashed](#includetrashed)
     * [maxLength](#maxLength)
     * [method](#method)
+    * [onUpdate](#onupdate)
     * [reserved](#reserved)
     * [separator](#separator)
     * [source](#source)
@@ -399,6 +400,23 @@ For example, to duplicate the default behaviour, you could do:
 Any other values for `method` will throw an exception.
 
 For more complex slugging requirements, see [Extending Sluggable](#extending) below.
+
+### onUpdate
+
+By default, updating a model will not try and generate a new slug value.  It is assumed
+that once your slug is generated, you won't want it to change (this may be especially
+true if you are using slugs for URLs and don't want to mess up your SEO mojo).
+
+If you want to regenerate one or more of your model's slug fields, you can set those
+fields to null or an empty string before the update:
+
+```php
+$post->slug = null;
+$post->update(['title' => 'My New Title']);
+```
+
+If this is the behaviour you want every time you update a model, then set the `onUpdate`
+option to true.
 
 ### separator
 
