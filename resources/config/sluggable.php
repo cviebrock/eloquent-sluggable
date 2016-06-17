@@ -110,4 +110,9 @@ return [
 
     'reserved' => null,
 
+    /**
+     * If true, new slug generate on update record
+     */
+    'on_update' => false,
+
 ];
