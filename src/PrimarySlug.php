@@ -2,86 +2,75 @@
 
 namespace Cviebrock\EloquentSluggable;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
-trait PrimarySlug {
+/**
+ * Class PrimarySlug
+ * Helper trait for defining the primary slug of a model.
+ *
+ * @package Cviebrock\EloquentSluggable
+ */
+trait PrimarySlug
+{
 
     /**
      * Primary slug column of this model.
      *
      * @return string
      */
-    public function primarySlug(){
-        if(isset($this->primarySlug)){
-            return $this->primarySlug;
+    public function getSlugKeyName()
+    {
+        if (property_exists($this, 'slugKeyName')) {
+            return $this->slugKeyName;
         }
-        return 'slug';
-    }
-//
-//    /**
-//     * how to map the primary slug to the router
-//     *
-//     * @return string
-//     */
-//    public function getRouteKeyName() {
-//        return $this->primarySlug();
-//    }
-//
-//    /**
-//     * Return the sluggable configuration array for this model.
-//     *
-//     * @return array
-//     */
-//    public function sluggable() {
-//        $config = (method_exists(get_parent_class($this), 'getConfig')) ? parent::sluggable() : [];
-//        return array_merge($config, [
-//            $this->primarySlug() => $this->primarySlugConfig()
-//        ]);
-//    }
 
-    /**
-     * Query scope for finding a model by its slug.
-     * @param $scope
-     * @param $slug
-     * @return mixed
-     */
-    public function scopeWhereSlug($scope, $slug) {
-        return $scope->where($this->primarySlug(), $slug);
+        return array_first(array_keys($this->sluggable()));
     }
 
     /**
-     * Find a model by slug.
-     * @param $slug
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * Primary slug value of this model.
+     *
+     * @return string
      */
-    public static function findBySlug($slug) {
+    public function getSlugKey()
+    {
+        return $this->getAttribute($this->getSlugKeyName());
+    }
+
+    /**
+     * Query scope for finding a model by primary slug.
+     *
+     * @param Builder $scope
+     * @param string $slug
+     * @return Builder
+     */
+    public function scopeWhereSlug($scope, $slug)
+    {
+        return $scope->where($this->getSlugKeyName(), $slug);
+    }
+
+    /**
+     * Find Model by primary slug. Fallback to find by id. Fail if not found.
+     *
+     * @param string $slug
+     * @return Model|Collection|null
+     */
+    public static function findBySlug($slug)
+    {
         return static::whereSlug($slug)->first();
     }
 
     /**
-     * Find a model by slug or fail.
-     * @param $slug
-     * @return \Illuminate\Database\Eloquent\Model
+     * Find by primary slug. Fail if not found.
+     *
+     * @param string $slug
+     * @return Model
      */
-    public static function findBySlugOrFail($slug) {
+    public static function findBySlugOrFail($slug)
+    {
         return static::whereSlug($slug)->firstOrFail();
     }
 
-    /**
-     * Simple find by Id if it's numeric or slug if not. Fail if not found.
-     * @param $slug
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
-     */
-    public static function findBySlugOrIdOrFail($slug) {
-        return static::findBySlug($slug) ?: static::findOrFail((int)$slug);
-    }
-
-    /**
-     * Simple find by Id if it's numeric or slug if not.
-     * @param $slug
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|null
-     */
-    public static function findBySlugOrId($slug) {
-        return  static::findBySlug($slug) ?: static::find($slug);
-    }
 }
