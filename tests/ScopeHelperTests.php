@@ -2,7 +2,6 @@
 
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndCustomSlugKey;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndHelperTrait;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Class ScopeHelperTests
@@ -107,6 +106,7 @@ class ScopeHelperTests extends TestCase
      * Test finding a model by its primary slug throws an exception if the slug does not exist.
      *
      * @test
+     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function testFindBySlugOrFail()
     {
@@ -124,8 +124,6 @@ class ScopeHelperTests extends TestCase
 
         $this->assertEquals($post->getKey(),
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
-
-        $this->expectException(ModelNotFoundException::class);
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
     }
