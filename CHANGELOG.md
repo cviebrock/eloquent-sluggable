@@ -1,9 +1,11 @@
 # Change Log
 
-## 4.x.x - xx-Jun-2016
+## 4.0.2 - 17-Jun-2016
 
 - Added  `SluggableScopeHelpers` trait which restores some of the scoping and query
   functionality of the 3.x version of the package (#280, thanks @unstoppablecarl and @Keoghan).
+- Updated the documentation to show usage of the `SluggableScopeHelpers` trait, and
+  how to use route model binding with slugs.
 
 
 ## 4.0.1 - 13-Jun-2016
