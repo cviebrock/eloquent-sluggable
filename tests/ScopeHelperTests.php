@@ -5,11 +5,11 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndHelperTrait
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * Class StaticTests
+ * Class ScopeHelperTests
  *
  * @package Tests
  */
-class PrimarySlugTests extends TestCase
+class ScopeHelperTests extends TestCase
 {
 
     /**
@@ -125,7 +125,7 @@ class PrimarySlugTests extends TestCase
         $this->assertEquals($post->getKey(),
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
 
-        $this->expectException(ModelNotFoundException::class);
+        $this->setExpectedException(ModelNotFoundException::class);
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
     }
