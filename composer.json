@@ -22,7 +22,7 @@
     "cocur/slugify": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.0",
+    "phpunit/phpunit": "^4.8 || ^5.0",
     "orchestra/testbench": "^3.0",
     "mockery/mockery": "^0.9.4"
   },
