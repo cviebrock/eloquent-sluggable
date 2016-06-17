@@ -27,6 +27,8 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
     * [customizeSlugEngine](#customizeslugengine)
     * [scopeWithUniqueSlugConstraints](#scopewithuniqueslugconstraints)
     * [scopeFindSimilarSlugs](#scopefindsimilarslugs)
+* [SluggableScopeHelpers Trait](#sluggablescopehelpers-trait)
+* [Route Model Binding](#route-model-binding)
 * [Bugs, Suggestions and Contributions](#bugs-suggestions-and-contributions)
 * [Copyright and License](#copyright-and-license)
 
@@ -562,6 +564,32 @@ However, you are free to overload it in your models.
 
 
 
+## SluggableScopeHelpers Trait
+
+Earlier versions of the package included some helper functions for working with models and their slugs.
+Because you can now have more than one slug per model, this functionality has been refactored into a
+separate trait you can use in your application.
+
+By adding the `SluggableScopeHelpers` trait to your model, you can then do things such as:
+
+```php
+$post = Post::whereSlug($slugString)->get();
+
+$post = Post::findBySlug($slugString);
+
+$post = Post::findBySlugOrFail($slugString);
+```
+
+See [SCOPE-HELPERS.md] for all the details.
+
+
+
+## Route Model Binding
+
+See [ROUTE-MODEL-BINDING.md] for details.
+
+
+
 ## Bugs, Suggestions and Contributions
 
 Thanks to [everyone](https://github.com/cviebrock/eloquent-taggable/graphs/contributors)
@@ -571,6 +599,7 @@ Please use [Github](https://github.com/cviebrock/eloquent-sluggable) for reporti
 and making comments or suggestions.
  
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute changes.
+
 
 
 ## Copyright and License

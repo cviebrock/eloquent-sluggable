@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.x.x - xx-Jun-2016
+
+- Added  `SluggableScopeHelpers` trait which restores some of the scoping and query
+  functionality of the 3.x version of the package (#280, thanks @unstoppablecarl and @Keoghan).
+
+
 ## 4.0.1 - 13-Jun-2016
 
 - Fixed several bugs related to Laravel 5.1 and collections (#263, #274).

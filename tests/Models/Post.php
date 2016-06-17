@@ -5,6 +5,15 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Post
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
+ *
+ * @property integer id
+ * @property string title
+ * @property string|null subtitle
+ * @property string|null slug
+ * @property string|null dummy
+ * @property integer author_id
  */
 class Post extends Model
 {
