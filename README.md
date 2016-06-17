@@ -87,7 +87,7 @@ automatically, with minimal configuration.
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require cviebrock/eloquent-sluggable:^4.0.1
+$ composer require cviebrock/eloquent-sluggable:^4.0.2
 ```
 
 > **NOTE**: Eloquent-Sluggable uses traits and requires Laravel 5.1 or later,

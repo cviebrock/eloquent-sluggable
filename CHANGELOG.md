@@ -9,7 +9,6 @@
   how to use route model binding with slugs.
   
 
-
 ## 4.0.1 - 13-Jun-2016
 
 - Fixed several bugs related to Laravel 5.1 and collections (#263, #274).
