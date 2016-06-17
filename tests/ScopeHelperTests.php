@@ -125,7 +125,7 @@ class ScopeHelperTests extends TestCase
         $this->assertEquals($post->getKey(),
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
 
-        $this->setExpectedException(ModelNotFoundException::class);
+        $this->expectException(ModelNotFoundException::class);
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
     }
