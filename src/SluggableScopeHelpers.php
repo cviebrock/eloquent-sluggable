@@ -22,7 +22,9 @@ trait SluggableScopeHelpers
             return $this->slugKeyName;
         }
 
-        return array_first(array_keys($this->sluggable()));
+        $keys = array_keys($this->sluggable());
+
+        return reset($keys);
     }
 
     /**
