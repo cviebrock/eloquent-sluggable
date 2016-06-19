@@ -103,7 +103,7 @@ return [
      * In the case of a slug that gets generated with one of these reserved names,
      * we will do:
      *
-     *    $slug .= $seperator + "1"
+     *    $slug .= $separator + "1"
      *
      * and continue from there.
      */
