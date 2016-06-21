@@ -322,8 +322,8 @@ class Book extends Eloquent
             'slug' => [
                 'source' => ['author.name', 'title']
             ]
-        ]
-    ];
+        ];
+    }
     
     public function author() {
         return $this->belongsTo(Author::class);
