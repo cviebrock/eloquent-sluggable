@@ -82,12 +82,8 @@ class SlugService
 
             if ($source) {
                 $slug = $this->generateSlug($source, $config, $attribute);
-
                 $slug = $this->validateSlug($slug, $config, $attribute);
-
-                if ($config['unique']) {
-                    $slug = $this->makeSlugUnique($slug, $config, $attribute);
-                }
+                $slug = $this->makeSlugUnique($slug, $config, $attribute);
             }
         }
 
@@ -234,6 +230,10 @@ class SlugService
      */
     protected function makeSlugUnique($slug, array $config, $attribute)
     {
+        if (!$config['unique']) {
+            return $slug;
+        }
+
         $separator = $config['separator'];
 
         // find all models where the slug is like the current one
@@ -365,9 +365,7 @@ class SlugService
 
         $slug = $instance->generateSlug($fromString, $config, $attribute);
         $slug = $instance->validateSlug($slug, $config, $attribute);
-        if ($config['unique']) {
-            $slug = $instance->makeSlugUnique($slug, $config, $attribute);
-        }
+        $slug = $instance->makeSlugUnique($slug, $config, $attribute);
 
         return $slug;
     }
