@@ -258,7 +258,7 @@ class SlugService
         $method = $config['uniqueSuffix'];
         if ($method === null) {
             $suffix = $this->generateSuffix($slug, $separator, $list);
-        } else if (is_callable($method)) {
+        } elseif (is_callable($method)) {
             $suffix = call_user_func($method, $slug, $separator, $list);
         } else {
             throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
@@ -345,16 +345,22 @@ class SlugService
      * @param \Illuminate\Database\Eloquent\Model|string $model
      * @param string $attribute
      * @param string $fromString
+     * @param array $config
      * @return string
      */
-    public static function createSlug($model, $attribute, $fromString)
+    public static function createSlug($model, $attribute, $fromString, array $config = null)
     {
         if (is_string($model)) {
             $model = new $model;
         }
         $instance = (new self())->setModel($model);
 
-        $config = array_get($model->sluggable(), $attribute);
+        if ($config === null) {
+            $config = array_get($model->sluggable(), $attribute);
+        } elseif (!is_array($config)) {
+            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; ' . gettype($config) . ' given.');
+        }
+
         $config = $instance->getConfiguration($config);
 
         $slug = $instance->generateSlug($fromString, $config, $attribute);

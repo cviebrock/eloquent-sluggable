@@ -5,7 +5,7 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 [![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/stable?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
-[![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/unstable?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
+[![Latest Unstable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/unstable?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cviebrock/eloquent-sluggable/badges/quality-score.png?format=flat)](https://scrutinizer-ci.com/g/cviebrock/eloquent-sluggable)
 
 * [Background: What is a slug](#background-what-is-a-slug)
@@ -205,6 +205,15 @@ This would be useful for Ajax-y controllers or the like, where you want to show 
 user what the unique slug _would_ be for a given test input, before actually creating
 a model.  The first two arguments to the method are the model and slug field being
 tested, and the third argument is the source string to use for testing the slug.
+
+You can also pass an optional array of configuration values as the fourth argument.
+These will take precedence over the normal configuration values for the slug field
+being tested.  For example, if your model is configured to use unique slugs, but you 
+want to generate the "base" version of a slug for some reason, you could do:
+
+```php
+$slug = SlugService::createSlug(Post::class, 'slug', 'My First Post', ['unique' => false]);
+```
 
 
 
