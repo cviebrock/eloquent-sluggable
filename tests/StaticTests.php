@@ -35,4 +35,18 @@ class StaticTests extends TestCase
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
         $this->assertEquals('my-test-post-1', $slug);
     }
+
+    /**
+     * Test that we can generate a slug statically with different configuration.
+     *
+     * @test
+     */
+    public function testStaticSlugGeneratorWithConfig()
+    {
+        $config = [
+            'separator' => '.'
+        ];
+        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post', $config);
+        $this->assertEquals('my.test.post', $slug);
+    }
 }

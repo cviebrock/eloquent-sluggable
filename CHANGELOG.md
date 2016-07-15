@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.0.3 - 15-Jul-2016
+
+- Added `$config` argument to `SlugService::createSlug` method for optionally overriding 
+  the configuration for a statically generated slug (#286).
+
+
 ## 4.0.2 - 17-Jun-2016
 
 - Added  `SluggableScopeHelpers` trait which restores some of the scoping and query
@@ -7,7 +13,7 @@
 - Added the `onUpdate` configuration option back to the package.
 - Updated the documentation to show usage of the `SluggableScopeHelpers` trait, and
   how to use route model binding with slugs.
-  
+
 
 ## 4.0.1 - 13-Jun-2016
 
@@ -37,7 +43,7 @@
     (pretty simple) task yourself now. 
   - Several bug fixes.
 - See [UPGRADING.md] for details.
-  
+
 
 ## 3.1.4 - 03-Jan-2016
 
@@ -138,7 +144,7 @@
 
 ## 1.0.8 - 20-Feb-2014
 
-- Fix issue where replicated models couldn't forceably be reslugged (#20 thanks @trideout).
+- Fix issue where replicated models couldn't forcibly be re-slugged (#20 thanks @trideout).
 
 
 ## 1.0.7 - 03-Dec-2013
