@@ -17,4 +17,4 @@
 
 ## Planned changes (possibly BC-breaking) for next major version - 4.1
 
-- [ ] ...?
+- [ ] remove unused `$model` argument from `scopeFindSimilarSlugs`
