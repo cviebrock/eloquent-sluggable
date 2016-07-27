@@ -408,7 +408,7 @@ For example, to duplicate the default behaviour, you could do:
 
 Any other values for `method` will throw an exception.
 
-For more complex slugging requirements, see [Extending Sluggable](#extending) below.
+For more complex slugging requirements, see [Extending Sluggable](#extending-sluggable) below.
 
 ### onUpdate
 
