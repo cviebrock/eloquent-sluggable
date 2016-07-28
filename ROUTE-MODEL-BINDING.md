@@ -64,7 +64,7 @@ public function getRouteKeyName()
 
 ## Explicit Binding
 
-You can also use the `RootServiceProvider::boot` method as described in the 
+You can also use the `RouteServiceProvider::boot` method as described in the 
 [Laravel Documentation](https://laravel.com/docs/5.2/routing#route-model-binding) to 
 handle explicit route model binding.
 
