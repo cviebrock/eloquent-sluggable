@@ -68,6 +68,13 @@ You can also use the `RouteServiceProvider::boot` method as described in the
 [Laravel Documentation](https://laravel.com/docs/5.2/routing#route-model-binding) to 
 handle explicit route model binding.
 
+
+## Laravel 5.3 Note
+
+If you are using Laravel 5.3, please take note of the instructions in the
+[upgrade guide](https://laravel.com/docs/5.3/upgrade#upgrade-5.3.0)
+under _Middleware_ > _Binding Substitution Middleware_ for adding the correct middleware
+and classes to your project to enable slug-based route model binding.
  
  
 - - -
