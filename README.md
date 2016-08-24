@@ -607,13 +607,13 @@ $post = Post::findBySlug($slugString);
 $post = Post::findBySlugOrFail($slugString);
 ```
 
-See [SCOPE-HELPERS.md] for all the details.
+See [SCOPE-HELPERS.md](SCOPE-HELPERS.md) for all the details.
 
 
 
 ## Route Model Binding
 
-See [ROUTE-MODEL-BINDING.md] for details.
+See [ROUTE-MODEL-BINDING.md](ROUTE-MODEL-BINDING.md) for details.
 
 
 
