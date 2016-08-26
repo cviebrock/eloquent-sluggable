@@ -101,7 +101,7 @@ $post = Post::findBySlugOrIdOrFail($input);
 $posts = Post::where('slug',$input)->get();
 $post = Post::where('slug', $input)->first();
 $post = Post::where('slug', $input)->firstOrFail();
-$post = Post::where('slug', $input)->get() ?: Post::findOrFail((int)$input);
+$post = Post::where('slug', $input)->first() ?: Post::findOrFail((int)$input);
 ```
 
 Alternatively, your model can use the `SluggableScopeHelpers` trait.  
