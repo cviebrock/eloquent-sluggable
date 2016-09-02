@@ -487,8 +487,8 @@ The package supports a really short configuration syntax, if you are truly lazy:
 public function sluggable() {
     return [
         'slug'
-    ]
-];
+    ];
+}
 ```
 
 This will use all the default options from `app/config/sluggable.php`, use the model's
