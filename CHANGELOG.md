@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.0.4 - 13-Sep-2016
+
+- Fix `SluggableScopeHelpers` to work when using the short configuration syntax (#314).
+
+
 ## 4.0.3 - 15-Jul-2016
 
 - Added `$config` argument to `SlugService::createSlug` method for optionally overriding 
