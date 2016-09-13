@@ -21,14 +21,10 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         // Call migrations specific to our tests, e.g. to seed the db
-        $this->artisan('migrate', [
+        $this->loadMigrationsFrom([
             '--database' => 'testbench',
             '--realpath' => realpath(__DIR__ . '/../resources/database/migrations'),
         ]);
-
-        $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
-        });
     }
 
     /**
