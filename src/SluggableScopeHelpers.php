@@ -1,7 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 /**
- * Class PrimarySlug
+ * Class SluggableScopeHelpers
  *
  * Helper trait for defining the primary slug of a model
  * and providing useful scopes and query methods.
@@ -22,9 +22,16 @@ trait SluggableScopeHelpers
             return $this->slugKeyName;
         }
 
-        $keys = array_keys($this->sluggable());
+        $config = $this->sluggable();
+        $name = reset($config);
+        $key = key($config);
 
-        return reset($keys);
+        // check for short configuration
+        if ($key === 0) {
+            return $name;
+        }
+
+        return $key;
     }
 
     /**

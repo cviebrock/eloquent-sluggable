@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests;
 
+use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfigWithScopeHelpers;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndCustomSlugKey;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndHelperTrait;
 
@@ -126,5 +127,16 @@ class ScopeHelperTests extends TestCase
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
+    }
+
+    /**
+     * Test that getSlugKeyName() works with the short configuration syntax.
+     *
+     * @test
+     */
+    public function testGetSlugKeyNameWithShortConfig()
+    {
+        $post = new PostShortConfigWithScopeHelpers();
+        $this->assertEquals('slug_field', $post->getSlugKeyName());
     }
 }
