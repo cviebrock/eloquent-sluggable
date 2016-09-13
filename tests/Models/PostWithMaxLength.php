@@ -2,6 +2,8 @@
 
 /**
  * Class PostWithMaxLength
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithMaxLength extends Post
 {

@@ -4,6 +4,8 @@
  * Class PostWithCustomSeparator
  *
  * A test model that uses a custom suffix generation method.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithCustomSeparator extends Post
 {

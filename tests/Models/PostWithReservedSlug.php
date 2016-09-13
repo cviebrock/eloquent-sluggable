@@ -4,6 +4,8 @@
  * Class PostWithReservedSlug
  *
  * A test model that uses custom reserved slug names.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithReservedSlug extends Post
 {

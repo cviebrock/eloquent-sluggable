@@ -2,6 +2,8 @@
 
 /**
  * Class PostWithMultipleSlugs
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithMultipleSlugs extends Post
 {

@@ -2,6 +2,8 @@
 
 /**
  * Class PostShortConfig
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostShortConfig extends Post
 {

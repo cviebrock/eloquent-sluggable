@@ -2,6 +2,8 @@
 
 /**
  * Class PostWithMultipleSources
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithMultipleSources extends Post
 {

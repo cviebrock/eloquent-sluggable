@@ -3,7 +3,9 @@
 /**
  * Class PostWithNoSource
  *
- * A test model that uses a custom suffix generation method.
+ * A test model with no source field defined.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithNoSource extends Post
 {

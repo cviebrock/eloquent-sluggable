@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class PostNotSluggable
  *
  * A test model that doesn't use the Sluggable package.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostNotSluggable extends Model
 {

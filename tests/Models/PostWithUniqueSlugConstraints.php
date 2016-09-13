@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class PostWithUniqueSlugConstraints
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithUniqueSlugConstraints extends Post
 {

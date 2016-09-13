@@ -7,6 +7,8 @@ use Illuminate\Support\Collection;
  * Class PostWithCustomSuffix
  *
  * A test model that uses a custom suffix generation method.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithCustomSuffix extends Post
 {

@@ -5,6 +5,8 @@
  *
  * A test model used for the relationship tests.
  *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
+ *
  * @property \Cviebrock\EloquentSluggable\Tests\Models\Author author
  */
 class PostWithRelation extends Post

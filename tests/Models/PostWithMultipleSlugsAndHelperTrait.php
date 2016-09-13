@@ -4,6 +4,8 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 /**
  * Class PostWithMultipleSlugsAndPrimary
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithMultipleSlugsAndHelperTrait extends PostWithMultipleSlugs
 {

@@ -4,6 +4,8 @@
  * Class PostWithOnUpdate
  *
  * A test model that uses the onUpdate functionality.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithOnUpdate extends Post
 {

@@ -5,6 +5,8 @@ use Illuminate\Support\Str;
 
 /**
  * Class PostWithCustomMethod
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithCustomMethod extends Post
 {

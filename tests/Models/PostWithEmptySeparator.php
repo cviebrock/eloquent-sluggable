@@ -4,6 +4,8 @@
  * Class PostWithEmptySeparator
  *
  * A test model that uses an empty separator.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithEmptySeparator extends Post
 {

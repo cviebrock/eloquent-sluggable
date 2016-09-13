@@ -2,6 +2,8 @@
 
 /**
  * Class PostWithMultipleSlugsAndCustomSlugKey
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithMultipleSlugsAndCustomSlugKey extends PostWithMultipleSlugsAndHelperTrait
 {
