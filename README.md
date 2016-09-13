@@ -90,8 +90,8 @@ First, you'll need to install the package via Composer:
 $ composer require cviebrock/eloquent-sluggable:^4.0
 ```
 
-> **NOTE**: Eloquent-Sluggable uses traits and requires Laravel 5.1 or later,
-> so you will need to be running PHP 5.5.9 or higher.
+> **NOTE**: Eloquent-Sluggable uses traits, requires Laravel 5.1 or later,
+> and few other "new" features, so you will need to be running PHP 5.6 or higher.
 
 Then, update `config/app.php` by adding an entry for the service provider.
 
