@@ -34,10 +34,6 @@ Easy creation of slugs for your Eloquent models in Laravel 5.
 * [Copyright and License](#copyright-and-license)
 
 
-> **NOTE** If you are using Laravel 4, then use the `2.x` branch or tagged `2.*` releases. 
-> Currently, the `master` branch is only tested against Laravel 5.1 and 5.2.
-
-
 ## Background: What is a slug?
 
 A slug is a simplified version of a string, typically URL-friendly. The act of "slugging" 
@@ -84,14 +80,29 @@ automatically, with minimal configuration.
 
 ## Installation
 
+> **NOTE**: Depending on your version of Laravel, you should install a different
+> version of the package:
+> 
+> | Laravel Version | Sluggable Version |
+> |:---------------:|:-----------------:|
+> |       4.x       |        2.x        |
+> |     5.1, 5.2    |        4.0        |
+> | 5.1*, 5.2*, 5.3 |        4.1        |
+>
+> \* The 4.1 version _should_ work with Laravel 5.1 and 5.2, but might not in the future.
+>
+> Also note that different versions of the package have different configuration
+> settings.  See [UPGRADING.md](UPGRADING.md) for details.
+> 
+> Finally, the latest version of the package uses traits and few other "new" PHP
+> features, so you should be running PHP 5.6 or higher.  HHVM is not supported.
+
+
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require cviebrock/eloquent-sluggable:^4.0
+$ composer require cviebrock/eloquent-sluggable:^4.1
 ```
-
-> **NOTE**: Eloquent-Sluggable uses traits, requires Laravel 5.1 or later,
-> and few other "new" features, so you will need to be running PHP 5.6 or higher.
 
 Then, update `config/app.php` by adding an entry for the service provider.
 
@@ -112,7 +123,7 @@ php artisan vendor:publish --provider="Cviebrock\EloquentSluggable\ServiceProvid
 ## Updating your Eloquent Models
 
 Your models should use the Sluggable trait, which has an abstract method `sluggable()`
- that you need to define.  This is where any model-specific configuration is set 
+that you need to define.  This is where any model-specific configuration is set 
 (see [Configuration](#configuration) below for details):
 
 ```php

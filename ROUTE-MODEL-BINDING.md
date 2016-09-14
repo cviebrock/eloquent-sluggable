@@ -51,7 +51,7 @@ In this example, since the Eloquent type-hinted `$post` variable defined on the 
 matches the {post} segment in the route's URI, Laravel will automatically inject the 
 model instance that has a slug matching the corresponding value from the request URI.
 
-Further, if you are using the [`SluggableScopeHelpers`](SCOPE-HELPERS.md) trait, you can bind
+Further, if you are using the [SluggableScopeHelpers](SCOPE-HELPERS.md) trait, you can bind
 the default slug to the route parameter with:
  
 ```php

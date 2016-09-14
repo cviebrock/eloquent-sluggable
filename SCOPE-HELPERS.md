@@ -60,7 +60,7 @@ class Post extends Model
 
 In the above case, `Post::findBySlugOrFail($slug)` is the equivalent to `Post::where('alternate,'=',$slug)->firstOrFail()`.
 
-> **NOTE**: The old `findBySlugOrIdOrFail` is not implemented in the helper trait.  See [UPGRADING.md] for more details.
+> **NOTE**: The old `findBySlugOrIdOrFail` is not implemented in the helper trait.  See [UPGRADING.md](UPGRADING.md) for more details.
 
 
 - - -

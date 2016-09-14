@@ -1,5 +1,12 @@
 # Change Log
 
+## 4.1.0 - 14-Sep-2016
+
+- The goal of the 4.1.x releases will be to focus on support in Laravel 5.3, only providing support for 5.1/5.2
+  where it is easy and doesn't affect performance significantly.
+- Drop support for PHP <5.6 and HHVM (no longer supported by Laravel 5.3); fixes test build process
+
+
 ## 4.0.4 - 13-Sep-2016
 
 - Fix `SluggableScopeHelpers` to work when using the short configuration syntax (#314).
@@ -47,7 +54,7 @@
   - Removed artisan command to add slug column to tables.  You will need to do this
     (pretty simple) task yourself now. 
   - Several bug fixes.
-- See [UPGRADING.md] for details.
+- See [UPGRADING.md](UPGRADING.md) for details.
 
 
 ## 3.1.4 - 03-Jan-2016
