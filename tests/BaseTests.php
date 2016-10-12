@@ -27,8 +27,6 @@ class BaseTests extends TestCase
 
     /**
      * Test basic slugging functionality.
-     *
-     * @test
      */
     public function testSimpleSlug()
     {
@@ -40,8 +38,6 @@ class BaseTests extends TestCase
 
     /**
      * Test basic slugging functionality using short configuration syntax.
-     *
-     * @test
      */
     public function testShortConfig()
     {
@@ -53,8 +49,6 @@ class BaseTests extends TestCase
 
     /**
      * Test that accented characters and other stuff is "fixed".
-     *
-     * @test
      */
     public function testAccentedCharacters()
     {
@@ -66,8 +60,6 @@ class BaseTests extends TestCase
 
     /**
      * Test building a slug from multiple attributes.
-     *
-     * @test
      */
     public function testMultipleSource()
     {
@@ -80,8 +72,6 @@ class BaseTests extends TestCase
 
     /**
      * Test building a slug using a custom method.
-     *
-     * @test
      */
     public function testCustomMethod()
     {
@@ -94,8 +84,6 @@ class BaseTests extends TestCase
 
     /**
      * Test building a slug using a custom suffix.
-     *
-     * @test
      */
     public function testCustomSuffix()
     {
@@ -114,9 +102,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test building a slug using the __toString method
-     *
-     * @test
+     * Test building a slug using the __toString method.
      */
     public function testToStringMethod()
     {
@@ -128,8 +114,6 @@ class BaseTests extends TestCase
 
     /**
      * Test using a custom separator.
-     *
-     * @test
      */
     public function testCustomSeparator()
     {
@@ -141,8 +125,6 @@ class BaseTests extends TestCase
 
     /**
      * Test using reserved word blocking.
-     *
-     * @test
      */
     public function testReservedWord()
     {
@@ -153,9 +135,9 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test when reverting to a shorter version of a similar slug (issue #5)
+     * Test when reverting to a shorter version of a similar slug.
      *
-     * @test
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/5
      */
     public function testIssue5()
     {
@@ -176,9 +158,9 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test model replication (issue #20)
+     * Test model replication.
      *
-     * @test
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/20
      */
     public function testIssue20()
     {
@@ -192,9 +174,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that we don't try and slug models that don't implement Sluggable
-     *
-     * @test
+     * Test that we don't try and slug models that don't implement Sluggable.
      */
     public function testNonSluggableModels()
     {
@@ -206,9 +186,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test for max_length option
-     *
-     * @test
+     * Test for max_length option.
      */
     public function testMaxLength()
     {
@@ -219,9 +197,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test for max_length option with increments
-     *
-     * @test
+     * Test for max_length option with increments.
      */
     public function testMaxLengthWithIncrements()
     {
@@ -238,9 +214,9 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that models aren't slugged if the slug field is defined (issue #32)
+     * Test that models aren't slugged if the slug field is defined.
      *
-     * @test
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/32
      */
     public function testDoesNotNeedSluggingWhenSlugIsSet()
     {
@@ -252,9 +228,9 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that models aren't *re*slugged if the slug field is defined (issue #32)
+     * Test that models aren't *re*slugged if the slug field is defined.
      *
-     * @test
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/32
      */
     public function testDoesNotNeedSluggingWithUpdateWhenSlugIsSet()
     {
@@ -276,8 +252,6 @@ class BaseTests extends TestCase
 
     /**
      * Test generating slug from related model field.
-     *
-     * @test
      */
     public function testSlugFromRelatedModel()
     {
@@ -294,8 +268,6 @@ class BaseTests extends TestCase
 
     /**
      * Test generating slug when related model doesn't exists.
-     *
-     * @test
      */
     public function testSlugFromRelatedModelNotExists()
     {
@@ -307,8 +279,6 @@ class BaseTests extends TestCase
 
     /**
      * Test that an empty slug source creates a null slug.
-     *
-     * @test
      */
     public function testEmptySourceGeneratesEmptySlug()
     {
@@ -320,8 +290,6 @@ class BaseTests extends TestCase
 
     /**
      * Test using custom Slugify rules.
-     *
-     * @test
      */
     public function testCustomEngineRules()
     {
@@ -333,9 +301,9 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test if using an empty separator works (issue 256).
+     * Test if using an empty separator works.
      *
-     * @test
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/256
      */
     public function testEmptySeparator()
     {
@@ -346,6 +314,9 @@ class BaseTests extends TestCase
         $this->assertEquals('mytestpost', $post->slug);
     }
 
+    /**
+     * Test models with multiple slug fields.
+     */
     public function testMultipleSlugs()
     {
         $post = new PostWithMultipleSlugs([

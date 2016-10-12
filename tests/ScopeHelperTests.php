@@ -14,8 +14,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test that primary slug is set to $model->slugKeyName when set.
-     *
-     * @test
      */
     public function testSlugKeyNameProperty()
     {
@@ -32,8 +30,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test primary slug is set to first defined slug if $model->slugKeyName is not set.
-     *
-     * @test
      */
     public function testFirstSlugAsFallback()
     {
@@ -47,8 +43,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test primary slug query scope.
-     *
-     * @test
      */
     public function testQueryScope()
     {
@@ -71,8 +65,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test finding a model by its primary slug.
-     *
-     * @test
      */
     public function testFindBySlug()
     {
@@ -95,8 +87,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test finding a model by its primary slug fails if the slug does not exist.
-     *
-     * @test
      */
     public function testFindBySlugReturnsNullForNoRecord()
     {
@@ -106,7 +96,6 @@ class ScopeHelperTests extends TestCase
     /**
      * Test finding a model by its primary slug throws an exception if the slug does not exist.
      *
-     * @test
      * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function testFindBySlugOrFail()
@@ -131,8 +120,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test that getSlugKeyName() works with the short configuration syntax.
-     *
-     * @test
      */
     public function testGetSlugKeyNameWithShortConfig()
     {
