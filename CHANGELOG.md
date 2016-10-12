@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.1.1 - 12-Oct-2016
+
+- Fix for slugs updating when they don't need to, when using `onUpdate` with `unique` (#317) 
+
+
 ## 4.1.0 - 14-Sep-2016
 
 - The goal of the 4.1.x releases will be to focus on support in Laravel 5.3, only providing support for 5.1/5.2
