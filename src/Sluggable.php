@@ -1,6 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use Cviebrock\EloquentSluggable\Contracts\SlugContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -52,7 +52,7 @@ trait Sluggable
     public function replicate(array $except = null)
     {
         $instance = parent::replicate($except);
-        (new SlugService())->slug($instance, true);
+        app(SlugContract::class)->slug($instance, true);
 
         return $instance;
     }

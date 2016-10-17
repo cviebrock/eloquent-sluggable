@@ -1,6 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable\Services;
 
 use Cocur\Slugify\Slugify;
+use Cviebrock\EloquentSluggable\Contracts\SlugContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -9,7 +10,7 @@ use Illuminate\Support\Collection;
  *
  * @package Cviebrock\EloquentSluggable\Services
  */
-class SlugService
+class SlugService implements SlugContract
 {
 
     /**
@@ -18,11 +19,7 @@ class SlugService
     protected $model;
 
     /**
-     * Slug the current model.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param bool $force
-     * @return bool
+     * {@inheritDoc}
      */
     public function slug(Model $model, $force = false)
     {
@@ -49,11 +46,7 @@ class SlugService
     }
 
     /**
-     * Get the sluggable configuration for the current model,
-     * including default values where not specified.
-     *
-     * @param array $overrides
-     * @return array
+     * {@inheritDoc}
      */
     public function getConfiguration(array $overrides = [])
     {
@@ -66,12 +59,7 @@ class SlugService
     }
 
     /**
-     * Build the slug for the given attribute of the current model.
-     *
-     * @param string $attribute
-     * @param array $config
-     * @param bool $force
-     * @return null|string
+     * {@inheritDoc}
      */
     public function buildSlug($attribute, array $config, $force = null)
     {
@@ -350,20 +338,14 @@ class SlugService
     }
 
     /**
-     * Generate a unique slug for a given string.
-     *
-     * @param \Illuminate\Database\Eloquent\Model|string $model
-     * @param string $attribute
-     * @param string $fromString
-     * @param array $config
-     * @return string
+     * {@inheritDoc}
      */
     public static function createSlug($model, $attribute, $fromString, array $config = null)
     {
         if (is_string($model)) {
             $model = new $model;
         }
-        $instance = (new self())->setModel($model);
+        $instance = app(SlugContract::class)->setModel($model);
 
         if ($config === null) {
             $config = array_get($model->sluggable(), $attribute);
@@ -381,8 +363,7 @@ class SlugService
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return $this
+     * {@inheritDoc}
      */
     public function setModel(Model $model)
     {

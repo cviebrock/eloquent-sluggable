@@ -1,6 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use Cviebrock\EloquentSluggable\Contracts\SlugContract;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class SluggableObserver
 {
 
     /**
-     * @var \Cviebrock\EloquentSluggable\Services\SlugService
+     * @var SlugContract
      */
     private $slugService;
 
@@ -25,10 +25,10 @@ class SluggableObserver
     /**
      * SluggableObserver constructor.
      *
-     * @param \Cviebrock\EloquentSluggable\Services\SlugService $slugService
+     * @param SlugContract $slugService
      * @param \Illuminate\Contracts\Events\Dispatcher $events
      */
-    public function __construct(SlugService $slugService, Dispatcher $events)
+    public function __construct(SlugContract $slugService, Dispatcher $events)
     {
         $this->slugService = $slugService;
         $this->events = $events;

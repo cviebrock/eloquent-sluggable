@@ -1,6 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests;
 
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use Cviebrock\EloquentSluggable\Contracts\SlugContract;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 /**
@@ -16,7 +16,7 @@ class StaticTests extends TestCase
      */
     public function testStaticSlugGenerator()
     {
-        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
+        $slug = app(SlugContract::class)->createSlug(Post::class, 'slug', 'My Test Post');
         $this->assertEquals('my-test-post', $slug);
     }
 
@@ -28,7 +28,7 @@ class StaticTests extends TestCase
         $post = Post::create(['title' => 'My Test Post']);
         $this->assertEquals('my-test-post', $post->slug);
 
-        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
+        $slug = app(SlugContract::class)->createSlug(Post::class, 'slug', 'My Test Post');
         $this->assertEquals('my-test-post-1', $slug);
     }
 
@@ -40,7 +40,7 @@ class StaticTests extends TestCase
         $config = [
             'separator' => '.'
         ];
-        $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post', $config);
+        $slug = app(SlugContract::class)->createSlug(Post::class, 'slug', 'My Test Post', $config);
         $this->assertEquals('my.test.post', $slug);
     }
 }
