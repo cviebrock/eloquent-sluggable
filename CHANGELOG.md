@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.1.2 - 09-Nov-2016
+
+- Fix in `getExistingSlugs` when using global scopes (#327)
+- Update `Cocur\Slugify` to `^2.3`.
+
 ## 4.1.1 - 12-Oct-2016
 
 - Fix for slugs updating when they don't need to, when using `onUpdate` with `unique` (#317) 

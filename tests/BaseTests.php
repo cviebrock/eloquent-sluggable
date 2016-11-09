@@ -328,4 +328,17 @@ class BaseTests extends TestCase
         $this->assertEquals('my-test-post', $post->slug);
         $this->assertEquals('my.subtitle', $post->dummy);
     }
+
+    /**
+     * Test subscript characters in slug field
+     */
+    public function testSubscriptCharacters()
+    {
+        $post = new Post([
+            'title' => 'RDA-125-15/30/45m³/h CAV'
+        ]);
+        $post->save();
+
+        $this->assertEquals('rda-125-15-30-45m3-h-cav', $post->slug);
+    }
 }
