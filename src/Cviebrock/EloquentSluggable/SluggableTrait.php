@@ -163,11 +163,10 @@ trait SluggableTrait {
 		$save_to         = $this->sluggable['save_to'];
 		$include_trashed = $this->sluggable['include_trashed'];
 
-		$instance = new static;
-
-		$query = $instance->where( $save_to, 'LIKE', $slug.'%' );
+		$query = $this->newQuery()->where( $save_to, 'LIKE', $slug.'%' );
 
 		// include trashed models if required
+		$instance = new static;
 		if ( $include_trashed && $instance->usesSoftDeleting() )
 		{
 			$query = $query->withTrashed();
