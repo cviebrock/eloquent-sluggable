@@ -85,7 +85,7 @@ class SluggableObserver
             $this->events->fire('eloquent.slugged: ' . get_class($model), [$model, $status]);
         } else {
             // Laravel 5.4+, use dispatch()
-            $this->events->dispatch('eloquent.slugged: ' . get_class($model), [$model, $status]);    
+            $this->events->dispatch('eloquent.slugged: ' . get_class($model), [$model, $status]);
         }
         
     }
