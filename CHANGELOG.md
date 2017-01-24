@@ -1,9 +1,15 @@
 # Change Log
 
+## 4.2.0 - xx-xxx-xxxx
+
+- Support Laravel 5.4 (#339, thanks @maddhatter)
+
+
 ## 4.1.2 - 09-Nov-2016
 
 - Fix in `getExistingSlugs` when using global scopes (#327)
 - Update `Cocur\Slugify` to `^2.3`.
+
 
 ## 4.1.1 - 12-Oct-2016
 
