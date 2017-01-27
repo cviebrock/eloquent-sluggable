@@ -319,7 +319,7 @@ class SlugService implements SlugContract
         }
 
         // get the list of all matching slugs
-        $results = $query->select([$attribute, $this->model->getKeyName()])
+        $results = $query->select([$attribute, $this->model->getTable() . '.' . $this->model->getKeyName()])
             ->get()
             ->toBase();
 
