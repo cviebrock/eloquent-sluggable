@@ -87,10 +87,12 @@ automatically, with minimal configuration.
 > |:---------------:|:-----------------:|
 > |       4.x       |        2.x        |
 > |     5.1, 5.2    |        4.0        |
-> | 5.1*, 5.2*, 5.3 |        4.1        |
-> |       5.4       |        4.2        |
+> | 5.1†, 5.2†, 5.3 |        4.1        |
+> |       5.4‡      |        4.3        |
 >
-> \* The 4.1 version _should_ work with Laravel 5.1 and 5.2, but might not in the future.
+> † The 4.1 version _should_ work with Laravel 5.1 and 5.2, but might not in the future.
+>
+> ‡ The 4.2 version was short-lived and had some issues; please upgrade to 4.3 instead if you are using Laravel 5.4
 >
 > Also note that different versions of the package have different configuration
 > settings.  See [UPGRADING.md](UPGRADING.md) for details.
@@ -102,7 +104,7 @@ automatically, with minimal configuration.
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require cviebrock/eloquent-sluggable:^4.2
+$ composer require cviebrock/eloquent-sluggable
 ```
 
 Then, update `config/app.php` by adding an entry for the service provider.

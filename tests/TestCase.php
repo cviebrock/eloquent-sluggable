@@ -1,5 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests;
 
+use Cviebrock\EloquentSluggable\ServiceProvider;
+use Illuminate\Contracts\Events\Dispatcher;
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -20,9 +22,11 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $realpath = realpath(__DIR__ . '/../resources/database/migrations');
+        $this->artisan('migrate', ['--database' => 'testbench']);
 
-        $this->loadMigrationsFrom($realpath);
+        $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:rollback');
+        });
     }
 
     /**
@@ -50,7 +54,8 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            \Cviebrock\EloquentSluggable\ServiceProvider::class
+            ServiceProvider::class,
+            TestServiceProvider::class
         ];
     }
 
@@ -61,7 +66,7 @@ abstract class TestCase extends Orchestra
      */
     protected function withoutEvents()
     {
-        $mock = Mockery::mock('Illuminate\Contracts\Events\Dispatcher');
+        $mock = Mockery::mock(Dispatcher::class);
 
         $mock->shouldReceive('fire', 'until');
 
