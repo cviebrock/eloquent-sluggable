@@ -88,11 +88,11 @@ automatically, with minimal configuration.
 > |       4.x       |        2.x        |
 > |     5.1, 5.2    |        4.0        |
 > | 5.1†, 5.2†, 5.3 |        4.1        |
-> |       5.4‡      |        4.3        |
+> |       5.4       |       4.2.1‡      |
 >
 > † The 4.1 version _should_ work with Laravel 5.1 and 5.2, but might not in the future.
 >
-> ‡ The 4.2 version was short-lived and had some issues; please upgrade to 4.3 instead if you are using Laravel 5.4
+> ‡ The 4.2.0 version was short-lived and had some issues; please upgrade to 4.2.1
 >
 > Also note that different versions of the package have different configuration
 > settings.  See [UPGRADING.md](UPGRADING.md) for details.
