@@ -1,6 +1,6 @@
 # Change Log
 
-## 4.2.0 - xx-xxx-xxxx
+## 4.2.1 - 01-Feb-2017
 
 - Support Laravel 5.4 (#339, thanks @maddhatter)
 
