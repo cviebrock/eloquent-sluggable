@@ -1,5 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Illuminate\Database\Eloquent\Builder;
+
 /**
  * Class SluggableScopeHelpers
  *
@@ -51,7 +53,7 @@ trait SluggableScopeHelpers
      * @param string $slug
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereSlug($scope, $slug)
+    public function scopeWhereSlug(Builder $scope, $slug)
     {
         return $scope->where($this->getSlugKeyName(), $slug);
     }
