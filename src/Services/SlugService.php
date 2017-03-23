@@ -80,7 +80,7 @@ class SlugService
         if ($force || $this->needsSlugging($attribute, $config)) {
             $source = $this->getSlugSource($config['source']);
 
-            if ($source) {
+            if ($source || is_numeric($source)) {
                 $slug = $this->generateSlug($source, $config, $attribute);
                 $slug = $this->validateSlug($slug, $config, $attribute);
                 $slug = $this->makeSlugUnique($slug, $config, $attribute);

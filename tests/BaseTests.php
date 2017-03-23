@@ -278,14 +278,25 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that an empty slug source creates a null slug.
+     * Test that a null slug source creates a null slug.
      */
-    public function testEmptySourceGeneratesEmptySlug()
+    public function testNullSourceGeneratesEmptySlug()
     {
         $post = PostWithCustomSource::create([
             'title' => 'My Test Post'
         ]);
         $this->assertEquals(null, $post->slug);
+    }
+
+    /**
+     * Test that a zero length slug source creates a null slug.
+     */
+    public function testZeroLengthSourceGeneratesEmptySlug()
+    {
+        $post = Post::create([
+            'title' => ''
+        ]);
+        $this->assertNull($post->slug);
     }
 
     /**
@@ -340,5 +351,27 @@ class BaseTests extends TestCase
         $post->save();
 
         $this->assertEquals('rda-125-15-30-45m3-h-cav', $post->slug);
+    }
+
+    /**
+     * Test that a falsy string slug source creates a slug.
+     */
+    public function testFalsyString()
+    {
+        $post = Post::create([
+            'title' => '0'
+        ]);
+        $this->assertEquals('0', $post->slug);
+    }
+
+    /**
+     * Test that a falsy int slug source creates a slug.
+     */
+    public function testFalsyInt()
+    {
+        $post = Post::create([
+            'title' => 0
+        ]);
+        $this->assertEquals('0', $post->slug);
     }
 }
