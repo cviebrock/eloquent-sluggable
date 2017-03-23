@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Cviebrock\EloquentSluggable\Contracts\SlugContract;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -39,8 +40,10 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../resources/config/sluggable.php', 'sluggable');
 
+        $this->app->bind(SlugContract::class, SlugService::class);
+
         $this->app->singleton(SluggableObserver::class, function ($app) {
-            return new SluggableObserver(new SlugService(), $app['events']);
+            return new SluggableObserver(app(SlugContract::class), $app['events']);
         });
     }
 }
