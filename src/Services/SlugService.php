@@ -126,7 +126,12 @@ class SlugService
         }
 
         $sourceStrings = array_map(function ($key) {
-            return data_get($this->model, $key);
+            $value = data_get($this->model, $key);
+            if (is_bool($value)) {
+                $value = (int) $value;
+            }
+
+            return $value;
         }, (array)$from);
 
         return join($sourceStrings, ' ');

@@ -374,4 +374,26 @@ class BaseTests extends TestCase
         ]);
         $this->assertEquals('0', $post->slug);
     }
+
+    /**
+     * Test that a boolean true source creates a slug.
+     */
+    public function testTrueSource()
+    {
+        $post = Post::create([
+            'title' => true
+        ]);
+        $this->assertEquals('1', $post->slug);
+    }
+
+    /**
+     * Test that a boolean false slug source creates a slug.
+     */
+    public function testFalseSource()
+    {
+        $post = Post::create([
+            'title' => false
+        ]);
+        $this->assertEquals('0', $post->slug);
+    }
 }
