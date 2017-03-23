@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.2.2 - 23-Mar-2017
+
+- Better handling of numeric and boolean slug sources (#351, thanks @arturock)
+
+
 ## 4.2.1 - 01-Feb-2017
 
 - Support Laravel 5.4 (#339, thanks @maddhatter)

@@ -201,7 +201,19 @@ $newPost = $post->replicate();
 // $newPost->slug is "my-awesome-blog-post-1"
 ```
 
+Note that empty strings, non-strings or other "odd" source values will result in different slugs:
 
+| Source Value | Resulting Slug        |
+|--------------|-----------------------|
+| string       | string                |
+| empty string | _no slug will be set_ |
+| `null`       | _no slug will be set_ |
+| `0`          | `"0"`                 |
+| `1`          | `"1"`                 |
+| `false`      | `"0"`                 |
+| `true`       | `"1"`                 |
+
+(The above values would be subject to any unique or other checks as well.)
 
 ## The SlugService Class 
 
