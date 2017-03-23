@@ -80,7 +80,7 @@ class SlugService
         if ($force || $this->needsSlugging($attribute, $config)) {
             $source = $this->getSlugSource($config['source']);
 
-            if ($source) {
+            if ($source || is_numeric($source)) {
                 $slug = $this->generateSlug($source, $config, $attribute);
                 $slug = $this->validateSlug($slug, $config, $attribute);
                 $slug = $this->makeSlugUnique($slug, $config, $attribute);
@@ -126,7 +126,12 @@ class SlugService
         }
 
         $sourceStrings = array_map(function ($key) {
-            return data_get($this->model, $key);
+            $value = data_get($this->model, $key);
+            if (is_bool($value)) {
+                $value = (int) $value;
+            }
+
+            return $value;
         }, (array)$from);
 
         return join($sourceStrings, ' ');
