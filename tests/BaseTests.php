@@ -131,7 +131,7 @@ class BaseTests extends TestCase
         $post = PostWithReservedSlug::create([
             'title' => 'Add'
         ]);
-        $this->assertEquals('add-1', $post->slug);
+        $this->assertEquals('add-2', $post->slug);
     }
 
     /**
