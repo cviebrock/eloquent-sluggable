@@ -20,7 +20,7 @@ class PostWithReservedSlug extends Post
         return [
             'slug' => [
                 'source' => 'title',
-                'reserved' => ['add']
+                'reserved' => ['add','add-1']
             ]
         ];
     }
