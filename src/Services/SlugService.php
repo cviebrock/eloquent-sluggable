@@ -202,6 +202,7 @@ class SlugService
      */
     protected function validateSlug($slug, array $config, $attribute)
     {
+
         $separator = $config['separator'];
         $reserved = $config['reserved'];
 
@@ -216,13 +217,25 @@ class SlugService
 
         if (is_array($reserved)) {
             if (in_array($slug, $reserved)) {
-                return $slug . $separator . '1';
+
+                $method = $config['uniqueSuffix'];
+                if ($method === null) {
+                    $suffix = $this->generateSuffix($slug, $separator, collect($reserved));
+                } elseif (is_callable($method)) {
+                    $suffix = call_user_func($method, $slug, $separator, collect($reserved));
+                } else {
+                    throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
+                }
+
+                return $slug . $separator . $suffix;
+
             }
 
             return $slug;
         }
 
         throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
+
     }
 
     /**
@@ -276,7 +289,7 @@ class SlugService
         } elseif (is_callable($method)) {
             $suffix = call_user_func($method, $slug, $separator, $list);
         } else {
-            throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
+            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
         }
 
         return $slug . $separator . $suffix;
@@ -368,7 +381,7 @@ class SlugService
         if (is_string($model)) {
             $model = new $model;
         }
-        $instance = (new self())->setModel($model);
+        $instance = (new static())->setModel($model);
 
         if ($config === null) {
             $config = array_get($model->sluggable(), $attribute);
