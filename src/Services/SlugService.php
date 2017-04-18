@@ -289,7 +289,7 @@ class SlugService
         } elseif (is_callable($method)) {
             $suffix = call_user_func($method, $slug, $separator, $list);
         } else {
-            throw new \UnexpectedValueException('Sluggable "unigueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
+            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
         }
 
         return $slug . $separator . $suffix;
