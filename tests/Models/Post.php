@@ -1,6 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\FindBySlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
-    use Sluggable;
+    use Sluggable, FindBySlug;
 
     /**
      * The table associated with the model.
