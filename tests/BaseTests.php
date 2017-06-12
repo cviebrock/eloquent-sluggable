@@ -398,7 +398,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test models with multiple slug fields.
+     * Test models with an empty source field.
      */
     public function testUseClassNameWhenSourceIsEmpty(){
         $post = new Post([
