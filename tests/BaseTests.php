@@ -396,4 +396,16 @@ class BaseTests extends TestCase
         ]);
         $this->assertEquals('0', $post->slug);
     }
+
+    /**
+     * Test models with multiple slug fields.
+     */
+    public function testUseClassNameWhenSourceIsEmpty(){
+        $post = new Post([
+            'title' => ''
+        ]);
+        $post->save();
+
+        $this->assertEquals('post', $post->slug);
+    }
 }
