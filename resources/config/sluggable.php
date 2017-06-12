@@ -72,7 +72,7 @@ return [
      * "similar" slugs.  The closure should return the new unique
      * suffix to append to the slug.
      */
-    
+
     'uniqueSuffix' => null,
 
     /**
@@ -120,7 +120,14 @@ return [
      * is probably not a good idea from an SEO point of view.
      * Only set this to true if you understand the possible consequences.
      */
-    
+
     'onUpdate' => false,
+
+    /**
+     * When the source value is empty should we use the class name instead?
+     *
+     * This option should be used only if 'unique' option is also true.
+     */
+    'class_name_when_null' => false,
 
 ];
