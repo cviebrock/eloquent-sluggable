@@ -40,6 +40,13 @@
   "scripts": {
     "test": "phpunit"
   },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cviebrock\\EloquentSluggable\\ServiceProvider"
+            ]
+        }
+    },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
