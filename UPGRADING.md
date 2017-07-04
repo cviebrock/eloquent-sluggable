@@ -15,6 +15,9 @@ The configuration array has changed slightly between versions:
 * Per-model configuration has been moved from a protect property into a protected method, and 
   the configuration array is now keyed with the attribute field where the slug is stored (i.e. the
   previous value of the `save_to` configuration.
+* The service provider name has changed, so update the entry in your project's `config/app.php`
+  from `Cviebrock\EloquentSluggable\SluggableServiceProvider::class` to
+  `Cviebrock\EloquentSluggable\ServiceProvider::class`.
   
 #### Version 3.x Configuration Example:
   
