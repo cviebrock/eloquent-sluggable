@@ -3,17 +3,22 @@
 language: php
 
 php:
-  - 5.6
   - 7.0
+  - 7.1
+  - 7.2
+
+env:
+  - COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+  - COMPOSER_FLAGS=""
 
 matrix:
-  include:
-    - php: 5.6
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+  exclude:
+    - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev $PREFER_LOWEST
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
   - travis_retry composer dump-autoload
 
 script:
