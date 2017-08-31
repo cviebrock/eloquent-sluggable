@@ -134,6 +134,10 @@ class SlugService
             return $value;
         }, (array)$from);
 
+        if ($this->getConfiguration()['class_name_when_null'] && $sourceStrings[0] == null) {
+            $sourceStrings[0] = class_basename($this->model);
+        }
+
         return join($sourceStrings, ' ');
     }
 

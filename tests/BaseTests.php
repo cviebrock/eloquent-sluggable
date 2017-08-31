@@ -4,6 +4,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Cviebrock\EloquentSluggable\Tests\Models\PostNotSluggable;
 use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfig;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithClassNameUseEnabled;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
@@ -395,5 +396,17 @@ class BaseTests extends TestCase
             'title' => false
         ]);
         $this->assertEquals('0', $post->slug);
+    }
+
+    /**
+     * Test models with an empty source field.
+     */
+    public function testUseClassNameWhenSourceIsEmpty(){
+        $post = new PostWithClassNameUseEnabled([
+            'title' => ''
+        ]);
+        $post->save();
+
+        $this->assertEquals('post', $post->slug);
     }
 }
