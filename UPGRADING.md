@@ -1,5 +1,17 @@
 # Upgrading
 
+## Upgrading from 4.2 to 4.3
+
+* The signature for `scopeFindSimilarSlugs()` dropped the unused `$model` parameter:
+  ```diff
+  - public function scopeFindSimilarSlugs(Builder $query, Model $model, $attribute, $config, $slug)
+  + public function scopeFindSimilarSlugs(Builder $query, $attribute, $config, $slug)
+  ```
+  If you use this scope in your application, then remove the first argument passed to the scope.
+
+
+- - -
+
 ## Upgrading from 3.x to 4.x
 
 ### Configuration Changes
@@ -109,3 +121,8 @@ $post = Post::where('slug', $input)->first() ?: Post::findOrFail((int)$input);
 
 Alternatively, your model can use the `SluggableScopeHelpers` trait.  
 See [SCOPE-HELPERS.md](SCOPE-HELPERS.md) for details.
+
+
+- - -
+
+Copyright (c) 2013 Colin Viebrock

@@ -1,6 +1,7 @@
 # Todos
 
 - [x] Write tests
+    - [ ] Test events
 - [x] Better docblock and inline-commenting
 - [x] Make code style consistent
 - [x] Drop `develop` branch and just have `master` and tagged releases
@@ -15,6 +16,6 @@
 - [x] refactor, or remove, caching code (it wasn't really thought out well enough, IMO)
 - [x] add events, e.g. `eloquent.slug.created`, `eloquent.slug.changed`, etc. (as suggested in #96 and #101)
 
-## Planned changes (possibly BC-breaking) for next major version - 4.1
+## Planned changes (possibly BC-breaking) for next major version - 4.3
 
-- [ ] remove unused `$model` argument from `scopeFindSimilarSlugs`
+- [x] remove unused `$model` argument from `scopeFindSimilarSlugs`

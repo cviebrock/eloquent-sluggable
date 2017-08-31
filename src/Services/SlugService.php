@@ -24,7 +24,7 @@ class SlugService
      * @param bool $force
      * @return bool
      */
-    public function slug(Model $model, $force = false)
+    public function slug(Model $model, bool $force = false): bool
     {
         $this->setModel($model);
 
@@ -55,7 +55,7 @@ class SlugService
      * @param array $overrides
      * @return array
      */
-    public function getConfiguration(array $overrides = [])
+    public function getConfiguration(array $overrides = []): array
     {
         static $defaultConfig = null;
         if ($defaultConfig === null) {
@@ -73,7 +73,7 @@ class SlugService
      * @param bool $force
      * @return null|string
      */
-    public function buildSlug($attribute, array $config, $force = null)
+    public function buildSlug(string $attribute, array $config, bool $force = null)
     {
         $slug = $this->model->getAttribute($attribute);
 
@@ -97,11 +97,11 @@ class SlugService
      * @param array $config
      * @return bool
      */
-    protected function needsSlugging($attribute, array $config)
+    protected function needsSlugging(string $attribute, array $config): bool
     {
         if (
-            empty($this->model->getAttributeValue($attribute)) ||
-            $config['onUpdate'] === true
+            $config['onUpdate'] === true ||
+            empty($this->model->getAttributeValue($attribute))
         ) {
             return true;
         }
@@ -119,7 +119,7 @@ class SlugService
      * @param mixed $from
      * @return string
      */
-    protected function getSlugSource($from)
+    protected function getSlugSource($from): string
     {
         if (is_null($from)) {
             return $this->model->__toString();
@@ -128,13 +128,13 @@ class SlugService
         $sourceStrings = array_map(function ($key) {
             $value = data_get($this->model, $key);
             if (is_bool($value)) {
-                $value = (int) $value;
+                $value = (int)$value;
             }
 
             return $value;
         }, (array)$from);
 
-        return join($sourceStrings, ' ');
+        return implode($sourceStrings, ' ');
     }
 
     /**
@@ -144,8 +144,9 @@ class SlugService
      * @param array $config
      * @param string $attribute
      * @return string
+     * @throws \UnexpectedValueException
      */
-    protected function generateSlug($source, array $config, $attribute)
+    protected function generateSlug(string $source, array $config, string $attribute): string
     {
         $separator = $config['separator'];
         $method = $config['method'];
@@ -172,9 +173,9 @@ class SlugService
      * strings into slugs.
      *
      * @param string $attribute
-     * @return Slugify
+     * @return \Cocur\Slugify\Slugify
      */
-    protected function getSlugEngine($attribute)
+    protected function getSlugEngine(string $attribute): Slugify
     {
         static $slugEngines = [];
 
@@ -199,8 +200,9 @@ class SlugService
      * @param array $config
      * @param string $attribute
      * @return string
+     * @throws \UnexpectedValueException
      */
-    protected function validateSlug($slug, array $config, $attribute)
+    protected function validateSlug(string $slug, array $config, string $attribute): string
     {
 
         $separator = $config['separator'];
@@ -222,20 +224,18 @@ class SlugService
                 if ($method === null) {
                     $suffix = $this->generateSuffix($slug, $separator, collect($reserved));
                 } elseif (is_callable($method)) {
-                    $suffix = call_user_func($method, $slug, $separator, collect($reserved));
+                    $suffix = $method($slug, $separator, collect($reserved));
                 } else {
                     throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
                 }
 
                 return $slug . $separator . $suffix;
-
             }
 
             return $slug;
         }
 
         throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
-
     }
 
     /**
@@ -245,8 +245,9 @@ class SlugService
      * @param array $config
      * @param string $attribute
      * @return string
+     * @throws \UnexpectedValueException
      */
-    protected function makeSlugUnique($slug, array $config, $attribute)
+    protected function makeSlugUnique(string $slug, array $config, string $attribute): string
     {
         if (!$config['unique']) {
             return $slug;
@@ -287,7 +288,7 @@ class SlugService
         if ($method === null) {
             $suffix = $this->generateSuffix($slug, $separator, $list);
         } elseif (is_callable($method)) {
-            $suffix = call_user_func($method, $slug, $separator, $list);
+            $suffix = $method($slug, $separator, $list);
         } else {
             throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
         }
@@ -303,7 +304,7 @@ class SlugService
      * @param \Illuminate\Support\Collection $list
      * @return string
      */
-    protected function generateSuffix($slug, $separator, Collection $list)
+    protected function generateSuffix(string $slug, string $separator, Collection $list): string
     {
         $len = strlen($slug . $separator);
 
@@ -316,7 +317,7 @@ class SlugService
         }
 
         $list->transform(function ($value, $key) use ($len) {
-            return intval(substr($value, $len));
+            return (int)substr($value, $len);
         });
 
         // find the highest value and return one greater.
@@ -331,12 +332,12 @@ class SlugService
      * @param array $config
      * @return \Illuminate\Support\Collection
      */
-    protected function getExistingSlugs($slug, $attribute, array $config)
+    protected function getExistingSlugs(string $slug, string $attribute, array $config): Collection
     {
         $includeTrashed = $config['includeTrashed'];
 
         $query = $this->model->newQuery()
-            ->findSimilarSlugs($this->model, $attribute, $config, $slug);
+            ->findSimilarSlugs($attribute, $config, $slug);
 
         // use the model scope to find similar slugs
         if (method_exists($this->model, 'scopeWithUniqueSlugConstraints')) {
@@ -349,7 +350,7 @@ class SlugService
         }
 
         // get the list of all matching slugs
-        $results = $query->select([$attribute, $this->model->getTable() . '.' . $this->model->getKeyName()])
+        $results = $query->select([$attribute, $this->model->getQualifiedKeyName()])
             ->get()
             ->toBase();
 
@@ -362,7 +363,7 @@ class SlugService
      *
      * @return bool
      */
-    protected function usesSoftDeleting()
+    protected function usesSoftDeleting(): bool
     {
         return method_exists($this->model, 'bootSoftDeletes');
     }
@@ -373,14 +374,16 @@ class SlugService
      * @param \Illuminate\Database\Eloquent\Model|string $model
      * @param string $attribute
      * @param string $fromString
-     * @param array $config
+     * @param array|null $config
      * @return string
+     * @throws \UnexpectedValueException
      */
-    public static function createSlug($model, $attribute, $fromString, array $config = null)
+    public static function createSlug($model, string $attribute, string $fromString, array $config = null): string
     {
         if (is_string($model)) {
             $model = new $model;
         }
+        /** @var static $instance */
         $instance = (new static())->setModel($model);
 
         if ($config === null) {

@@ -1,9 +1,5 @@
 # SluggableScopeHelpers Trait
 
-Earlier versions of the package included some helper functions for working with models and their slugs.
-Because you can now have more than one slug per model, this functionality has been refactored into a
-separate trait you can use in your application.
-
 The `SluggableScopeHelpers` trait adds a query scope and other methods to make finding models with a 
 matching slug as easy as:
 
@@ -59,8 +55,6 @@ class Post extends Model
 ```
 
 In the above case, `Post::findBySlugOrFail($slug)` is the equivalent to `Post::where('alternate,'=',$slug)->firstOrFail()`.
-
-> **NOTE**: The old `findBySlugOrIdOrFail` is not implemented in the helper trait.  See [UPGRADING.md](UPGRADING.md) for more details.
 
 
 - - -

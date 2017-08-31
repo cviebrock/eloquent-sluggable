@@ -25,7 +25,6 @@ trait Sluggable
      * Register a slugging model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @return void
      */
     public static function slugging($callback)
     {
@@ -36,7 +35,6 @@ trait Sluggable
      * Register a slugged model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @return void
      */
     public static function slugged($callback)
     {
@@ -47,9 +45,9 @@ trait Sluggable
      * Clone the model into a new, non-existing instance.
      *
      * @param  array|null $except
-     * @return Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function replicate(array $except = null)
+    public function replicate(array $except = null): Model
     {
         $instance = parent::replicate($except);
         (new SlugService())->slug($instance, true);
@@ -61,13 +59,12 @@ trait Sluggable
      * Query scope for finding "similar" slugs, used to determine uniqueness.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $attribute
      * @param array $config
      * @param string $slug
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFindSimilarSlugs(Builder $query, Model $model, $attribute, $config, $slug)
+    public function scopeFindSimilarSlugs(Builder $query, string $attribute, array $config, string $slug): Builder
     {
         $separator = $config['separator'];
 
@@ -82,5 +79,5 @@ trait Sluggable
      *
      * @return array
      */
-    abstract public function sluggable();
+    abstract public function sluggable(): array;
 }

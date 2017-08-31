@@ -2,8 +2,11 @@
     "name": "cviebrock/eloquent-sluggable",
     "description": "Easy creation of slugs for your Eloquent models in Laravel 5.",
     "keywords": [
-        "laravel",
+        "eloquent-sluggable",
         "eloquent",
+        "sluggable",
+        "laravel",
+        "lumen",
         "slug"
     ],
     "homepage": "https://github.com/cviebrock/eloquent-sluggable",
@@ -16,16 +19,16 @@
     ],
     "require": {
         "php": "^7.0",
-        "illuminate/config": "~5.4.0",
-        "illuminate/database": "~5.4.0",
-        "illuminate/support": "~5.4.0",
-        "cocur/slugify": "^2.3"
+        "illuminate/config": "~5.5.0",
+        "illuminate/database": "~5.5.0",
+        "illuminate/support": "~5.5.0",
+        "cocur/slugify": "^3.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.4",
-        "orchestra/database": "~3.4.0",
-        "orchestra/testbench": "~3.4.0",
-        "phpunit/phpunit": "~5.7"
+        "orchestra/database": "~3.5.0",
+        "orchestra/testbench": "~3.5.0",
+        "phpunit/phpunit": "^6.2"
     },
     "autoload": {
         "psr-4": {

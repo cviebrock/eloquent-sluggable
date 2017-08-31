@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.3.0 - 31-Aug-2017
+
+- Laravel 5.5 support, including auto-registration
+- Bumped `cocur/slugify` to `^3.0`
+
+
 ## 4.2.5 - 31-Aug-2017
 
 - Fixing composer requirements to support Laravel 5.4 only

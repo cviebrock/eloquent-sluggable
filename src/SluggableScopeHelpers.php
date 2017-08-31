@@ -18,7 +18,7 @@ trait SluggableScopeHelpers
      *
      * @return string
      */
-    public function getSlugKeyName()
+    public function getSlugKeyName(): string
     {
         if (property_exists($this, 'slugKeyName')) {
             return $this->slugKeyName;
@@ -41,7 +41,7 @@ trait SluggableScopeHelpers
      *
      * @return string
      */
-    public function getSlugKey()
+    public function getSlugKey(): string
     {
         return $this->getAttribute($this->getSlugKeyName());
     }
@@ -53,7 +53,7 @@ trait SluggableScopeHelpers
      * @param string $slug
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereSlug(Builder $scope, $slug)
+    public function scopeWhereSlug(Builder $scope, string $slug): Builder
     {
         return $scope->where($this->getSlugKeyName(), $slug);
     }
@@ -65,7 +65,7 @@ trait SluggableScopeHelpers
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
      */
-    public static function findBySlug($slug, array $columns = ['*'])
+    public static function findBySlug(string $slug, array $columns = ['*'])
     {
         return static::whereSlug($slug)->first($columns);
     }
@@ -79,7 +79,7 @@ trait SluggableScopeHelpers
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public static function findBySlugOrFail($slug, array $columns = ['*'])
+    public static function findBySlugOrFail(string $slug, array $columns = ['*'])
     {
         return static::whereSlug($slug)->firstOrFail($columns);
     }
