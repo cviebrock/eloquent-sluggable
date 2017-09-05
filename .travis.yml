@@ -23,6 +23,3 @@ before_script:
 
 script:
   - php vendor/bin/phpunit
-
-after_script:
-  - php vendor/bin/ocular code-coverage:upload --format=php-clover build/clover.xml
