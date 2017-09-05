@@ -22,4 +22,7 @@ before_script:
   - travis_retry composer dump-autoload
 
 script:
-  - vendor/bin/phpunit
+  - php vendor/bin/phpunit
+
+after_script:
+  - php vendor/bin/ocular code-coverage:upload --format=php-clover build/clover.xml
