@@ -108,7 +108,7 @@ automatically, with minimal configuration.
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require cviebrock/eloquent-sluggable
+$ composer require cviebrock/eloquent-sluggable:^4.2
 ```
 
 Then, update `config/app.php` by adding an entry for the service provider.
