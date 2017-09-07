@@ -103,9 +103,15 @@ automatically, with minimal configuration.
     ```sh
     $ composer require cviebrock/eloquent-sluggable
     ```
-
-    The package will automatically register itself.
-
+    After successfully install package, open config/app.php file and add service provider and alias.
+    ####config/app.php
+    ```sh
+    'providers' => [
+            ....
+            Cviebrock\EloquentSluggable\ServiceProvider::class,
+        ]
+        .....
+    ```
 2. Optionally, publish the configuration file if you want to change any defaults:
 
     ```sh
