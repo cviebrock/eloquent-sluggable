@@ -1,6 +1,8 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use function is_null;
 
 trait SluggableTrait {
 
@@ -244,5 +246,17 @@ trait SluggableTrait {
 
 		return static::getBySlug($slug)->first();
 	}
-
+	
+	public static function findBySlugOrFail($slug = array('*'))
+	{
+		if (!is_null(static::getBySlug($slug)->first()))
+		{
+			
+			return static::getBySlug($slug)->first();
+		}
+		else
+		{
+			throw (new ModelNotFoundException)->setModel(static::getBySlug($slug));
+		}
+	}
 }
