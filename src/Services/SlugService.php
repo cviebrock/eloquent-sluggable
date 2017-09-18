@@ -57,10 +57,7 @@ class SlugService
      */
     public function getConfiguration(array $overrides = []): array
     {
-        static $defaultConfig = null;
-        if ($defaultConfig === null) {
-            $defaultConfig = app('config')->get('sluggable');
-        }
+        $defaultConfig = config('sluggable', []);
 
         return array_merge($defaultConfig, $overrides);
     }
