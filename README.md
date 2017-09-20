@@ -1,6 +1,9 @@
 # Eloquent-Sluggable
 
-Easy creation of slugs for your Eloquent models in Laravel 5.
+Easy creation of slugs for your Eloquent models in Laravel.
+
+> **NOTE**: These instructions are for Laravel 5.5.  If you are using Laravel 5.4, please see
+> the [previous version docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.2).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
@@ -88,10 +91,8 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
-> |       5.4       |      4.2.1†     |
-> |       5.4       |       4.3       |
->
-> † The 4.2.0 version was short-lived and had some issues; please upgrade to 4.2.1
+> |       5.5       |      ^4.3       |
+> |       5.4       |      ^4.2       |
 >
 > Older versions of Laravel can use older versions of the package, although they are no 
 > longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
@@ -101,10 +102,10 @@ automatically, with minimal configuration.
 1. Install the package via Composer:
 
     ```sh
-    $ composer require cviebrock/eloquent-sluggable
+    $ composer require cviebrock/eloquent-sluggable:^4.3
     ```
 
-    The package will automatically register itself.
+    The package will automatically register itself with Laravel 5.5.
 
 2. Optionally, publish the configuration file if you want to change any defaults:
 
@@ -143,7 +144,9 @@ class Post extends Model
 ```
 
 Of course, your model and database will need a column in which to store the slug. 
-You will need to add this manually via your own migration.
+You can use `slug` or any other appropriate name you want; your configuration array
+will determine to which field the data will be stored.  You will need to add the 
+column manually via your own migration.
 
 That's it ... your model is now "sluggable"!
 
