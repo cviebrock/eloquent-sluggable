@@ -158,7 +158,9 @@ class Post extends Model
 ```
 
 Of course, your model and database will need a column in which to store the slug. 
-You will need to add this manually via a migration.
+You can use `slug` or any other appropriate name you want; your configuration array
+will determine to which field the data will be stored.  You will need to add the 
+column manually via your own migration.
 
 (Previous versions of the package included an `artisan sluggable:table` command to
 assist you.  This has been deprecated because it's easy enough to generate your own
