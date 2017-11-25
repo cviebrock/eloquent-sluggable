@@ -299,7 +299,7 @@ public function sluggable()
             'source' => 'title'
         ],
         'author-slug' => [
-            'source' => ['author.lastname', 'author.firstname']
+            'source' => ['author.lastname', 'author.firstname'],
             'separator' => '_'
         ],
     ];
