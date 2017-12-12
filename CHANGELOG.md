@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.4.0 - 12-Dec-2017
+
+- Make sure truncated slugs (due to maxLength) don't end in a separator (#398)
+
+
 ## 4.3.0 - 31-Aug-2017
 
 - Laravel 5.5 support, including auto-registration

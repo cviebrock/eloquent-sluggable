@@ -162,7 +162,7 @@ class SlugService
             $slug = mb_substr($slug, 0, $maxLength);
         }
 
-        return $slug;
+        return trim($slug, $separator);
     }
 
     /**

@@ -70,6 +70,14 @@ class BaseTests extends TestCase
         $this->assertEquals('a-post-title-a-subtitle', $post->slug);
     }
 
+    public function testLeadingTrailingSpaces()
+    {
+        $post = Post::create([
+            'title' => "\tMy First Post \r\n"
+        ]);
+        $this->assertEquals('my-first-post', $post->slug);
+    }
+
     /**
      * Test building a slug using a custom method.
      */
@@ -211,6 +219,17 @@ class BaseTests extends TestCase
                 $this->assertEquals('a-post-wit-' . $i, $post->slug);
             }
         }
+    }
+
+    /**
+     * Test for max_length option with a slug that might end in separator.
+     */
+    public function testMaxLengthDoesNotEndInSeparator()
+    {
+        $post = PostWithMaxLength::create([
+            'title' => 'It should work'
+        ]);
+        $this->assertEquals('it-should', $post->slug);
     }
 
     /**

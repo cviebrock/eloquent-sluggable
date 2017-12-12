@@ -91,8 +91,8 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
-> |       5.5       |      ^4.3       |
-> |       5.4       |      ^4.2       |
+> |       5.5       |   4.3.*|4.4.*   |
+> |       5.4       |      4.2.*      |
 >
 > Older versions of Laravel can use older versions of the package, although they are no 
 > longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
