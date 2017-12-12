@@ -22,6 +22,7 @@ class SlugService
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param bool $force
+     *
      * @return bool
      */
     public function slug(Model $model, bool $force = false): bool
@@ -53,6 +54,7 @@ class SlugService
      * including default values where not specified.
      *
      * @param array $overrides
+     *
      * @return array
      */
     public function getConfiguration(array $overrides = []): array
@@ -68,6 +70,7 @@ class SlugService
      * @param string $attribute
      * @param array $config
      * @param bool $force
+     *
      * @return null|string
      */
     public function buildSlug(string $attribute, array $config, bool $force = null)
@@ -92,6 +95,7 @@ class SlugService
      *
      * @param string $attribute
      * @param array $config
+     *
      * @return bool
      */
     protected function needsSlugging(string $attribute, array $config): bool
@@ -114,6 +118,7 @@ class SlugService
      * Get the source string for the slug.
      *
      * @param mixed $from
+     *
      * @return string
      */
     protected function getSlugSource($from): string
@@ -140,6 +145,7 @@ class SlugService
      * @param string $source
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
@@ -148,6 +154,7 @@ class SlugService
         $separator = $config['separator'];
         $method = $config['method'];
         $maxLength = $config['maxLength'];
+        $maxLengthKeepWords = $config['maxLengthKeepWords'];
 
         if ($method === null) {
             $slugEngine = $this->getSlugEngine($attribute);
@@ -155,14 +162,21 @@ class SlugService
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
         } else {
-            throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
+            throw new \UnexpectedValueException('Sluggable "method" for '.get_class($this->model).':'.$attribute.' is not callable nor null.');
         }
 
-        if (is_string($slug) && $maxLength) {
-            $slug = mb_substr($slug, 0, $maxLength);
+        $len = mb_strlen($slug);
+        if (is_string($slug) && $maxLength && $len > $maxLength) {
+            $reverseOffset = $maxLength - $len;
+            $lastSeparatorPos = mb_strrpos($slug, $separator, $reverseOffset);
+            if ($maxLengthKeepWords && $lastSeparatorPos !== false) {
+                $slug = mb_substr($slug, 0, $lastSeparatorPos);
+            } else {
+                $slug = trim(mb_substr($slug, 0, $maxLength), $separator);
+            }
         }
 
-        return trim($slug, $separator);
+        return $slug;
     }
 
     /**
@@ -170,13 +184,14 @@ class SlugService
      * strings into slugs.
      *
      * @param string $attribute
+     *
      * @return \Cocur\Slugify\Slugify
      */
     protected function getSlugEngine(string $attribute): Slugify
     {
         static $slugEngines = [];
 
-        $key = get_class($this->model) . '.' . $attribute;
+        $key = get_class($this->model).'.'.$attribute;
 
         if (!array_key_exists($key, $slugEngines)) {
             $engine = new Slugify();
@@ -196,12 +211,12 @@ class SlugService
      * @param string $slug
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
     protected function validateSlug(string $slug, array $config, string $attribute): string
     {
-
         $separator = $config['separator'];
         $reserved = $config['reserved'];
 
@@ -216,23 +231,22 @@ class SlugService
 
         if (is_array($reserved)) {
             if (in_array($slug, $reserved)) {
-
                 $method = $config['uniqueSuffix'];
                 if ($method === null) {
                     $suffix = $this->generateSuffix($slug, $separator, collect($reserved));
                 } elseif (is_callable($method)) {
                     $suffix = $method($slug, $separator, collect($reserved));
                 } else {
-                    throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
+                    throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for '.get_class($this->model).':'.$attribute.' is not null, or a closure.');
                 }
 
-                return $slug . $separator . $suffix;
+                return $slug.$separator.$suffix;
             }
 
             return $slug;
         }
 
-        throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
+        throw new \UnexpectedValueException('Sluggable "reserved" for '.get_class($this->model).':'.$attribute.' is not null, an array, or a closure that returns null/array.');
     }
 
     /**
@@ -241,6 +255,7 @@ class SlugService
      * @param string $slug
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
@@ -287,10 +302,10 @@ class SlugService
         } elseif (is_callable($method)) {
             $suffix = $method($slug, $separator, $list);
         } else {
-            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
+            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for '.get_class($this->model).':'.$attribute.' is not null, or a closure.');
         }
 
-        return $slug . $separator . $suffix;
+        return $slug.$separator.$suffix;
     }
 
     /**
@@ -299,11 +314,12 @@ class SlugService
      * @param string $slug
      * @param string $separator
      * @param \Illuminate\Support\Collection $list
+     *
      * @return string
      */
     protected function generateSuffix(string $slug, string $separator, Collection $list): string
     {
-        $len = strlen($slug . $separator);
+        $len = strlen($slug.$separator);
 
         // If the slug already exists, but belongs to
         // our model, return the current suffix.
@@ -327,6 +343,7 @@ class SlugService
      * @param string $slug
      * @param string $attribute
      * @param array $config
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getExistingSlugs(string $slug, string $attribute, array $config): Collection
@@ -372,6 +389,7 @@ class SlugService
      * @param string $attribute
      * @param string $fromString
      * @param array|null $config
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
@@ -386,7 +404,7 @@ class SlugService
         if ($config === null) {
             $config = array_get($model->sluggable(), $attribute);
         } elseif (!is_array($config)) {
-            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; ' . gettype($config) . ' given.');
+            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; '.gettype($config).' given.');
         }
 
         $config = $instance->getConfiguration($config);
@@ -400,6 +418,7 @@ class SlugService
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
+     *
      * @return $this
      */
     public function setModel(Model $model)

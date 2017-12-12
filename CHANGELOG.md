@@ -3,6 +3,7 @@
 ## 4.4.0 - 12-Dec-2017
 
 - Make sure truncated slugs (due to maxLength) don't end in a separator (#398)
+- Add `maxLengthKeepWords` configuration option (#398)
 
 
 ## 4.3.0 - 31-Aug-2017
