@@ -127,14 +127,14 @@ class SlugService
             return $this->model->__toString();
         }
 
-        $sourceStrings = array_map(function ($key) {
+        $sourceStrings = array_map(function($key) {
             $value = data_get($this->model, $key);
             if (is_bool($value)) {
-                $value = (int)$value;
+                $value = (int) $value;
             }
 
             return $value;
-        }, (array)$from);
+        }, (array) $from);
 
         return implode($sourceStrings, ' ');
     }
@@ -162,7 +162,7 @@ class SlugService
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
         } else {
-            throw new \UnexpectedValueException('Sluggable "method" for '.get_class($this->model).':'.$attribute.' is not callable nor null.');
+            throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
         }
 
         $len = mb_strlen($slug);
@@ -191,7 +191,7 @@ class SlugService
     {
         static $slugEngines = [];
 
-        $key = get_class($this->model).'.'.$attribute;
+        $key = get_class($this->model) . '.' . $attribute;
 
         if (!array_key_exists($key, $slugEngines)) {
             $engine = new Slugify();
@@ -237,16 +237,16 @@ class SlugService
                 } elseif (is_callable($method)) {
                     $suffix = $method($slug, $separator, collect($reserved));
                 } else {
-                    throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for '.get_class($this->model).':'.$attribute.' is not null, or a closure.');
+                    throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
                 }
 
-                return $slug.$separator.$suffix;
+                return $slug . $separator . $suffix;
             }
 
             return $slug;
         }
 
-        throw new \UnexpectedValueException('Sluggable "reserved" for '.get_class($this->model).':'.$attribute.' is not null, an array, or a closure that returns null/array.');
+        throw new \UnexpectedValueException('Sluggable "reserved" for ' . get_class($this->model) . ':' . $attribute . ' is not null, an array, or a closure that returns null/array.');
     }
 
     /**
@@ -302,10 +302,10 @@ class SlugService
         } elseif (is_callable($method)) {
             $suffix = $method($slug, $separator, $list);
         } else {
-            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for '.get_class($this->model).':'.$attribute.' is not null, or a closure.');
+            throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
         }
 
-        return $slug.$separator.$suffix;
+        return $slug . $separator . $suffix;
     }
 
     /**
@@ -319,7 +319,7 @@ class SlugService
      */
     protected function generateSuffix(string $slug, string $separator, Collection $list): string
     {
-        $len = strlen($slug.$separator);
+        $len = strlen($slug . $separator);
 
         // If the slug already exists, but belongs to
         // our model, return the current suffix.
@@ -329,8 +329,8 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function ($value, $key) use ($len) {
-            return (int)substr($value, $len);
+        $list->transform(function($value, $key) use ($len) {
+            return (int) substr($value, $len);
         });
 
         // find the highest value and return one greater.
@@ -404,7 +404,7 @@ class SlugService
         if ($config === null) {
             $config = array_get($model->sluggable(), $attribute);
         } elseif (!is_array($config)) {
-            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; '.gettype($config).' given.');
+            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; ' . gettype($config) . ' given.');
         }
 
         $config = $instance->getConfiguration($config);
