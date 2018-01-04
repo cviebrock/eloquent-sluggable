@@ -29,6 +29,21 @@ return [
     'maxLength' => null,
 
     /**
+     * If you are setting a maximum length on your slugs, you may not want the
+     * truncated string to split a word in half.  The default setting of "true"
+     * will ensure this, e.g. with a maxLength of 12:
+     *
+     *   "my source string" -> "my-source"
+     *
+     * Setting it to "false" will simply truncate the generated slug at the
+     * desired length, e.g.:
+     *
+     *   "my source string" -> "my-source-st"
+     */
+
+    'maxLengthKeepWords' => true,
+
+    /**
      * If left to "null", then use the cocur/slugify package to generate the slug
      * (with the separator defined below).
      *

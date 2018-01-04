@@ -11,6 +11,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLengthSplitWords;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugs;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSources;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithNoSource;
@@ -68,6 +69,14 @@ class BaseTests extends TestCase
             'subtitle' => 'A Subtitle'
         ]);
         $this->assertEquals('a-post-title-a-subtitle', $post->slug);
+    }
+
+    public function testLeadingTrailingSpaces()
+    {
+        $post = Post::create([
+            'title' => "\tMy First Post \r\n"
+        ]);
+        $this->assertEquals('my-first-post', $post->slug);
     }
 
     /**
@@ -193,6 +202,17 @@ class BaseTests extends TestCase
         $post = PostWithMaxLength::create([
             'title' => 'A post with a really long title'
         ]);
+        $this->assertEquals('a-post', $post->slug);
+    }
+
+    /**
+     * Test for max_length option with word splitting.
+     */
+    public function testMaxLengthSplitWords()
+    {
+        $post = PostWithMaxLengthSplitWords::create([
+            'title' => 'A post with a really long title'
+        ]);
         $this->assertEquals('a-post-wit', $post->slug);
     }
 
@@ -206,11 +226,39 @@ class BaseTests extends TestCase
                 'title' => 'A post with a really long title'
             ]);
             if ($i == 0) {
+                $this->assertEquals('a-post', $post->slug);
+            } elseif ($i < 10) {
+                $this->assertEquals('a-post-' . $i, $post->slug);
+            }
+        }
+    }
+
+    /**
+     * Test for max_length option with increments and word splitting.
+     */
+    public function testMaxLengthSplitWordsWithIncrements()
+    {
+        for ($i = 0; $i < 20; $i++) {
+            $post = PostWithMaxLengthSplitWords::create([
+                'title' => 'A post with a really long title'
+            ]);
+            if ($i == 0) {
                 $this->assertEquals('a-post-wit', $post->slug);
             } elseif ($i < 10) {
                 $this->assertEquals('a-post-wit-' . $i, $post->slug);
             }
         }
+    }
+
+    /**
+     * Test for max_length option with a slug that might end in separator.
+     */
+    public function testMaxLengthDoesNotEndInSeparator()
+    {
+        $post = PostWithMaxLengthSplitWords::create([
+            'title' => 'It should work'
+        ]);
+        $this->assertEquals('it-should', $post->slug);
     }
 
     /**

@@ -1,9 +1,15 @@
 # Change Log
 
-## 4.3.1 - 04-Jan-2018
+## 4.4.1 - 04-Jan-2018
 
 - Better exception message when calling `SlugService::createSlug` with an invalid attribute (#402, thanks @lptn)
 - Prettier unit test output
+
+
+## 4.4.0 - 12-Dec-2017
+
+- Make sure truncated slugs (due to maxLength) don't end in a separator (#398)
+- Add `maxLengthKeepWords` configuration option (#398)
 
 
 ## 4.3.0 - 31-Aug-2017

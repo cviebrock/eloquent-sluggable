@@ -22,7 +22,8 @@ Easy creation of slugs for your Eloquent models in Laravel.
 * [Events](#events)
 * [Configuration](#configuration)
     * [includeTrashed](#includetrashed)
-    * [maxLength](#maxLength)
+    * [maxLength](#maxlength)
+    * [maxLengthKeepWords](#maxlengthkeepwords)
     * [method](#method)
     * [onUpdate](#onupdate)
     * [reserved](#reserved)
@@ -91,8 +92,8 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
-> |       5.5       |      ^4.3       |
-> |       5.4       |      ^4.2       |
+> |       5.5       |   4.3.*|4.4.*   |
+> |       5.4       |      4.2.*      |
 >
 > Older versions of Laravel can use older versions of the package, although they are no 
 > longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
@@ -273,15 +274,16 @@ Here is an example configuration, with all the default settings shown:
 
 ```php
 return [
-    'source'          => null,
-    'maxLength'       => null,
-    'method'          => null,
-    'separator'       => '-',
-    'unique'          => true,
-    'uniqueSuffix'    => null,
-    'includeTrashed'  => false,
-    'reserved'        => null,
-    'onUpdate'        => false,
+    'source'             => null,
+    'maxLength'          => null,
+    'maxLengthKeepWords' => true,
+    'method'             => null,
+    'separator'          => '-',
+    'unique'             => true,
+    'uniqueSuffix'       => null,
+    'includeTrashed'     => false,
+    'reserved'           => null,
+    'onUpdate'           => false,
 ];
 ```
 
@@ -299,7 +301,7 @@ public function sluggable()
             'source' => 'title'
         ],
         'author-slug' => [
-            'source' => ['author.lastname', 'author.firstname']
+            'source' => ['author.lastname', 'author.firstname'],
             'separator' => '_'
         ],
     ];
@@ -378,6 +380,18 @@ several models with the same slug, then you should set this value to a few chara
 less than the length of your database field. The reason why is that the class will 
 append "-1", "-2", "-3", etc., to subsequent models in order to maintain uniqueness. 
 These incremental extensions aren't included in part of the `maxLength` calculation.
+
+### maxLengthKeepWords
+
+If you are truncating your slugs with the `maxLength` setting, than you probably
+want to ensure that your slugs don't get truncated in the middle of a word.  For
+example, if your source string is "My First Post", and your `maxLength` is 10,
+the generated slug would end up being "my-first-p", which isn't ideal.
+
+By default, the `maxLengthKeepWords` value is set to true which would trim the
+partial words off the end of the slug, resulting in "my-first" instead of "my-first-p".
+
+If you want to keep partial words, then set this configuration to false.
 
 ### method
 

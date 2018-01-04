@@ -22,6 +22,7 @@ class SlugService
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param bool $force
+     *
      * @return bool
      */
     public function slug(Model $model, bool $force = false): bool
@@ -53,6 +54,7 @@ class SlugService
      * including default values where not specified.
      *
      * @param array $overrides
+     *
      * @return array
      */
     public function getConfiguration(array $overrides = []): array
@@ -68,6 +70,7 @@ class SlugService
      * @param string $attribute
      * @param array $config
      * @param bool $force
+     *
      * @return null|string
      */
     public function buildSlug(string $attribute, array $config, bool $force = null)
@@ -92,6 +95,7 @@ class SlugService
      *
      * @param string $attribute
      * @param array $config
+     *
      * @return bool
      */
     protected function needsSlugging(string $attribute, array $config): bool
@@ -114,6 +118,7 @@ class SlugService
      * Get the source string for the slug.
      *
      * @param mixed $from
+     *
      * @return string
      */
     protected function getSlugSource($from): string
@@ -122,14 +127,14 @@ class SlugService
             return $this->model->__toString();
         }
 
-        $sourceStrings = array_map(function ($key) {
+        $sourceStrings = array_map(function($key) {
             $value = data_get($this->model, $key);
             if (is_bool($value)) {
-                $value = (int)$value;
+                $value = (int) $value;
             }
 
             return $value;
-        }, (array)$from);
+        }, (array) $from);
 
         return implode($sourceStrings, ' ');
     }
@@ -140,6 +145,7 @@ class SlugService
      * @param string $source
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
@@ -148,6 +154,7 @@ class SlugService
         $separator = $config['separator'];
         $method = $config['method'];
         $maxLength = $config['maxLength'];
+        $maxLengthKeepWords = $config['maxLengthKeepWords'];
 
         if ($method === null) {
             $slugEngine = $this->getSlugEngine($attribute);
@@ -158,8 +165,15 @@ class SlugService
             throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
         }
 
-        if (is_string($slug) && $maxLength) {
-            $slug = mb_substr($slug, 0, $maxLength);
+        $len = mb_strlen($slug);
+        if (is_string($slug) && $maxLength && $len > $maxLength) {
+            $reverseOffset = $maxLength - $len;
+            $lastSeparatorPos = mb_strrpos($slug, $separator, $reverseOffset);
+            if ($maxLengthKeepWords && $lastSeparatorPos !== false) {
+                $slug = mb_substr($slug, 0, $lastSeparatorPos);
+            } else {
+                $slug = trim(mb_substr($slug, 0, $maxLength), $separator);
+            }
         }
 
         return $slug;
@@ -170,6 +184,7 @@ class SlugService
      * strings into slugs.
      *
      * @param string $attribute
+     *
      * @return \Cocur\Slugify\Slugify
      */
     protected function getSlugEngine(string $attribute): Slugify
@@ -196,12 +211,12 @@ class SlugService
      * @param string $slug
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
     protected function validateSlug(string $slug, array $config, string $attribute): string
     {
-
         $separator = $config['separator'];
         $reserved = $config['reserved'];
 
@@ -216,7 +231,6 @@ class SlugService
 
         if (is_array($reserved)) {
             if (in_array($slug, $reserved)) {
-
                 $method = $config['uniqueSuffix'];
                 if ($method === null) {
                     $suffix = $this->generateSuffix($slug, $separator, collect($reserved));
@@ -241,6 +255,7 @@ class SlugService
      * @param string $slug
      * @param array $config
      * @param string $attribute
+     *
      * @return string
      * @throws \UnexpectedValueException
      */
@@ -299,6 +314,7 @@ class SlugService
      * @param string $slug
      * @param string $separator
      * @param \Illuminate\Support\Collection $list
+     *
      * @return string
      */
     protected function generateSuffix(string $slug, string $separator, Collection $list): string
@@ -313,8 +329,8 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function ($value, $key) use ($len) {
-            return (int)substr($value, $len);
+        $list->transform(function($value, $key) use ($len) {
+            return (int) substr($value, $len);
         });
 
         // find the highest value and return one greater.
@@ -327,6 +343,7 @@ class SlugService
      * @param string $slug
      * @param string $attribute
      * @param array $config
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getExistingSlugs(string $slug, string $attribute, array $config): Collection
@@ -372,6 +389,7 @@ class SlugService
      * @param string $attribute
      * @param string $fromString
      * @param array|null $config
+     *
      * @return string
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
@@ -405,6 +423,7 @@ class SlugService
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
+     *
      * @return $this
      */
     public function setModel(Model $model)
