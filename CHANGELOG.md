@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.3.1 - 04-Jan-2018
+
+- Better exception message when calling `SlugService::createSlug` with an invalid attribute (#402, thanks @lptn)
+- Prettier unit test output
+
+
 ## 4.3.0 - 31-Aug-2017
 
 - Laravel 5.5 support, including auto-registration
