@@ -25,6 +25,7 @@
         "cocur/slugify": "^3.0"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.4.4",
         "mockery/mockery": "^0.9.4",
         "orchestra/database": "~3.5.0",
         "orchestra/testbench": "~3.5.0",
