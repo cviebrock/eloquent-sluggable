@@ -373,6 +373,7 @@ class SlugService
      * @param string $fromString
      * @param array|null $config
      * @return string
+     * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
     public static function createSlug($model, string $attribute, string $fromString, array $config = null): string
@@ -385,6 +386,10 @@ class SlugService
 
         if ($config === null) {
             $config = array_get($model->sluggable(), $attribute);
+            if ($config === null) {
+                $modelClass = get_class($model);
+                throw new \InvalidArgumentException("Argument 2 passed to SlugService::createSlug ['{$attribute}'] is not a valid slug attribute for model {$modelClass}.");
+            }
         } elseif (!is_array($config)) {
             throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; ' . gettype($config) . ' given.');
         }
