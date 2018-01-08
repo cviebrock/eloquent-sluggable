@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLengthSplitWords;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugs;
@@ -360,6 +361,17 @@ class BaseTests extends TestCase
     }
 
     /**
+     * Test using a custom Slugify ruleset.
+     */
+    public function testForeignRuleset()
+    {
+        $post = PostWithForeignRuleset::create([
+            'title' => 'Mia unua poŝto'
+        ]);
+        $this->assertEquals('mia-unua-posxto', $post->slug);
+    }
+
+    /**
      * Test if using an empty separator works.
      *
      * @see https://github.com/cviebrock/eloquent-sluggable/issues/256
@@ -402,7 +414,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that a falsy string slug source creates a slug.
+     * Test that a false-y string slug source creates a slug.
      */
     public function testFalsyString()
     {
@@ -413,7 +425,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that a falsy int slug source creates a slug.
+     * Test that a false-y int slug source creates a slug.
      */
     public function testFalsyInt()
     {
