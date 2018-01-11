@@ -47,7 +47,7 @@ trait Sluggable
      * @param  array|null $except
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function replicate(array $except = null): Model
+    public function replicate(array $except = null)
     {
         $instance = parent::replicate($except);
         (new SlugService())->slug($instance, true);
