@@ -2,7 +2,7 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for Laravel 5.5.  If you are using Laravel 5.4, please see
+> **NOTE**: These instructions are for Laravel 5.5 and 5.6.  If you are using Laravel 5.4, please see
 > the [previous version docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.2).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
@@ -92,6 +92,7 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
+> |       5.6       |      4.4.*      |
 > |       5.5       |   4.3.*|4.4.*   |
 > |       5.4       |      4.2.*      |
 >
@@ -106,7 +107,7 @@ automatically, with minimal configuration.
     $ composer require cviebrock/eloquent-sluggable:^4.3
     ```
 
-    The package will automatically register itself with Laravel 5.5.
+    The package will automatically register itself with Laravel 5.5 and 5.6.
 
 2. Optionally, publish the configuration file if you want to change any defaults:
 
