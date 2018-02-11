@@ -2,8 +2,8 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for Laravel 5.5.  If you are using Laravel 5.4, please see
-> the [previous version docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.2).
+> **NOTE**: These instructions are for Laravel 5.6.  If you are using Laravel 5.5, please
+> see the [previous version docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.4).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
@@ -92,18 +92,21 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
+> |       5.6       |      4.5.*      |
 > |       5.5       |   4.3.*|4.4.*   |
 > |       5.4       |      4.2.*      |
 >
-> Older versions of Laravel can use older versions of the package, although they are no 
-> longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
-> [UPGRADING.md](UPGRADING.md) for specifics.
+> Older versions of Laravel can use older versions of the package, although they 
+> are no longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
+> [UPGRADING.md](UPGRADING.md) for specifics, and be sure that you are reading 
+> the correct README.md for your version (Github displays the version in 
+> the _master_ branch by default, which might not be what you want).
 
 
 1. Install the package via Composer:
 
     ```sh
-    $ composer require cviebrock/eloquent-sluggable:^4.3
+    $ composer require cviebrock/eloquent-sluggable:^4.5
     ```
 
     The package will automatically register itself with Laravel 5.5.

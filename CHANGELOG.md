@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.5.0 - 10-Feb-2018
+
+- Laravel 5.6 support
+
+
 ## 4.4.1 - 04-Jan-2018
 
 - Better exception message when calling `SlugService::createSlug` with an invalid attribute (#402, thanks @lptn)
