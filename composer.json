@@ -29,7 +29,7 @@
         "orchestra/database": "~3.6.0",
         "orchestra/testbench": "~3.6.0",
         "phpunit/phpunit": "~7.0",
-        "codedungeon/phpunit-result-printer": "^0.6.0"
+        "codedungeon/phpunit-result-printer": "^0.19.0"
     },
     "autoload": {
         "psr-4": {
