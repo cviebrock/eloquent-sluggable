@@ -4,6 +4,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Cviebrock\EloquentSluggable\Tests\Models\PostNotSluggable;
 use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfig;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomCallableMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
@@ -86,6 +87,18 @@ class BaseTests extends TestCase
     public function testCustomMethod()
     {
         $post = PostWithCustomMethod::create([
+            'title' => 'A Post Title',
+            'subtitle' => 'A Subtitle'
+        ]);
+        $this->assertEquals('eltit-tsop-a', $post->slug);
+    }
+
+    /**
+     * Test building a slug using a custom method.
+     */
+    public function testCustomCallableMethod()
+    {
+        $post = PostWithCustomCallableMethod::create([
             'title' => 'A Post Title',
             'subtitle' => 'A Subtitle'
         ]);
