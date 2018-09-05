@@ -25,11 +25,11 @@
         "illuminate/support": "~5.7.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.19.6",
         "mockery/mockery": "^0.9.4",
         "orchestra/database": "3.7.x-dev",
         "orchestra/testbench": "v3.7.0",
-        "phpunit/phpunit": "~7.0"
+        "phpunit/phpunit": "~7.0",
+        "limedeck/phpunit-detailed-printer": "^4.1"
     },
     "autoload": {
         "psr-4": {

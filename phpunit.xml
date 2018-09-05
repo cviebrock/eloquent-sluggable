@@ -6,10 +6,9 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
+         printerClass="LimeDeck\Testing\Printer"
          processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="false">
+         stopOnFailure="true">
     <testsuites>
         <testsuite name="Sluggable Test Suite">
             <directory suffix=".php">./tests/</directory>
@@ -22,7 +21,7 @@
     </filter>
     <logging>
         <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true"/>
+        <log type="coverage-html" target="build/coverage"/>
         <log type="coverage-text" target="build/coverage.txt"/>
         <log type="coverage-clover" target="build/clover.xml"/>
     </logging>

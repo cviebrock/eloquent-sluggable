@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.6.0 - 04-Sep-2018
+
+- Laravel 5.7 support
+
+
 ## 4.5.1 - 21-May-2018
 
 - bump versions of package dependencies
