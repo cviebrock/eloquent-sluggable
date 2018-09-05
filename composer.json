@@ -20,15 +20,15 @@
     "require": {
         "php": "^7.0",
         "cocur/slugify": "^3.1",
-        "illuminate/config": "~5.6.0",
-        "illuminate/database": "~5.6.0",
-        "illuminate/support": "~5.6.0"
+        "illuminate/config": "~5.7.0",
+        "illuminate/database": "~5.7.0",
+        "illuminate/support": "~5.7.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.19.6",
         "mockery/mockery": "^0.9.4",
-        "orchestra/database": "~3.6.0",
-        "orchestra/testbench": "~3.6.0",
+        "orchestra/database": "3.7.x-dev",
+        "orchestra/testbench": "v3.7.0",
         "phpunit/phpunit": "~7.0"
     },
     "autoload": {
