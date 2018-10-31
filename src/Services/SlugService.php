@@ -41,9 +41,10 @@ class SlugService
 
             $slug = $this->buildSlug($attribute, $config, $force);
 
-            $this->model->setAttribute($attribute, $slug);
-
-            $attributes[] = $attribute;
+            if ($slug !== null) {
+                $this->model->setAttribute($attribute, $slug);
+                $attributes[] = $attribute;
+            }
         }
 
         return $this->model->isDirty($attributes);

@@ -104,4 +104,24 @@ class OnUpdateTests extends TestCase
         ]);
         $this->assertEquals('my-first-post-3', $post3->slug);
     }
+
+    /**
+     * Test that the slug isn't set to null if the source fields
+     * not loaded in model.
+     */
+    public function testSlugDoesNotChangeIfSourceNotProvidedInModel()
+    {
+        $post = Post::create([
+            'title' => 'My First Post'
+        ]);
+        $this->assertEquals('my-first-post', $post->slug);
+
+        $post = Post::whereKey($post->id)->get(['id','subtitle'])->first();
+        $post->update([
+            'subtitle' => 'A Subtitle'
+        ]);
+
+        $post = Post::findOrFail($post->id);
+        $this->assertEquals('my-first-post', $post->slug);
+    }
 }
