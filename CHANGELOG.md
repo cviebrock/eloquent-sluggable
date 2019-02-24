@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.7.0 - 24-Feb-2019
+
+- Fix slug getting set to `null` if model is updated with no source column loaded (#450, thanks @mylgeorge)
+
+
 ## 4.6.0 - 04-Sep-2018
 
 - Laravel 5.7 support
@@ -7,7 +12,7 @@
 
 ## 4.5.1 - 21-May-2018
 
-- bump versions of package dependencies
+- Bump versions of package dependencies
 
 
 ## 4.5.0 - 10-Feb-2018
