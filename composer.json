@@ -18,16 +18,16 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "cocur/slugify": "^3.1",
-        "illuminate/config": "~5.7.0",
-        "illuminate/database": "~5.7.0",
-        "illuminate/support": "~5.7.0"
+        "illuminate/config": "~5.8.0",
+        "illuminate/database": "~5.8.0",
+        "illuminate/support": "~5.8.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
-        "orchestra/database": "3.7.x-dev",
-        "orchestra/testbench": "v3.7.0",
+        "mockery/mockery": "^1.2",
+        "orchestra/database": "3.8.x-dev",
+        "orchestra/testbench": "v3.8.0",
         "phpunit/phpunit": "~7.0",
         "limedeck/phpunit-detailed-printer": "^4.1"
     },

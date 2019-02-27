@@ -92,6 +92,7 @@ automatically, with minimal configuration.
 > 
 > | Laravel Version | Package Version |
 > |:---------------:|:---------------:|
+> |       5.8       |      4.8.*      |
 > |       5.7       |      4.6.*      |
 > |       5.6       |      4.5.*      |
 > |       5.5       |   4.3.*|4.4.*   |
@@ -107,7 +108,7 @@ automatically, with minimal configuration.
 1. Install the package via Composer:
 
     ```sh
-    $ composer require cviebrock/eloquent-sluggable:^4.6
+    $ composer require cviebrock/eloquent-sluggable:^4.8
     ```
 
     The package will automatically register its service provider.
