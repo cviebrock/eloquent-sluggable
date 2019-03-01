@@ -1,8 +1,9 @@
 # Change Log
 
-## 4.8.0 - 27-Feb-2019
+## 4.8.0 - 28-Feb-2019
 
 - Laravel 5.8 support
+
 
 ## 4.7.0 - 24-Feb-2019
 
