@@ -271,15 +271,18 @@ class SlugService
         // if our slug is in the list, but
         // 	a) it's for our model, or
         //  b) it looks like a suffixed version of our slug
+        //  c) it's not empty
         // ... we are also okay (use the current slug)
-        if ($list->has($this->model->getKey())) {
-            $currentSlug = $list->get($this->model->getKey());
+        if ($this->model->{$attribute}) {
+            if ($list->has($this->model->getKey())) {
+                $currentSlug = $list->get($this->model->getKey());
 
-            if (
-                $currentSlug === $slug ||
-                strpos($currentSlug, $slug) === 0
-            ) {
-                return $currentSlug;
+                if (
+                    $currentSlug === $slug ||
+                    strpos($currentSlug, $slug) === 0
+                ) {
+                    return $currentSlug;
+                }
             }
         }
 
