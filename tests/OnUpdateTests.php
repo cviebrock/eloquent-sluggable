@@ -104,4 +104,23 @@ class OnUpdateTests extends TestCase
         ]);
         $this->assertEquals('my-first-post-3', $post3->slug);
     }
+
+    public function testSlugRegenerateAfterModelCreated()
+    {
+        $post1 = Post::create([
+            'title' => 'A post title'
+        ]);
+
+        $this->assertEquals('a-post-title', $post1->slug);
+        $post2 = new Post;
+        $post2->title = $post1->title;
+        $post2->slug = $post1->slug;
+        $post2->save();
+
+        $post2->title = 'A post title';
+        $post2->slug = '';
+        $post2->save();
+
+        $this->assertEquals('a-post-title-1', $post2->slug);
+    }
 }
