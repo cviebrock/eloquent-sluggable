@@ -292,7 +292,7 @@ class SlugService
 
             if (
                 $currentSlug === $slug ||
-                strpos($currentSlug, $slug) === 0
+                !$slug || strpos($currentSlug, $slug) === 0
             ) {
                 return $currentSlug;
             }
