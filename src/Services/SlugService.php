@@ -2,7 +2,6 @@
 
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 /**
@@ -79,10 +78,14 @@ class SlugService
     {
         $slug = $this->model->getAttribute($attribute);
 
+
         if ($force || $this->needsSlugging($attribute, $config)) {
             $source = $this->getSlugSource($config['source']);
 
             if ($source || is_numeric($source)) {
+                $tr = ["ö", "Ö", "ü", "Ü"];
+                $rp = ["o", "O", "u", "U"];
+                $source = str_replace($tr, $rp, $source);
                 $slug = $this->generateSlug($source, $config, $attribute);
                 $slug = $this->validateSlug($slug, $config, $attribute);
                 $slug = $this->makeSlugUnique($slug, $config, $attribute);
@@ -292,7 +295,7 @@ class SlugService
 
             if (
                 $currentSlug === $slug ||
-                !$slug || strpos($currentSlug, $slug) === 0
+                strpos($currentSlug, $slug) === 0
             ) {
                 return $currentSlug;
             }
@@ -405,7 +408,7 @@ class SlugService
         $instance = (new static())->setModel($model);
 
         if ($config === null) {
-            $config = Arr::get($model->sluggable(), $attribute);
+            $config = array_get($model->sluggable(), $attribute);
             if ($config === null) {
                 $modelClass = get_class($model);
                 throw new \InvalidArgumentException("Argument 2 passed to SlugService::createSlug ['{$attribute}'] is not a valid slug attribute for model {$modelClass}.");
