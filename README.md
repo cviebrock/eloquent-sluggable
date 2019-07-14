@@ -273,7 +273,7 @@ Configuration was designed to be as flexible as possible. You can set up default
 for all of your Eloquent models, and then override those settings for individual 
 models.
 
-By default, global configuration is set in the `app/config/sluggable.php` file. 
+By default, global configuration is set in the `config/sluggable.php` file. 
 If a configuration isn't set, then the package defaults are used. 
 Here is an example configuration, with all the default settings shown:
 
@@ -507,7 +507,7 @@ public function sluggable() {
 }
 ```
 
-This will use all the default options from `app/config/sluggable.php`, use the model's
+This will use all the default options from `config/sluggable.php`, use the model's
 `__toString()` method as the source, and store the slug in the `slug` field.
 
 
