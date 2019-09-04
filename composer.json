@@ -1,6 +1,6 @@
 {
     "name": "cviebrock/eloquent-sluggable",
-    "description": "Easy creation of slugs for your Eloquent models in Laravel 5.",
+    "description": "Easy creation of slugs for your Eloquent models in Laravel",
     "keywords": [
         "eloquent-sluggable",
         "eloquent",
@@ -18,18 +18,18 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "cocur/slugify": "^3.1",
-        "illuminate/config": "~5.8.0",
-        "illuminate/database": "~5.8.0",
-        "illuminate/support": "~5.8.0"
+        "php": "^7.2",
+        "cocur/slugify": "^3.2",
+        "illuminate/config": "~6.0.0",
+        "illuminate/database": "~6.0.0",
+        "illuminate/support": "~6.0.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.2",
-        "orchestra/database": "3.8.x-dev",
-        "orchestra/testbench": "v3.8.0",
-        "phpunit/phpunit": "~7.0",
-        "limedeck/phpunit-detailed-printer": "^4.1"
+        "limedeck/phpunit-detailed-printer": "^5.0",
+        "mockery/mockery": "^1.2.3",
+        "orchestra/database": "4.*",
+        "orchestra/testbench": "4.*",
+        "phpunit/phpunit": "~8.0"
     },
     "autoload": {
         "psr-4": {
