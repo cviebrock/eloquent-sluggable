@@ -1,5 +1,10 @@
 # Change Log
 
+## 6.0.0 - 03-Sep-2019
+
+- Laravel 6.0 support (note the package version will now follow the Laravel version)
+
+
 ## 4.8.0 - 28-Feb-2019
 
 - Laravel 5.8 support (#460, big thanks @tabuna)

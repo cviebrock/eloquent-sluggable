@@ -2,8 +2,8 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for Laravel 5.8.  If you are using Laravel 5.7, please
-> see the [previous version's docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.7.0).
+> **NOTE**: These instructions are for Laravel 6.0.  If you are using Laravel 5.8, please
+> see the [previous version's docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.8).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
@@ -81,28 +81,30 @@ added to the end of the slug:
 
 This keeps the URLs unique.
 
-The **Eloquent-Sluggable** package for Laravel 5 aims to handle all of this for you 
+The **Eloquent-Sluggable** package for Laravel aims to handle all of this for you 
 automatically, with minimal configuration.
 
 
 ## Installation
 
-> **NOTE**: Depending on your version of Laravel, you should install a different
-> version of the package:
-> 
-> | Laravel Version | Package Version |
-> |:---------------:|:---------------:|
-> |       5.8       |      4.8.*      |
-> |       5.7       |   4.6.*|4.7.*   |
-> |       5.6       |      4.5.*      |
-> |       5.5       |   4.3.*|4.4.*   |
-> |       5.4       |      4.2.*      |
->
-> Older versions of Laravel can use older versions of the package, although they 
-> are no longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
-> [UPGRADING.md](UPGRADING.md) for specifics, and be sure that you are reading 
-> the correct README.md for your version (Github displays the version in 
-> the _master_ branch by default, which might not be what you want).
+Depending on your version of Laravel, you should install a different
+version of the package.  **NOTE**: As of version 6.0, the package's 
+version should match the Laravel version.
+
+| Laravel Version | Package Version |
+|:---------------:|:---------------:|
+|       6.0       |      6.0.*      |
+|       5.8       |      4.8.*      |
+|       5.7       |   4.6.*|4.7.*   |
+|       5.6       |      4.5.*      |
+|       5.5       |   4.3.*|4.4.*   |
+|       5.4       |      4.2.*      |
+
+Older versions of Laravel can use older versions of the package, although they 
+are no longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
+[UPGRADING.md](UPGRADING.md) for specifics, and be sure that you are reading 
+the correct README.md for your version (Github displays the version in 
+the _master_ branch by default, which might not be what you want).
 
 
 1. Install the package via Composer:
@@ -273,7 +275,7 @@ Configuration was designed to be as flexible as possible. You can set up default
 for all of your Eloquent models, and then override those settings for individual 
 models.
 
-By default, global configuration is set in the `app/config/sluggable.php` file. 
+By default, global configuration is set in the `config/sluggable.php` file. 
 If a configuration isn't set, then the package defaults are used. 
 Here is an example configuration, with all the default settings shown:
 
@@ -507,7 +509,7 @@ public function sluggable() {
 }
 ```
 
-This will use all the default options from `app/config/sluggable.php`, use the model's
+This will use all the default options from `config/sluggable.php`, use the model's
 `__toString()` method as the source, and store the slug in the `slug` field.
 
 

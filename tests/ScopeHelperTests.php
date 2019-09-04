@@ -95,8 +95,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test finding a model by its primary slug throws an exception if the slug does not exist.
-     *
-     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function testFindBySlugOrFail()
     {
@@ -114,6 +112,8 @@ class ScopeHelperTests extends TestCase
 
         $this->assertEquals($post->getKey(),
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
+
+        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
     }
