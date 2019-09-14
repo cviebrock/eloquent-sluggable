@@ -1,5 +1,10 @@
 # Change Log
 
+## 6.0.1 - 13-Sep-2019
+
+- fix for semantic versioning
+
+
 ## 6.0.0 - 03-Sep-2019
 
 - Laravel 6.0 support (note the package version will now follow the Laravel version)
