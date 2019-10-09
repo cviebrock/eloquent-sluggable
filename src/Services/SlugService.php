@@ -35,7 +35,7 @@ class SlugService
         foreach ($this->model->sluggable() as $attribute => $config) {
             if (is_numeric($attribute)) {
                 $attribute = $config;
-                $config = $this->getConfiguration();
+                $config    = $this->getConfiguration();
             } else {
                 $config = $this->getConfiguration($config);
             }
@@ -80,12 +80,34 @@ class SlugService
         $slug = $this->model->getAttribute($attribute);
 
         if ($force || $this->needsSlugging($attribute, $config)) {
-            $source = $this->getSlugSource($config['source']);
+            $sources = $this->getSlugSources($config['source']);
 
-            if ($source || is_numeric($source)) {
-                $slug = $this->generateSlug($source, $config, $attribute);
-                $slug = $this->validateSlug($slug, $config, $attribute);
-                $slug = $this->makeSlugUnique($slug, $config, $attribute);
+            if (is_array($sources) && !empty($sources)) {
+                $slugs = [];
+
+                foreach ($sources as $index => $source) {
+                    if (empty($source)) {
+                        continue;
+                    }
+
+                    // If $source already has the field separator, we assume
+                    // it's already a slug
+                    if (strpos($source, $config['field_separator']) === false) {
+                        $slug = $this->generateSlug($source, $config, $attribute);
+                        $slug = $this->validateSlug($slug, $config, $attribute);
+                    }
+
+                    // We only need to make the last part of the slug unique
+                    if ($index === count($sources) - 1) {
+                        $slug = $this->makeSlugUnique($slug, $config, $attribute);
+                    } else {
+                        $slug = $source;
+                    }
+
+                    $slugs[] = $slug;
+                }
+
+                $slug = implode($config['field_separator'], $slugs);
             }
         }
 
@@ -117,19 +139,19 @@ class SlugService
     }
 
     /**
-     * Get the source string for the slug.
+     * Get the source strings for the slug.
      *
      * @param mixed $from
      *
-     * @return string
+     * @return array
      */
-    protected function getSlugSource($from): string
+    protected function getSlugSources($from): array
     {
         if (is_null($from)) {
             return $this->model->__toString();
         }
 
-        $sourceStrings = array_map(function($key) {
+        $sourceStrings = array_map(function ($key) {
             $value = data_get($this->model, $key);
             if (is_bool($value)) {
                 $value = (int) $value;
@@ -138,7 +160,7 @@ class SlugService
             return $value;
         }, (array) $from);
 
-        return implode($sourceStrings, ' ');
+        return $sourceStrings;
     }
 
     /**
@@ -153,14 +175,14 @@ class SlugService
      */
     protected function generateSlug(string $source, array $config, string $attribute): string
     {
-        $separator = $config['separator'];
-        $method = $config['method'];
-        $maxLength = $config['maxLength'];
+        $separator          = $config['separator'];
+        $method             = $config['method'];
+        $maxLength          = $config['maxLength'];
         $maxLengthKeepWords = $config['maxLengthKeepWords'];
 
         if ($method === null) {
             $slugEngine = $this->getSlugEngine($attribute);
-            $slug = $slugEngine->slugify($source, $separator);
+            $slug       = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
         } else {
@@ -169,7 +191,7 @@ class SlugService
 
         $len = mb_strlen($slug);
         if (is_string($slug) && $maxLength && $len > $maxLength) {
-            $reverseOffset = $maxLength - $len;
+            $reverseOffset    = $maxLength - $len;
             $lastSeparatorPos = mb_strrpos($slug, $separator, $reverseOffset);
             if ($maxLengthKeepWords && $lastSeparatorPos !== false) {
                 $slug = mb_substr($slug, 0, $lastSeparatorPos);
@@ -220,7 +242,7 @@ class SlugService
     protected function validateSlug(string $slug, array $config, string $attribute): string
     {
         $separator = $config['separator'];
-        $reserved = $config['reserved'];
+        $reserved  = $config['reserved'];
 
         if ($reserved === null) {
             return $slug;
@@ -273,8 +295,8 @@ class SlugService
         $list = $this->getExistingSlugs($slug, $attribute, $config);
 
         // if ...
-        // 	a) the list is empty, or
-        // 	b) our slug isn't in the list
+        //     a) the list is empty, or
+        //     b) our slug isn't in the list
         // ... we are okay
         if (
             $list->count() === 0 ||
@@ -284,7 +306,7 @@ class SlugService
         }
 
         // if our slug is in the list, but
-        // 	a) it's for our model, or
+        //     a) it's for our model, or
         //  b) it looks like a suffixed version of our slug
         // ... we are also okay (use the current slug)
         if ($list->has($this->model->getKey())) {
@@ -331,7 +353,7 @@ class SlugService
             return end($suffix);
         }
 
-        $list->transform(function($value, $key) use ($len) {
+        $list->transform(function ($value, $key) use ($len) {
             return (int) substr($value, $len);
         });
 
