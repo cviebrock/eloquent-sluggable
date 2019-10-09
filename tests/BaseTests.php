@@ -70,7 +70,7 @@ class BaseTests extends TestCase
             'title' => 'A Post Title',
             'subtitle' => 'A Subtitle'
         ]);
-        $this->assertEquals('a-post-title-a-subtitle', $post->slug);
+        $this->assertEquals('a-post-title/a-subtitle', $post->slug);
     }
 
     public function testLeadingTrailingSpaces()
@@ -325,7 +325,7 @@ class BaseTests extends TestCase
         ]);
         $post->author()->associate($author);
         $post->save();
-        $this->assertEquals('arthur-conan-doyle-first', $post->slug);
+        $this->assertEquals('arthur-conan-doyle/first', $post->slug);
     }
 
     /**
@@ -423,7 +423,7 @@ class BaseTests extends TestCase
         ]);
         $post->save();
 
-        $this->assertEquals('rda-125-15-30-45m3-h-cav', $post->slug);
+        $this->assertEquals('rda-125-15/30/45m3/h-cav', $post->slug);
     }
 
     /**
