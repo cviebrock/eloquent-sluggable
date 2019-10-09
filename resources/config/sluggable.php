@@ -68,6 +68,12 @@ return [
     'separator' => '-',
 
     /**
+     * Separator between multiple fields. Defaults to a slash.
+     */
+    
+    'field_separator' => '/',
+
+    /**
      * Enforce uniqueness of slugs?  Defaults to true.
      * If a generated slug already exists, an incremental numeric
      * value will be appended to the end until a unique slug is found.  e.g.:
