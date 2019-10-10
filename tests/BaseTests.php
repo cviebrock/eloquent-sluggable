@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostNotSluggable;
 use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfig;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomCallableMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine2;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
@@ -371,6 +372,18 @@ class BaseTests extends TestCase
         ]);
         $post->save();
         $this->assertEquals('tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag', $post->slug);
+    }
+
+    /**
+     * Test using additional custom Slugify rules.
+     */
+    public function testCustomEngineRules2()
+    {
+        $post = new PostWithCustomEngine2([
+            'title' => 'The quick brown fox/jumps over/the lazy dog'
+        ]);
+        $post->save();
+        $this->assertEquals('the-quick-brown-fox/jumps-over/the-lazy-dog', $post->slug);
     }
 
     /**
