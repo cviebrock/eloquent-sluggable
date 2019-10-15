@@ -245,8 +245,9 @@ $slug = SlugService::createSlug(Post::class, 'slug', 'My First Post', ['unique' 
 
 Sluggable models will fire two Eloquent model events: "slugging" and "slugged".
   
-The "slugging" event is fired just before the slug is generated.  If the callback 
-from this event returns false, then the slugging is not performed.
+The "slugging" event is fired just before the slug is generated.  If the callback
+from this event returns `false`, then the slugging is not performed. If anything
+else is returned, including `null`, then the slugging will be performed.
 
 The "slugged" event is fired just after a slug is generated.  It won't be called
 in the case where the model doesn't need slugging (as determined by the `needsSlugging()`
