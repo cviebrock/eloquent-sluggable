@@ -50,8 +50,8 @@ class SluggableObserver
      */
     protected function generateSlug(Model $model, string $event)
     {
-        // If the "slugging" event returns a value, abort
-        if ($this->fireSluggingEvent($model, $event) !== null) {
+        // If the "slugging" event returns false, abort
+        if ($this->fireSluggingEvent($model, $event) === false) {
             return;
         }
         $wasSlugged = $this->slugService->slug($model);
