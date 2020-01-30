@@ -22,7 +22,8 @@
         "cocur/slugify": "^3.1",
         "illuminate/config": "~5.8.0",
         "illuminate/database": "~5.8.0",
-        "illuminate/support": "~5.8.0"
+        "illuminate/support": "~5.8.0",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",
