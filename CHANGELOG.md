@@ -1,5 +1,9 @@
 # Change Log
 
+## 4.4.2 - DD-MMM-2019
+
+- PHP 7.4 compatibility fix
+
 ## 4.4.1 - 04-Jan-2018
 
 - Better exception message when calling `SlugService::createSlug` with an invalid attribute (#402, thanks @lptn)
@@ -52,7 +56,7 @@
 
 ## 4.1.1 - 12-Oct-2016
 
-- Fix for slugs updating when they don't need to, when using `onUpdate` with `unique` (#317) 
+- Fix for slugs updating when they don't need to, when using `onUpdate` with `unique` (#317)
 
 
 ## 4.1.0 - 14-Sep-2016
@@ -69,7 +73,7 @@
 
 ## 4.0.3 - 15-Jul-2016
 
-- Added `$config` argument to `SlugService::createSlug` method for optionally overriding 
+- Added `$config` argument to `SlugService::createSlug` method for optionally overriding
   the configuration for a statically generated slug (#286).
 
 
@@ -107,7 +111,7 @@
   - `createSlug()` is no longer a static method on the model, but is a public method
     on the _SlugService_ class, with a different method signature (see docs).
   - Removed artisan command to add slug column to tables.  You will need to do this
-    (pretty simple) task yourself now. 
+    (pretty simple) task yourself now.
   - Several bug fixes.
 - See [UPGRADING.md](UPGRADING.md) for details.
 
