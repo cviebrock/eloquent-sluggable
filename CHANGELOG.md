@@ -1,8 +1,9 @@
 # Change Log
 
-## 4.4.2 - DD-MMM-2019
+## 4.4.2 - 09-Feb-2020
 
 - PHP 7.4 compatibility fix
+
 
 ## 4.4.1 - 04-Jan-2018
 
