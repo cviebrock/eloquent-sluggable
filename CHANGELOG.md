@@ -1,5 +1,10 @@
 # Change Log
 
+## 6.0.3 - 09-Feb-2020
+
+- bump [cocur/slugify](https://github.com/cocur/slugify) to `^4.0`
+
+
 ## 6.0.2 - 09-Oct-2019
 
 - fix for PHP 7.4 beta (#486, thanks @KamaZzw)
