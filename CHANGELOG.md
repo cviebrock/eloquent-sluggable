@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.8.1 - 30-Jan-2020
+
+- PHP 7.4 compatibility fix
+
+
 ## 4.8.0 - 28-Feb-2019
 
 - Laravel 5.8 support (#460, big thanks @tabuna)

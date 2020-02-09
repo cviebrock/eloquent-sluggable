@@ -138,7 +138,7 @@ class SlugService
             return $value;
         }, (array) $from);
 
-        return implode($sourceStrings, ' ');
+        return implode(' ', $sourceStrings);
     }
 
     /**
