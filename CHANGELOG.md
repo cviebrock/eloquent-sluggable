@@ -1,6 +1,6 @@
 # Change Log
 
-## 4.8.1 - 30-Jan-2020
+## 4.8.1 - 09-Feb-2020
 
 - PHP 7.4 compatibility fix
 
