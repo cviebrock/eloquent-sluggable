@@ -20,15 +20,15 @@
     "require": {
         "php": "^7.2.5",
         "cocur/slugify": "^4.0",
-        "illuminate/config": "^6.0|^7.0",
-        "illuminate/database": "^6.0|^7.0",
-        "illuminate/support": "^6.0|^7.0"
+        "illuminate/config": "^7.0",
+        "illuminate/database": "^7.0",
+        "illuminate/support": "^7.0"
     },
     "require-dev": {
         "limedeck/phpunit-detailed-printer": "^5.0",
         "mockery/mockery": "^1.2.3",
-        "orchestra/database": "4.*",
-        "orchestra/testbench": "4.*",
+        "orchestra/database": "^5.0",
+        "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.0"
     },
     "autoload": {
