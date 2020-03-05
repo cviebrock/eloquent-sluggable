@@ -1,5 +1,10 @@
 # Change Log
 
+## 7.0.0 - 04-Mar-2020
+
+- Laravel 7.0 support
+
+
 ## 6.0.3 - 09-Feb-2020
 
 - bump [cocur/slugify](https://github.com/cocur/slugify) to `^4.0`
