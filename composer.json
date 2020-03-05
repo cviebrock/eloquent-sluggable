@@ -18,11 +18,11 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2.5",
         "cocur/slugify": "^4.0",
-        "illuminate/config": "^6.0",
-        "illuminate/database": "^6.0",
-        "illuminate/support": "^6.0"
+        "illuminate/config": "^6.0|^7.0",
+        "illuminate/database": "^6.0|^7.0",
+        "illuminate/support": "^6.0|^7.0"
     },
     "require-dev": {
         "limedeck/phpunit-detailed-printer": "^5.0",
