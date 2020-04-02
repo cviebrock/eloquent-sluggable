@@ -61,7 +61,7 @@ class SlugService
      */
     public function getConfiguration(array $overrides = []): array
     {
-        $defaultConfig = config('sluggable', []);
+        $defaultConfig = config('sluggable', ['onUpdate' => false]);
 
         return array_merge($defaultConfig, $overrides);
     }
