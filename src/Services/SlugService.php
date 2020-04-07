@@ -130,7 +130,7 @@ class SlugService
         }
 
         $sourceStrings = array_map(function($key) {
-            $value = data_get($this->model, $key);
+            $value = data_get($this->model, $key, $this->model->getAttribute($key));
             if (is_bool($value)) {
                 $value = (int) $value;
             }
