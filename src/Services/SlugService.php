@@ -128,6 +128,10 @@ class SlugService
         if (is_null($from)) {
             return $this->model->__toString();
         }
+        if (is_callable($from)) {
+            $value = $from( $this->model );
+            return is_string($value) ? $value : null;
+        }
 
         $sourceStrings = array_map(function($key) {
             $value = data_get($this->model, $key, $this->model->getAttribute($key));

@@ -4,6 +4,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Cviebrock\EloquentSluggable\Tests\Models\PostNotSluggable;
 use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfig;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCallableSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomCallableMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine2;
@@ -482,4 +483,18 @@ class BaseTests extends TestCase
         ]);
         $this->assertEquals('0', $post->slug);
     }
+
+    /**
+     * Test using a custom separator.
+     */
+    public function testCallableSource()
+    {
+        $post = PostWithCallableSource::create([
+            'title' => 'title',
+            'subtitle' => 'subtitle'
+        ]);
+
+        $this->assertEquals('title-test-subtitle', $post->slug);
+    }
+
 }

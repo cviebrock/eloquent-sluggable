@@ -313,6 +313,11 @@ public function sluggable()
             'source' => ['author.lastname', 'author.firstname'],
             'separator' => '_'
         ],
+        'subtitle-slug' => [
+            'source' => function(Model $model){ 
+                   return $model->title.$model->subtitle;
+            }
+        ],
     ];
 }
 ```
