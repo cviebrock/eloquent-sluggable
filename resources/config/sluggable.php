@@ -8,7 +8,7 @@ return [
      *
      *     $model->name;
      *
-     * Or it can be an array of fields, like ("name", "company"), which builds a slug from:
+     * Or it can be an array of fields, like ["name", "company"], which builds a slug from:
      *
      *     $model->name . ' ' . $model->company;
      *
