@@ -20,9 +20,9 @@
     "require": {
         "php": "^7.2.5",
         "cocur/slugify": "^4.0",
-        "illuminate/config": "^7.0",
-        "illuminate/database": "^7.0",
-        "illuminate/support": "^7.0"
+        "illuminate/config": "^7.0|^8.0",
+        "illuminate/database": "^7.0|^8.0",
+        "illuminate/support": "^7.0|^8.0"
     },
     "require-dev": {
         "limedeck/phpunit-detailed-printer": "^5.0",
