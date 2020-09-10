@@ -2,8 +2,9 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for Laravel 6.0.  If you are using Laravel 5.8, please
-> see the [previous version's docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.8).
+> **NOTE**: These instructions are for the latest version of Laravel.  
+> If you are using an older version, please install a version of the package
+> that [correlates to your Laravel version](#installation).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
 [![Total Downloads](https://poser.pugx.org/cviebrock/eloquent-sluggable/downloads?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
@@ -93,8 +94,9 @@ version should match the Laravel version.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
-|       7.0       |      7.0.*      |
-|       6.0       |      6.0.*      |
+|       8.0       |      ^8.0       |
+|       7.0       |      ^7.0       |
+|       6.0       |      ^6.0       |
 |       5.8       |      4.8.*      |
 |       5.7       |   4.6.*|4.7.*   |
 |       5.6       |      4.5.*      |
