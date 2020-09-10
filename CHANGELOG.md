@@ -1,5 +1,10 @@
 # Change Log
 
+## 8.0.0 - 10-Sep-2020
+
+- Laravel 8 support
+
+
 ## 7.0.1 - 06-Apr-2020
 
 - fix to help support translatable slugs (using either spatie or Astrotomic package) (#506, thanks @GeoSot) 
