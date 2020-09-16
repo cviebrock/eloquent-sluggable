@@ -104,7 +104,7 @@ class SlugService
     {
         if (
             $config['onUpdate'] === true ||
-            empty($this->model->getAttributeValue($attribute))
+            trim($this->model->getAttributeValue($attribute)) == ''
         ) {
             return true;
         }
