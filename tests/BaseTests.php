@@ -482,4 +482,24 @@ class BaseTests extends TestCase
         ]);
         $this->assertEquals('0', $post->slug);
     }
+
+    /**
+     * Test that manually setting the slug to "0" doesn't
+     * force a re-slugging.
+     */
+    public function testIssue527()
+    {
+        $post = Post::create([
+            'title' => 'example title'
+        ]);
+        $this->assertEquals('example-title', $post->slug);
+
+        $post->slug = '0';
+        $post->save();
+        $this->assertEquals('0', $post->slug);
+
+        $post->slug = '';
+        $post->save();
+        $this->assertEquals('example-title', $post->slug);
+    }
 }

@@ -1,5 +1,10 @@
 # Change Log
 
+## 8.0.1 - 28-Sep-2020
+
+- fix when manually setting a slug to a "falsy" value (#527, thanks @huiyang)
+
+
 ## 8.0.0 - 10-Sep-2020
 
 - Laravel 8 support
