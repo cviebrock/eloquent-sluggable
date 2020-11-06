@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.5.2 - 06-Nov-2020
+
+- fix `implode()` arguments order (#495)
+
+
 ## 4.5.1 - 21-May-2018
 
 - bump versions of package dependencies
