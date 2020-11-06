@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.7.1 - 06-Nov-2020
+
+- fix implode() arguments order (#495)
+
+
 ## 4.7.0 - 24-Feb-2019
 
 - Fix slug getting set to `null` if model is updated with no source column loaded (#450, thanks @mylgeorge)
