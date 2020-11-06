@@ -42,7 +42,13 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "fresh": [
+            "rm -rf vendor composer.lock",
+            "composer install"
+        ],
+        "tests": [
+            "php vendor/bin/phpunit"
+        ]
     },
     "extra": {
         "laravel": {
