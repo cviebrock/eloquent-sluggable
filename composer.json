@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "cocur/slugify": "^4.0",
         "illuminate/config": "^8.0",
         "illuminate/database": "^8.0",
