@@ -15,7 +15,7 @@ class PostWithReservedSlug extends Post
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
