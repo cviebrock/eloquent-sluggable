@@ -1,5 +1,10 @@
 # Change Log
 
+## 8.0.2 - 29-Nov-2020
+
+- support PHP 8.0 (#533, thanks @cbl)
+
+
 ## 8.0.1 - 28-Sep-2020
 
 - fix when manually setting a slug to a "falsy" value (#527, thanks @huiyang)
