@@ -36,8 +36,8 @@ jobs:
           restore-keys: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-      - name: Check coding style
-        run: php-cs-fixer fix --dry-run --allow-risky=true --format=checkstyle | cs2pr
+#      - name: Check coding style
+#        run: php-cs-fixer fix --dry-run --allow-risky=true --format=checkstyle | cs2pr
       - name: Configure matchers for PHPUnit
         uses: mheap/phpunit-matcher-action@v1
       - name: Run PHP tests via PHPUnit
