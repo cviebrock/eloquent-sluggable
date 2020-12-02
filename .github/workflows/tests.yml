@@ -21,11 +21,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2, cs2pr, phpcs
+          tools: composer:v2, cs2pr
           coverage: none
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
       - name: Get composer cache directory
+        id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -35,7 +36,9 @@ jobs:
           restore-keys: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-
       - name: Install dependencies
         run: composer install --${{ matrix.stability }} --prefer-dist --no-interaction
+      - name: Check coding style
+        run: php-cs-fixer fix --dry-run --allow-risky=true --format=checkstyle | cs2pr
+      - name: Configure matchers for PHPUnit
+        uses: mheap/phpunit-matcher-action@v1
       - name: Run PHP tests via PHPUnit
-        run: vendor/bin/phpunit
-      - name: Run phpcs
-        run: phpcs -q --report=checkstyle src | cs2pr
+        run: vendor/bin/phpunit --teamcity
