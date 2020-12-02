@@ -1,8 +1,6 @@
-name: tests
+name: Test Package
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   tests:
@@ -19,20 +17,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key:
-            dependencies-php-${{ matrix.php }}-${{ matrix.stability }}-composer-${{ hashFiles('composer.json') }}
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2
+          tools: composer:v2, cs2pr, phpcs
           coverage: none
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+      - name: Get composer cache directory
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-
       - name: Install dependencies
-        run:
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+        run: composer install --${{ matrix.stability }} --prefer-dist --no-interaction
       - name: Run PHP tests via PHPUnit
         run: vendor/bin/phpunit
+      - name: Run phpcs
+        run: phpcs -q --report=checkstyle src | cs2pr
