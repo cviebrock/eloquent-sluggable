@@ -1,5 +1,11 @@
 # Change Log
 
+## x.x.x - xx-xxx-xxxx
+
+- move automated testing from travis-ci to Github actions (#534, thanks @cbl)
+- clean up some third-party tools and badges
+
+
 ## 8.0.2 - 29-Nov-2020
 
 - support PHP 8.0 (#533, thanks @cbl)
