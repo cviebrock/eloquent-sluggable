@@ -11,7 +11,7 @@
 class PostWithIncludeTrashed extends Post
 {
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
