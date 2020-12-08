@@ -1,5 +1,10 @@
 # Change Log
 
+## 6.0.4 - 08-Dec-2020
+
+- PHP 8.0 support (#536, thanks @fulopattila122)
+
+
 ## 6.0.3 - 09-Feb-2020
 
 - bump [cocur/slugify](https://github.com/cocur/slugify) to `^4.0`
