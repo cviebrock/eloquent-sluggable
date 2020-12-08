@@ -2,7 +2,7 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for Laravel 6.0.  If you are using Laravel 5.8, please
+> **NOTE**: These instructions are for Laravel 7.0.  If you are using Laravel 5.8, please
 > see the [previous version's docs](https://github.com/cviebrock/eloquent-sluggable/tree/4.8).
 
 [![Build Status](https://travis-ci.org/cviebrock/eloquent-sluggable.svg?branch=master&format=flat)](https://travis-ci.org/cviebrock/eloquent-sluggable)
@@ -141,7 +141,7 @@ class Post extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
