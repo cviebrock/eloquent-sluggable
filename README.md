@@ -11,7 +11,7 @@ Easy creation of slugs for your Eloquent models in Laravel.
 [![Latest Stable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/stable?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 [![Latest Unstable Version](https://poser.pugx.org/cviebrock/eloquent-sluggable/v/unstable?format=flat)](https://packagist.org/packages/cviebrock/eloquent-sluggable)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/0b966e13-6a6a-4d17-bcea-61037f04cfe7/mini.png)](https://insight.sensiolabs.com/projects/0b966e13-6a6a-4d17-bcea-61037f04cfe7)
-![Packagist License](https://img.shields.io/packagist/l/cviebrock/eloquent-sluggable)
+[![License](https://img.shields.io/packagist/l/cviebrock/eloquent-sluggable)](LICENSE.md)
 
 
 * [Background: What is a slug](#background-what-is-a-slug)
