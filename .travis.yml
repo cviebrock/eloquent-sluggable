@@ -19,8 +19,6 @@ env:
 
 matrix:
   exclude:
-    - php: 7.4
-      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
     - php: 8.0
       env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 

@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "tests": "./vendor/bin/phpunit"
     },
     "extra": {
         "laravel": {
