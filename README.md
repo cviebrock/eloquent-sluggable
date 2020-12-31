@@ -142,7 +142,7 @@ class Post extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -304,7 +304,7 @@ field.  This means you can create multiple slugs for the same model, based on di
 source strings and with different configuration options.
 
 ```php
-public function sluggable()
+public function sluggable(): array
 {
     return [
         'title-slug' => [
@@ -335,7 +335,8 @@ class Book extends Eloquent
 
     protected $fillable = ['title'];
 
-    public function sluggable() {
+    public function sluggable(): array
+    {
         return [
             'slug' => [
                 'source' => ['author.name', 'title']
@@ -343,7 +344,8 @@ class Book extends Eloquent
         ];
     }
     
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(Author::class);
     }
 }
@@ -361,7 +363,7 @@ class Person extends Eloquent
 {
     use Sluggable;
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -370,7 +372,8 @@ class Person extends Eloquent
         ];
     }
 
-    public function getFullnameAttribute() {
+    public function getFullnameAttribute()
+    {
         return $this->firstname . ' ' . $this->lastname;
     }
 }
@@ -505,7 +508,8 @@ that returns an array. Defaults to `null`: no reserved slug names.
 The package supports a really short configuration syntax, if you are truly lazy:
 
 ```php
-public function sluggable() {
+public function sluggable(): array
+{
     return [
         'slug'
     ];
