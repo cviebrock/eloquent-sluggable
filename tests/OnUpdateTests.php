@@ -14,71 +14,71 @@ class OnUpdateTests extends TestCase
     /**
      * Test that the slug isn't regenerated if onUpdate is false.
      */
-    public function testSlugDoesntChangeWithoutOnUpdate()
+    public function testSlugDoesntChangeWithoutOnUpdate(): void
     {
         $post = Post::create([
             'title' => 'My First Post'
         ]);
         $post->save();
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
             'title' => 'A New Title'
         ]);
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
     }
 
     /**
      * Test that the slug is regenerated if the field is emptied manually.
      */
-    public function testSlugDoesChangeWhenEmptiedManually()
+    public function testSlugDoesChangeWhenEmptiedManually(): void
     {
         $post = Post::create([
             'title' => 'My First Post'
         ]);
         $post->save();
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
 
         $post->slug = null;
         $post->update([
             'title' => 'A New Title'
         ]);
-        $this->assertEquals('a-new-title', $post->slug);
+        self::assertEquals('a-new-title', $post->slug);
     }
 
     /**
      * Test that the slug is regenerated if onUpdate is true.
      */
-    public function testSlugDoesChangeWithOnUpdate()
+    public function testSlugDoesChangeWithOnUpdate(): void
     {
         $post = PostWithOnUpdate::create([
             'title' => 'My First Post'
         ]);
         $post->save();
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
             'title' => 'A New Title'
         ]);
-        $this->assertEquals('a-new-title', $post->slug);
+        self::assertEquals('a-new-title', $post->slug);
     }
 
     /**
      * Test that the slug is not regenerated if onUpdate is true
      * but the source fields didn't change.
      */
-    public function testSlugDoesNotChangeIfSourceDoesNotChange()
+    public function testSlugDoesNotChangeIfSourceDoesNotChange(): void
     {
         $post = PostWithOnUpdate::create([
             'title' => 'My First Post'
         ]);
         $post->save();
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
             'subtitle' => 'A Subtitle'
         ]);
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
     }
 
     /**
@@ -88,7 +88,7 @@ class OnUpdateTests extends TestCase
      *
      * @see https://github.com/cviebrock/eloquent-sluggable/issues/317
      */
-    public function testSlugDoesNotChangeIfSourceDoesNotChangeMultiple()
+    public function testSlugDoesNotChangeIfSourceDoesNotChangeMultiple(): void
     {
         $data = [
             'title' => 'My First Post'
@@ -97,24 +97,24 @@ class OnUpdateTests extends TestCase
         $post1 = PostWithOnUpdate::create($data);
         $post2 = PostWithOnUpdate::create($data);
         $post3 = PostWithOnUpdate::create($data);
-        $this->assertEquals('my-first-post-3', $post3->slug);
+        self::assertEquals('my-first-post-3', $post3->slug);
 
         $post3->update([
             'subtitle' => 'A Subtitle'
         ]);
-        $this->assertEquals('my-first-post-3', $post3->slug);
+        self::assertEquals('my-first-post-3', $post3->slug);
     }
 
     /**
      * Test that the slug isn't set to null if the source fields
      * not loaded in model.
      */
-    public function testSlugDoesNotChangeIfSourceNotProvidedInModel()
+    public function testSlugDoesNotChangeIfSourceNotProvidedInModel(): void
     {
         $post = Post::create([
             'title' => 'My First Post'
         ]);
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
 
         $post = Post::whereKey($post->id)->get(['id','subtitle'])->first();
         $post->update([
@@ -122,6 +122,6 @@ class OnUpdateTests extends TestCase
         ]);
 
         $post = Post::findOrFail($post->id);
-        $this->assertEquals('my-first-post', $post->slug);
+        self::assertEquals('my-first-post', $post->slug);
     }
 }

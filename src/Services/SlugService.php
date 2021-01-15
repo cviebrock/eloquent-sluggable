@@ -14,7 +14,8 @@ class SlugService
 {
 
     /**
-     * @var \Illuminate\Database\Eloquent\Model;
+     * @var \Illuminate\Database\Eloquent\Model
+     * @var \Cviebrock\EloquentSluggable\Sluggable
      */
     protected $model;
 
@@ -75,7 +76,7 @@ class SlugService
      *
      * @return null|string
      */
-    public function buildSlug(string $attribute, array $config, bool $force = null)
+    public function buildSlug(string $attribute, array $config, bool $force = null): ?string
     {
         $slug = $this->model->getAttribute($attribute);
 
@@ -165,7 +166,7 @@ class SlugService
             $slugEngine = $this->getSlugEngine($attribute, $config);
             $slug = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
-            $slug = call_user_func($method, $source, $separator);
+            $slug = $method($source, $separator);
         } else {
             throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
         }
@@ -432,7 +433,7 @@ class SlugService
      *
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): self
     {
         $this->model = $model;
 

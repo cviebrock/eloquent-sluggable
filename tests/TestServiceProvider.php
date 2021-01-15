@@ -22,7 +22,7 @@ class TestServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->loadMigrationsFrom(
             __DIR__ . '/database/migrations'

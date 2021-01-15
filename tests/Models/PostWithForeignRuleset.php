@@ -13,11 +13,9 @@ class PostWithForeignRuleset extends Post
 {
 
     /**
-     * @param \Cocur\Slugify\Slugify $engine
-     * @param string $attribute
-     * @return \Cocur\Slugify\Slugify
+     * @inheritDoc
      */
-    public function customizeSlugEngine(Slugify $engine, $attribute)
+    public function customizeSlugEngine(Slugify $engine, string $attribute): Slugify
     {
         $engine->activateRuleSet('esperanto');
 

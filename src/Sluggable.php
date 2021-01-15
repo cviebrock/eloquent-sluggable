@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
+use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ trait Sluggable
      * Hook into the Eloquent model events to create or
      * update the slug as required.
      */
-    public static function bootSluggable()
+    public static function bootSluggable(): void
     {
         static::observe(app(SluggableObserver::class));
     }
@@ -26,7 +27,7 @@ trait Sluggable
      *
      * @param \Closure|string $callback
      */
-    public static function slugging($callback)
+    public static function slugging($callback): void
     {
         static::registerModelEvent('slugging', $callback);
     }
@@ -36,16 +37,13 @@ trait Sluggable
      *
      * @param \Closure|string $callback
      */
-    public static function slugged($callback)
+    public static function slugged($callback): void
     {
         static::registerModelEvent('slugged', $callback);
     }
 
     /**
-     * Clone the model into a new, non-existing instance.
-     *
-     * @param  array|null $except
-     * @return \Illuminate\Database\Eloquent\Model
+     * @inheritDoc
      */
     public function replicate(array $except = null)
     {
@@ -80,4 +78,37 @@ trait Sluggable
      * @return array
      */
     abstract public function sluggable(): array;
+
+
+    /**
+     * Optionally customize the cocur/slugify engine.
+     *
+     * @param \Cocur\Slugify\Slugify $engine
+     * @param string $attribute
+     * @return \Cocur\Slugify\Slugify
+     */
+    public function customizeSlugEngine(Slugify $engine, string $attribute) {
+        return $engine;
+    }
+
+    /**
+     * Optionally add constraints to the query that determines uniqueness.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $attribute
+     * @param array $config
+     * @param string $slug
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithUniqueSlugConstraints(
+        Builder $query,
+        Model $model,
+        string $attribute,
+        array $config,
+        string $slug
+    ): Builder
+    {
+        return $query;
+    }
 }

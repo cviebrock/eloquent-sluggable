@@ -18,7 +18,7 @@ abstract class TestCase extends Orchestra
      *
      * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,10 +30,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @inheritDoc
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -47,9 +44,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * Get Sluggable package providers.
-     *
-     * @return array
+     * @inheritDoc
      */
     protected function getPackageProviders($app)
     {
@@ -64,7 +59,7 @@ abstract class TestCase extends Orchestra
      *
      * @return $this
      */
-    protected function withoutEvents()
+    protected function withoutEvents(): self
     {
         $mock = Mockery::mock(Dispatcher::class);
 

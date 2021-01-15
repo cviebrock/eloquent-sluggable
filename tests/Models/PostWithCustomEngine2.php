@@ -18,7 +18,7 @@ class PostWithCustomEngine2 extends Post
      * @param string $attribute
      * @return \Cocur\Slugify\Slugify
      */
-    public function customizeSlugEngine(Slugify $engine, $attribute)
+    public function customizeSlugEngine(Slugify $engine, string $attribute): Slugify
     {
         return new Slugify(['regexp'=>'|[^A-Za-z0-9/]+|']);
     }

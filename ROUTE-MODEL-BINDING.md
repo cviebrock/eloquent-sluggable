@@ -15,9 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use Sluggable;
+    use Sluggable, SluggableScopeHelpers;
     
-    public function sluggable() {
+    public function sluggable(): array
+    {
         return [
             'slug' => [
                 'source' => 'title',
@@ -30,7 +31,7 @@ class Post extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -41,7 +42,7 @@ class Post extends Model
 From there, you can set up your routes as described in the Eloquent documentation:
 
 ```php
-Route::get('api/posts/{post}', function (App\Post $post) {
+Route::get('api/posts/{post}', function(App\Post $post): string {
     return $post->title;
 });
 ```
@@ -54,7 +55,7 @@ Further, if you are using the [SluggableScopeHelpers](SCOPE-HELPERS.md) trait, y
 the default slug to the route parameter with:
  
 ```php
-public function getRouteKeyName()
+public function getRouteKeyName(): string
 {
     return $this->getSlugKeyName();
 }

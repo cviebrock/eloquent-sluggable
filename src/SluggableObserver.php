@@ -48,7 +48,7 @@ class SluggableObserver
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $event
-     * @return boolean
+     * @return bool
      */
     protected function generateSlug(Model $model, string $event): bool
     {

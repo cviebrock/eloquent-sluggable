@@ -9,6 +9,7 @@
 - add `slugEngineOptions` configuration option (see #454, thanks @Adioz01)
 - move automated testing from travis-ci to Github actions (#534, thanks @cbl)
 - clean up some third-party tools and badges
+- clean up docblocks, return hints, and PHPUnit method calls
 
 
 ## 8.0.2 - 29-Nov-2020

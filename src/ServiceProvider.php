@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         $this->setUpConfig();
     }
@@ -31,7 +31,7 @@ class ServiceProvider extends BaseServiceProvider
         });
     }
 
-    protected function setUpConfig()
+    protected function setUpConfig(): void
     {
         $source = dirname(__DIR__) . '/resources/config/sluggable.php';
 

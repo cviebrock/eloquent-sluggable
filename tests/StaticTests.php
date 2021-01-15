@@ -14,42 +14,42 @@ class StaticTests extends TestCase
     /**
      * Test that we can generate a slug statically.
      */
-    public function testStaticSlugGenerator()
+    public function testStaticSlugGenerator(): void
     {
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
-        $this->assertEquals('my-test-post', $slug);
+        self::assertEquals('my-test-post', $slug);
     }
 
     /**
      * Test that we generate unique slugs in a static context.
      */
-    public function testStaticSlugGeneratorWhenEntriesExist()
+    public function testStaticSlugGeneratorWhenEntriesExist(): void
     {
         $post = Post::create(['title' => 'My Test Post']);
-        $this->assertEquals('my-test-post', $post->slug);
+        self::assertEquals('my-test-post', $post->slug);
 
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
-        $this->assertEquals('my-test-post-1', $slug);
+        self::assertEquals('my-test-post-1', $slug);
     }
 
     /**
      * Test that we can generate a slug statically with different configuration.
      */
-    public function testStaticSlugGeneratorWithConfig()
+    public function testStaticSlugGeneratorWithConfig(): void
     {
         $config = [
             'separator' => '.'
         ];
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post', $config);
-        $this->assertEquals('my.test.post', $slug);
+        self::assertEquals('my.test.post', $slug);
     }
 
     /**
      * Test passing an invalid attribute to static method
      */
-    public function testStaticSlugWithInvalidAttribute()
+    public function testStaticSlugWithInvalidAttribute(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $slug = SlugService::createSlug(Post::class, 'foo', 'My Test Post');
+        SlugService::createSlug(Post::class, 'foo', 'My Test Post');
     }
 }

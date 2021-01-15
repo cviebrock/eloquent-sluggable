@@ -143,7 +143,7 @@ class Post extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -168,11 +168,9 @@ That's it ... your model is now "sluggable"!
 Saving a model is easy:
 
 ```php
-$post = new Post([
+$post = Post::create([
     'title' => 'My Awesome Blog Post',
 ]);
-
-$post->save();
 ```
 
 So is retrieving the slug:
@@ -185,11 +183,9 @@ Also note that if you are replicating your models using Eloquent's `replicate()`
 the package will automatically re-slug the model afterwards to ensure uniqueness.
 
 ```php
-$post = new Post([
+$post = Post::create([
     'title' => 'My Awesome Blog Post',
 ]);
-
-$post->save();
 // $post->slug is "my-awesome-blog-post"
 
 $newPost = $post->replicate();
@@ -259,14 +255,14 @@ method).
 You can hook into either of these events just like any other Eloquent model event:
 
 ```php
-Post::registerModelEvent('slugging', function($post) {
+Post::registerModelEvent('slugging', static function($post) {
     if ($post->someCondition()) {
         // the model won't be slugged
         return false;
     }
 });
 
-Post::registerModelEvent('slugged', function($post) {
+Post::registerModelEvent('slugged', static function($post) {
     Log::info('Post slugged: ' . $post->getSlug());
 });
 ```
@@ -306,7 +302,7 @@ field.  This means you can create multiple slugs for the same model, based on di
 source strings and with different configuration options.
 
 ```php
-public function sluggable()
+public function sluggable(): array
 {
     return [
         'title-slug' => [
@@ -337,7 +333,8 @@ class Book extends Eloquent
 
     protected $fillable = ['title'];
 
-    public function sluggable() {
+    public function sluggable(): array
+    {
         return [
             'slug' => [
                 'source' => ['author.name', 'title']
@@ -345,7 +342,8 @@ class Book extends Eloquent
         ];
     }
     
-    public function author() {
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Author::class);
     }
 }
@@ -363,7 +361,7 @@ class Person extends Eloquent
 {
     use Sluggable;
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -372,7 +370,8 @@ class Person extends Eloquent
         ];
     }
 
-    public function getFullnameAttribute() {
+    public function getFullnameAttribute(): string
+    {
         return $this->firstname . ' ' . $this->lastname;
     }
 }
@@ -400,7 +399,7 @@ For example, to use Laravel's `Str::slug`, you could do:
 3. You can also define `method` as a closure (again, expecting two parameters):
 
 ```php
-'method' => function ($string, $separator) {
+'method' => static function(string $string, string $separator): string {
     return strtolower(preg_replace('/[^a-z]+/i', $separator, $string));
 },
 ```
@@ -456,11 +455,12 @@ that hasn't been used by any of the slugs in the collection.  For example, if yo
 to use letters instead of numbers as a suffix, this is one way to achieve that:
 
 ```php
-'uniqueSuffix' => function ($slug, $separator, Collection $list) {
-    $size = count($list);
+'uniqueSuffix' => static function(string $slug, string $separator, Collection $list): string
+    {
+      $size = count($list);
 
-    return chr($size + 96);
-}
+      return chr($size + 96);
+    }
 ```
 
 ### includeTrashed
@@ -517,10 +517,9 @@ for slugging.
 The package supports a really short configuration syntax, if you are truly lazy:
 
 ```php
-public function sluggable() {
-    return [
-        'slug'
-    ];
+public function sluggable(): array
+{
+    return ['slug'];
 }
 ```
 
@@ -546,9 +545,10 @@ the package's trait.
  * @param string $attribute
  * @return \Cocur\Slugify\Slugify
  */
-public function customizeSlugEngine(Slugify $engine, $attribute)
+public function customizeSlugEngine(Slugify $engine, string $attribute): \Cocur\Slugify\Slugify
 {
-    ...
+    // ...
+    return $engine;
 }
 ```
 
@@ -574,9 +574,15 @@ configuration for other ways to customize Slugify.
  * @param string $slug
  * @return \Illuminate\Database\Eloquent\Builder
  */
-public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug)
+public function scopeWithUniqueSlugConstraints(
+    Builder $query,
+    Model $model,
+    string $attribute,
+    array $config,
+    string $slug
+): Builder
 {
-    ...
+    // ...
 }
 ```
 
@@ -605,9 +611,9 @@ will have the same slug.
  * @param string $slug
  * @return \Illuminate\Database\Eloquent\Builder
  */
-public function scopeFindSimilarSlugs(Builder $query, $attribute, $config, $slug)
+public function scopeFindSimilarSlugs(Builder $query, string $attribute, array $config, string $slug): Builder
 {
-    ...
+    // ...
 }
 ```
 

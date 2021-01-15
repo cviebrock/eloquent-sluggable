@@ -18,7 +18,7 @@ class PostWithCustomEngine extends Post
      * @param string $attribute
      * @return \Cocur\Slugify\Slugify
      */
-    public function customizeSlugEngine(Slugify $engine, $attribute)
+    public function customizeSlugEngine(Slugify $engine, string $attribute): Slugify
     {
         $engine->addRule('e', 'a');
         $engine->addRule('i', 'a');

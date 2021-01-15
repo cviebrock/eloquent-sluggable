@@ -1,7 +1,5 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
-use Cocur\Slugify\Slugify;
-
 /**
  * Class PostWithCustomEngineOptions
  *

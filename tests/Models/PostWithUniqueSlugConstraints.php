@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class PostWithUniqueSlugConstraints
@@ -16,20 +17,15 @@ class PostWithUniqueSlugConstraints extends Post
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string $attribute
-     * @param array $config
-     * @param string $slug
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @inheritDoc
      */
-    public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug)
+    public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug): Builder
     {
         $author = $model->author;
 

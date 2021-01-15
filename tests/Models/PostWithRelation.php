@@ -1,5 +1,7 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * Class PostWithRelation
  *
@@ -31,7 +33,7 @@ class PostWithRelation extends Post
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }
