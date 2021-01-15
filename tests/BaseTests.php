@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine2;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset;
@@ -501,5 +502,26 @@ class BaseTests extends TestCase
         $post->slug = '';
         $post->save();
         $this->assertEquals('example-title', $post->slug);
+    }
+
+    /**
+     * Test that you can use the model's primary key
+     * as part of the source field.
+     */
+    public function testPrimaryKeyInSource()
+    {
+        $post = PostWithIdSource::create([
+            'title' => 'My First Post'
+        ]);
+        $this->assertEquals('my-first-post-1', $post->slug);
+
+        $post2 = PostWithIdSource::create([
+            'title' => 'My Second Post'
+        ]);
+        $this->assertEquals('my-second-post-2', $post2->slug);
+
+        $post->title = 'Still My First Post';
+        $post->save();
+        $this->assertEquals('still-my-first-post-1', $post->slug);
     }
 }

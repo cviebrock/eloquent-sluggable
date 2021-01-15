@@ -156,7 +156,7 @@ class Post extends Model
 Of course, your model and database will need a column in which to store the slug. 
 You can use `slug` or any other appropriate name you want; your configuration array
 will determine to which field the data will be stored.  You will need to add the 
-column manually via your own migration.
+column (which should be `NULLABLE`) manually via your own migration.
 
 That's it ... your model is now "sluggable"!
 
@@ -174,7 +174,7 @@ $post = new Post([
 $post->save();
 ```
 
-And so is retrieving the slug:
+So is retrieving the slug:
 
 ```php
 echo $post->slug;
