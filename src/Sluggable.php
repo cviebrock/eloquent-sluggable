@@ -54,6 +54,23 @@ trait Sluggable
     }
 
     /**
+     * Return the event name that should be listened to for generating slugs.
+     *
+     * Can be one of:
+     * - SluggableObserver::SAVING (to generate the slug before the model is saved)
+     * - SluggableObserver::SAVED (to generate the slug after the model is saved)
+     *
+     * The second option is required if the primary key is to be part of the slug
+     * source, as it won't be set during the "saving" event.
+     *
+     * @return string
+     */
+    public function sluggableEvent(): string
+    {
+        return SluggableObserver::SAVED;
+    }
+
+    /**
      * Query scope for finding "similar" slugs, used to determine uniqueness.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

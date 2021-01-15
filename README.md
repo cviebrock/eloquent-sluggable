@@ -20,6 +20,7 @@ Easy creation of slugs for your Eloquent models in Laravel.
 * [Usage](#usage)
 * [The SlugService Class](#the-slugservice-class)
 * [Events](#events)
+* [When Is A Model Slugged?](#when-is-a-model-slugged)
 * [Configuration](#configuration)
     * [source](#source)
     * [method](#method)
@@ -234,6 +235,59 @@ want to generate the "base" version of a slug for some reason, you could do:
 ```php
 $slug = SlugService::createSlug(Post::class, 'slug', 'My First Post', ['unique' => false]);
 ```
+
+
+
+## When Is A Model Slugged?
+
+Prior to version 8.0.3, the model was slugged during Eloquent's `saving`
+event.  This meant that the slug was generated before any new data was
+written to the database.
+  
+For new models, this meant that the primary key had not yet been set, 
+so it could not be used as part of the slug source, e.g.:
+
+```php
+public function sluggable(): array
+{
+    return [
+        'slug' => [
+            'source' => ['title', 'id']
+        ]
+    ];
+}
+```
+
+`$model->id` is `null` before the model is saved.  The benefit of hooking into
+the `saving` event, however, is that we only needed to make one database
+query to save all the model's data, including the slug.
+
+As of version 8.0.3 of this package, the model is slugged during Eloquent's
+`saved` event.  This means that all the other model attributes have been
+persisted to the database and _are_ available for use as slug sources.  So
+the above configuration would work.  The only drawback is that saving the model
+to the database take one extra query: the first one to save all the non-slug fields,
+and then a second one to update just the slug field.
+  
+This new behaviour is a breaking change, but likely won't affect most users
+(unless you are doing some pre-saving validation on a model's slug field).
+We feel the benefits outweigh the drawbacks ... although if you want to revert
+to the old behaviour and have the package generate a slug before saving the model,
+you can set that via the `sluggableEvent` method the trait provides:
+
+```php
+    public function sluggableEvent(): string
+    {
+        /** Default behaviour as of 8.0.3 -- generate slug after model is saved */
+        return SluggableObserver::SAVED;
+
+        /** Default behaviour 8.0.2 and prior -- generate slug before model is saved */
+        return SluggableObserver::SAVING;
+    }
+```
+
+Keep in mind that you will need to use `SluggableObserver::SAVED` if you want
+to use your model's primary key as part of the source fields for your slugs.
 
 
 

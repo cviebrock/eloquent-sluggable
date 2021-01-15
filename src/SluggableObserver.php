@@ -12,6 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 class SluggableObserver
 {
 
+    /** @var string */
+    public const SAVING = 'saving';
+
+    /** @var string */
+    public const SAVED = 'saved';
+
     /**
      * @var \Cviebrock\EloquentSluggable\Services\SlugService
      */
@@ -38,8 +44,24 @@ class SluggableObserver
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool|void
      */
+    public function saving(Model $model)
+    {
+        if ($model->sluggableEvent() !== self::SAVING) {
+            return;
+        }
+
+        return $this->generateSlug($model, 'saving');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return bool|void
+     */
     public function saved(Model $model)
     {
+        if ($model->sluggableEvent() !== self::SAVED) {
+            return;
+        }
         if ($this->generateSlug($model, 'saved')) {
             return $model->saveQuietly();
         }
