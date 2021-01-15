@@ -515,9 +515,13 @@ class BaseTests extends TestCase
         ]);
         $this->assertEquals('my-first-post-1', $post->slug);
 
-        $post = PostWithIdSource::create([
+        $post2 = PostWithIdSource::create([
             'title' => 'My Second Post'
         ]);
-        $this->assertEquals('my-second-post-2', $post->slug);
+        $this->assertEquals('my-second-post-2', $post2->slug);
+
+        $post->title = 'Still My First Post';
+        $post->save();
+        $this->assertEquals('still-my-first-post-1', $post->slug);
     }
 }

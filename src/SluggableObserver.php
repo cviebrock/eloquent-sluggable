@@ -36,14 +36,13 @@ class SluggableObserver
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @return boolean
+     * @return bool|void
      */
-    public function saved(Model $model): bool
+    public function saved(Model $model)
     {
         if ($this->generateSlug($model, 'saved')) {
             return $model->saveQuietly();
         }
-        return false;
     }
 
     /**

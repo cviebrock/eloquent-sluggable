@@ -19,8 +19,9 @@ class PostWithIdSource extends Post
     {
         return [
             'slug' => [
-                'source' => ['title','id']
-            ]
+                'source' => ['title','id'],
+                'onUpdate' => true,
+            ],
         ];
     }
 }
