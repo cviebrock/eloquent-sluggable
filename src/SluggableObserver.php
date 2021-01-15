@@ -15,12 +15,12 @@ class SluggableObserver
     /**
      * @var \Cviebrock\EloquentSluggable\Services\SlugService
      */
-    private SlugService $slugService;
+    private $slugService;
 
     /**
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
-    private Dispatcher $events;
+    private $events;
 
     /**
      * SluggableObserver constructor.
