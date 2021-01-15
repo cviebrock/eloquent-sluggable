@@ -21,16 +21,17 @@ Easy creation of slugs for your Eloquent models in Laravel.
 * [The SlugService Class](#the-slugservice-class)
 * [Events](#events)
 * [Configuration](#configuration)
-    * [includeTrashed](#includetrashed)
-    * [maxLength](#maxlength)
-    * [maxLengthKeepWords](#maxlengthkeepwords)
+    * [source](#source)
     * [method](#method)
     * [onUpdate](#onupdate)
-    * [reserved](#reserved)
     * [separator](#separator)
-    * [source](#source)
     * [unique](#unique)
     * [uniqueSuffix](#uniquesuffix)
+    * [includeTrashed](#includetrashed)
+    * [reserved](#reserved)
+    * [maxLength](#maxlength)
+    * [maxLengthKeepWords](#maxlengthkeepwords)
+    * [slugEngineOptions](#slugengineoptions)
 * [Extending Sluggable](#extending-sluggable)
     * [customizeSlugEngine](#customizeslugengine)
     * [scopeWithUniqueSlugConstraints](#scopewithuniqueslugconstraints)
@@ -285,15 +286,16 @@ Here is an example configuration, with all the default settings shown:
 ```php
 return [
     'source'             => null,
-    'maxLength'          => null,
-    'maxLengthKeepWords' => true,
     'method'             => null,
+    'onUpdate'           => false,
     'separator'          => '-',
     'unique'             => true,
     'uniqueSuffix'       => null,
     'includeTrashed'     => false,
     'reserved'           => null,
-    'onUpdate'           => false,
+    'maxLength'          => null,
+    'maxLengthKeepWords' => true,
+    'slugEngineOptions'  => [],
 ];
 ```
 
@@ -378,30 +380,6 @@ class Person extends Eloquent
 
 If `source` is empty, false or null, then the value of `$model->__toString()` is used
 as the source for slug generation.
-
-### maxLength
-
-Setting this to a positive integer will ensure that your generated slugs are restricted 
-to a maximum length (e.g. to ensure that they fit within your database fields). By default, 
-this value is null and no limit is enforced.
-
-Note: If `unique` is enabled (which it is by default), and you anticipate having 
-several models with the same slug, then you should set this value to a few characters 
-less than the length of your database field. The reason why is that the class will 
-append "-1", "-2", "-3", etc., to subsequent models in order to maintain uniqueness. 
-These incremental extensions aren't included in part of the `maxLength` calculation.
-
-### maxLengthKeepWords
-
-If you are truncating your slugs with the `maxLength` setting, than you probably
-want to ensure that your slugs don't get truncated in the middle of a word.  For
-example, if your source string is "My First Post", and your `maxLength` is 10,
-the generated slug would end up being "my-first-p", which isn't ideal.
-
-By default, the `maxLengthKeepWords` value is set to true which would trim the
-partial words off the end of the slug, resulting in "my-first" instead of "my-first-p".
-
-If you want to keep partial words, then set this configuration to false.
 
 ### method
 
@@ -498,6 +476,40 @@ An array of values that will never be allowed as slugs, e.g. to prevent collisio
 with existing routes or controller methods, etc.. This can be an array, or a closure 
 that returns an array. Defaults to `null`: no reserved slug names.
 
+### maxLength
+
+Setting this to a positive integer will ensure that your generated slugs are restricted 
+to a maximum length (e.g. to ensure that they fit within your database fields). By default, 
+this value is null and no limit is enforced.
+
+Note: If `unique` is enabled (which it is by default), and you anticipate having 
+several models with the same slug, then you should set this value to a few characters 
+less than the length of your database field. The reason why is that the class will 
+append "-1", "-2", "-3", etc., to subsequent models in order to maintain uniqueness. 
+These incremental extensions aren't included in part of the `maxLength` calculation.
+
+### maxLengthKeepWords
+
+If you are truncating your slugs with the `maxLength` setting, than you probably
+want to ensure that your slugs don't get truncated in the middle of a word.  For
+example, if your source string is "My First Post", and your `maxLength` is 10,
+the generated slug would end up being "my-first-p", which isn't ideal.
+
+By default, the `maxLengthKeepWords` value is set to true which would trim the
+partial words off the end of the slug, resulting in "my-first" instead of "my-first-p".
+
+If you want to keep partial words, then set this configuration to false.
+
+### slugEngineOptions
+
+When `method` is null (the default setting), the package uses the default slugging
+engine -- [cocur/slugify](https://github.com/cocur/slugify) -- to create the slug.
+If you want to pass a custom set of options to the Slugify constructor when the engine
+is instantiated, this is where you would define that. 
+See [the documentation](https://github.com/cocur/slugify#more-options)
+for Slugify for what those options are.  Also, look at 
+[customizeSlugEngine](#customizeslugengine) for other ways to customize Slugify
+for slugging.
 
 
 ## Short Configuration
@@ -547,6 +559,9 @@ You can customize the engine on a per-model and per-attribute basis (maybe your 
 two slug fields, and one of them needs customization).
 
 Take a look at `tests/Models/PostWithCustomEngine.php` for an example.
+
+Also, take a look at the [slugEngineOptions](#slugengineoptions)
+configuration for other ways to customize Slugify.
 
 ### scopeWithUniqueSlugConstraints
 

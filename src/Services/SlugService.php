@@ -162,7 +162,7 @@ class SlugService
         $maxLengthKeepWords = $config['maxLengthKeepWords'];
 
         if ($method === null) {
-            $slugEngine = $this->getSlugEngine($attribute);
+            $slugEngine = $this->getSlugEngine($attribute, $config);
             $slug = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
             $slug = call_user_func($method, $source, $separator);
@@ -190,16 +190,17 @@ class SlugService
      *
      * @param string $attribute
      *
+     * @param array $config
      * @return \Cocur\Slugify\Slugify
      */
-    protected function getSlugEngine(string $attribute): Slugify
+    protected function getSlugEngine(string $attribute, array $config): Slugify
     {
         static $slugEngines = [];
 
         $key = get_class($this->model) . '.' . $attribute;
 
         if (!array_key_exists($key, $slugEngines)) {
-            $engine = new Slugify();
+            $engine = new Slugify($config['slugEngineOptions'] ?? []);
             if (method_exists($this->model, 'customizeSlugEngine')) {
                 $engine = $this->model->customizeSlugEngine($engine, $attribute);
             }
