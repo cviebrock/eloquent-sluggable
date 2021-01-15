@@ -201,10 +201,8 @@ class SlugService
         $key = get_class($this->model) . '.' . $attribute;
 
         if (!array_key_exists($key, $slugEngines)) {
-            $engine = new Slugify($config['slugEngineOptions'] ?? []);
-            if (method_exists($this->model, 'customizeSlugEngine')) {
-                $engine = $this->model->customizeSlugEngine($engine, $attribute);
-            }
+            $engine = new Slugify($config['slugEngineOptions']);
+            $engine = $this->model->customizeSlugEngine($engine, $attribute);
 
             $slugEngines[$key] = $engine;
         }
@@ -361,9 +359,7 @@ class SlugService
             ->findSimilarSlugs($attribute, $config, $slug);
 
         // use the model scope to find similar slugs
-        if (method_exists($this->model, 'scopeWithUniqueSlugConstraints')) {
-            $query->withUniqueSlugConstraints($this->model, $attribute, $config, $slug);
-        }
+        $query->withUniqueSlugConstraints($this->model, $attribute, $config, $slug);
 
         // include trashed models if required
         if ($includeTrashed && $this->usesSoftDeleting()) {

@@ -552,7 +552,7 @@ public function customizeSlugEngine(Slugify $engine, string $attribute): \Cocur\
 }
 ```
 
-If this method exists on your model, the Slugify engine can be customized before slugging occurs.
+If you extend this method, the Slugify engine can be customized before slugging occurs.
 This might be where you change the character mappings that are used, or alter language files, etc..
 
 You can customize the engine on a per-model and per-attribute basis (maybe your model has 
@@ -586,7 +586,7 @@ public function scopeWithUniqueSlugConstraints(
 }
 ```
 
-If this scope exists on your model, then it will also be applied to the query used to determine 
+This method is applied to the query that is used to determine 
 if a given slug is unique.  The arguments passed to the scope are:
 
 * `$model` -- the object being slugged

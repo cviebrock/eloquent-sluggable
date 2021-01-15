@@ -87,7 +87,8 @@ trait Sluggable
      * @param string $attribute
      * @return \Cocur\Slugify\Slugify
      */
-    public function customizeSlugEngine(Slugify $engine, string $attribute) {
+    public function customizeSlugEngine(Slugify $engine, string $attribute): Slugify
+    {
         return $engine;
     }
 
