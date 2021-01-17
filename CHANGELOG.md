@@ -2,10 +2,11 @@
 
 ## 8.0.3 - 15-Jan-2021
 
-- change package to slug models on Eloquent's `saved` event, rather than
+- add ability to slug models on Eloquent's `saved` event, rather than
   `saving`
   - this adds a few more SQL queries per save, but allows for the use of
     the primary key field in the `source` configuration (see #539 and #448)
+  - default configuration remains the same, but might change in a future release
 - add `slugEngineOptions` configuration option (see #454, thanks @Adioz01)
 - move automated testing from travis-ci to Github actions (#534, thanks @cbl)
 - clean up some third-party tools and badges

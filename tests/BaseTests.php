@@ -15,7 +15,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset;
-use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSourceOnSaving;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSourceOnSaved;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLengthSplitWords;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugs;
@@ -510,16 +510,17 @@ class BaseTests extends TestCase
 
     /**
      * Test that you can use the model's primary key
-     * as part of the source field.
+     * as part of the source field when the sluggableEvent
+     * is using the SAVED observer.
      */
     public function testPrimaryKeyInSource(): void
     {
-        $post = PostWithIdSource::create([
+        $post = PostWithIdSourceOnSaved::create([
             'title' => 'My First Post'
         ]);
         self::assertEquals('my-first-post-1', $post->slug);
 
-        $post2 = PostWithIdSource::create([
+        $post2 = PostWithIdSourceOnSaved::create([
             'title' => 'My Second Post'
         ]);
         self::assertEquals('my-second-post-2', $post2->slug);
@@ -531,11 +532,12 @@ class BaseTests extends TestCase
 
     /**
      * Test that you can't use the model's primary key
-     * as part of the source field if the slugging event is pre-save.
+     * as part of the source field if the sluggableEvent
+     * is the default SAVING.
      */
     public function testPrimaryKeyInSourceOnSaving(): void
     {
-        $post = PostWithIdSourceOnSaving::create([
+        $post = PostWithIdSource::create([
             'title' => 'My First Post'
         ]);
         self::assertEquals('my-first-post', $post->slug);

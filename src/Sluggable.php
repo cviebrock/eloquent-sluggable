@@ -67,7 +67,7 @@ trait Sluggable
      */
     public function sluggableEvent(): string
     {
-        return SluggableObserver::SAVED;
+        return SluggableObserver::SAVING;
     }
 
     /**

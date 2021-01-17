@@ -3,14 +3,14 @@
 use Cviebrock\EloquentSluggable\SluggableObserver;
 
 /**
- * Class PostWithIdSourceOnSaving
+ * Class PostWithIdSourceOnSaved
  *
  * A test model that uses the model's ID in the slug source
- * and the SluggableObserver::SAVING event listener.
+ * and the SluggableObserver::SAVED event listener.
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
  */
-class PostWithIdSourceOnSaving extends Post
+class PostWithIdSourceOnSaved extends Post
 {
 
     /**
@@ -18,7 +18,7 @@ class PostWithIdSourceOnSaving extends Post
      */
     public function sluggableEvent(): string
     {
-        return SluggableObserver::SAVING;
+        return SluggableObserver::SAVED;
     }
 
     /**
