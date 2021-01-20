@@ -70,9 +70,9 @@ class SluggableObserver
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $event
-     * @return bool|void
+     * @return void
      */
-    protected function generateSlug(Model $model, string $event)
+    protected function generateSlug(Model $model, string $event): void
     {
         // If the "slugging" event returns false, abort
         if ($this->fireSluggingEvent($model, $event) === false) {
@@ -81,8 +81,6 @@ class SluggableObserver
         $wasSlugged = $this->slugService->slug($model);
 
         $this->fireSluggedEvent($model, $wasSlugged);
-
-        return $wasSlugged;
     }
 
     /**
