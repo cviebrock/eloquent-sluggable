@@ -1,6 +1,6 @@
 # Change Log
 
-## 8.0.3 - 15-Jan-2021
+## 8.0.3 - 19-Jan-2021
 
 - add ability to slug models on Eloquent's `saved` event, rather than
   `saving`
