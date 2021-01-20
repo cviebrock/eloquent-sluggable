@@ -598,6 +598,37 @@ In instances like these, the package offers hooks into the slugging workflow whe
 can use your own functions, either on a per-model basis, or in your own trait that extends 
 the package's trait.
 
+> **NOTE**: If you are putting these methods into your own trait, you will 
+> need to indicate in your models that PHP should use _your_ trait methods 
+> instead of the packages (since a class can't use two traits with the
+> same methods), e.g.
+>
+> ```php
+> /**
+>  * Your trait where you collect your common Sluggable extension methods
+>  */
+> class MySluggableTrait {
+>     public function customizeSlugEngine(...) {}
+>     public function scopeWithUniqueSlugConstraints(...) {}
+>     // etc.
+> }
+> 
+> /**
+>  * Your model
+>  */
+> class MyModel {
+>     // Tell PHP to use your methods instead of the packages:
+>     use Sluggable,
+>         MySluggableTrait  {
+>             MySluggableTrait::customizeSlugEngine insteadof Sluggable;
+>             MySluggableTrait::scopeWithUniqueSlugConstraints insteadof Sluggable;
+>         }
+> 
+>     // ...
+> }
+> ```
+
+
 ### customizeSlugEngine
 
 ```php
