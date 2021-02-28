@@ -18,14 +18,14 @@ class UniqueTests extends TestCase
      */
     public function testUnique(): void
     {
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             $post = Post::create([
                 'title' => 'A post title'
             ]);
-            if ($i === 0) {
+            if ($i === 1) {
                 self::assertEquals('a-post-title', $post->slug);
             } else {
-                self::assertEquals('a-post-title-' . $i + 1, $post->slug);
+                self::assertEquals('a-post-title-' . $i, $post->slug);
             }
         }
     }
