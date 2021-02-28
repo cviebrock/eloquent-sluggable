@@ -2,7 +2,7 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE**: These instructions are for the latest version of Laravel.  
+> **NOTE:** These instructions are for the latest version of Laravel.  
 > If you are using an older version, please install a version of the package
 > that [correlates to your Laravel version](#installation).
 
@@ -28,6 +28,7 @@ Easy creation of slugs for your Eloquent models in Laravel.
     * [separator](#separator)
     * [unique](#unique)
     * [uniqueSuffix](#uniquesuffix)
+    * [firstUniqueSuffix](#firstuniquesuffix)
     * [includeTrashed](#includetrashed)
     * [reserved](#reserved)
     * [maxLength](#maxlength)
@@ -90,8 +91,9 @@ automatically, with minimal configuration.
 ## Installation
 
 Depending on your version of Laravel, you should install a different
-version of the package.  **NOTE**: As of version 6.0, the package's 
-version should match the Laravel version.
+version of the package.
+
+> **NOTE:** As of version 6.0, the package's version should match the Laravel version.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
@@ -180,8 +182,8 @@ So is retrieving the slug:
 echo $post->slug;
 ```
 
-Also note that if you are replicating your models using Eloquent's `replicate()` method, 
-the package will automatically re-slug the model afterwards to ensure uniqueness.
+> **NOTE:** that if you are replicating your models using Eloquent's `replicate()` method, 
+> the package will automatically re-slug the model afterwards to ensure uniqueness.
 
 ```php
 $post = Post::create([
@@ -193,7 +195,7 @@ $newPost = $post->replicate();
 // $newPost->slug is "my-awesome-blog-post-1"
 ```
 
-Note that empty strings, non-strings or other "odd" source values will result in different slugs:
+> **NOTE:** empty strings, non-strings or other "odd" source values will result in different slugs:
 
 | Source Value | Resulting Slug        |
 |--------------|-----------------------|
@@ -348,6 +350,7 @@ return [
     'separator'          => '-',
     'unique'             => true,
     'uniqueSuffix'       => null,
+    'firstUniqueSuffix'  => 2,
     'includeTrashed'     => false,
     'reserved'           => null,
     'maxLength'          => null,
@@ -509,20 +512,39 @@ If you want to use a different way of identifying uniqueness (other than auto-in
 integers), you can set the `uniqueSuffix` configuration to a function or callable that 
 generates the "unique" values for you.
  
-The function should take three parameters: the base slug (i.e. the non-unique slug), the
-separator string, and an `\Illuminate\Support\Collection` of all the other slug strings
-that start with the same slug.  You can then do whatever you want to create a new suffix
-that hasn't been used by any of the slugs in the collection.  For example, if you wanted
+The function should take four parameters:
+1. the base slug (i.e. the non-unique slug)
+2. the separator string
+3. an `\Illuminate\Support\Collection` of all the other slug strings that start with the same slug
+4. the first suffix to use (for the first slug that needs to be made unique)
+You can then do whatever you want to create a new suffix that hasn't been used
+by any of the slugs in the collection.  For example, if you wanted
 to use letters instead of numbers as a suffix, this is one way to achieve that:
 
 ```php
-'uniqueSuffix' => static function(string $slug, string $separator, Collection $list): string
+'uniqueSuffix' => static function(string $slug, string $separator, Collection $list, $firstSuffix): string
     {
       $size = count($list);
 
       return chr($size + 96);
     }
 ```
+
+### firstUniqueSuffix
+
+When adding a unique suffix, we start counting at "2", so that the list of
+generated slugs would look something like:
+- `my-unique-slug`
+- `my-unique-slug-2`
+- `my-unique-slug-3`
+- etc.
+
+If you want to start counting at a different number (or pass a different value
+into your custom `uniqueSuffix` function above), then you can define it here.
+
+> **NOTE:** Prior versions of the package started with a unique
+> suffix of `1`.  This was switched to `2` in version 8.0.5, as it's a more
+> "intuitive" suffix value to attach to the second slug.
 
 ### includeTrashed
 
@@ -543,11 +565,11 @@ Setting this to a positive integer will ensure that your generated slugs are res
 to a maximum length (e.g. to ensure that they fit within your database fields). By default, 
 this value is null and no limit is enforced.
 
-Note: If `unique` is enabled (which it is by default), and you anticipate having 
-several models with the same slug, then you should set this value to a few characters 
-less than the length of your database field. The reason why is that the class will 
-append "-1", "-2", "-3", etc., to subsequent models in order to maintain uniqueness. 
-These incremental extensions aren't included in part of the `maxLength` calculation.
+> **NOTE:** If `unique` is enabled (which it is by default), and you anticipate having 
+> several models with the same slug, then you should set this value to a few characters 
+> less than the length of your database field. The reason why is that the class will 
+> append "-2", "-3", "-4", etc., to subsequent models in order to maintain uniqueness. 
+> These incremental extensions aren't included in part of the `maxLength` calculation.
 
 ### maxLengthKeepWords
 
@@ -598,7 +620,7 @@ In instances like these, the package offers hooks into the slugging workflow whe
 can use your own functions, either on a per-model basis, or in your own trait that extends 
 the package's trait.
 
-> **NOTE**: If you are putting these methods into your own trait, you will 
+> **NOTE:** If you are putting these methods into your own trait, you will 
 > need to indicate in your models that PHP should use _your_ trait methods 
 > instead of the packages (since a class can't use two traits with the
 > same methods), e.g.

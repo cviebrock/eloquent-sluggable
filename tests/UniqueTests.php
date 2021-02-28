@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithFirstUniqueSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithUniqueSlugConstraints;
 
 /**
@@ -24,7 +25,7 @@ class UniqueTests extends TestCase
             if ($i === 0) {
                 self::assertEquals('a-post-title', $post->slug);
             } else {
-                self::assertEquals('a-post-title-' . $i, $post->slug);
+                self::assertEquals('a-post-title-' . $i + 1, $post->slug);
             }
         }
     }
@@ -42,7 +43,7 @@ class UniqueTests extends TestCase
         $post2 = Post::create([
             'title' => 'A post title'
         ]);
-        self::assertEquals('a-post-title-1', $post2->slug);
+        self::assertEquals('a-post-title-2', $post2->slug);
 
         $post1->delete();
 
@@ -72,7 +73,7 @@ class UniqueTests extends TestCase
         $post->author()->associate($authorBob);
         $post->save();
 
-        self::assertEquals('my-first-post-1', $post->slug);
+        self::assertEquals('my-first-post-2', $post->slug);
 
         // Pam's first post with same title is scoped to her
         $post = new PostWithUniqueSlugConstraints(['title' => 'My first post']);
@@ -86,7 +87,7 @@ class UniqueTests extends TestCase
         $post->author()->associate($authorPam);
         $post->save();
 
-        self::assertEquals('my-first-post-1', $post->slug);
+        self::assertEquals('my-first-post-2', $post->slug);
     }
 
     public function testIssue431(): void
@@ -99,6 +100,22 @@ class UniqueTests extends TestCase
         $post2 = new Post;
         $post2->title = 'A post title';
         $post2->save();
-        self::assertEquals('a-post-title-1', $post2->slug);
+        self::assertEquals('a-post-title-2', $post2->slug);
+    }
+
+    /**
+     * Test custom firstUniqueSuffix configuration
+     */
+    public function testFirstUniqueSuffix(): void
+    {
+        $post1 = PostWithFirstUniqueSuffix::create([
+            'title' => 'A post title'
+        ]);
+        self::assertEquals('a-post-title', $post1->slug);
+
+        $post2 = PostWithFirstUniqueSuffix::create([
+            'title' => 'A post title'
+        ]);
+        self::assertEquals('a-post-title-42', $post2->slug);
     }
 }

@@ -1,5 +1,11 @@
 # Change Log
 
+## 8.0.5 - 28-Feb-2021
+
+- started unique suffixes with "-2" instead of "-1" (#549, thanks @Tamim26061)
+  - this can be adjusted via the `firstUniqueSuffix` config setting
+
+ 
 ## 8.0.4 - 20-Jan-2021
 
 - bug fix for #543#issuecomment-763391948 (thanks @dluague)

@@ -237,10 +237,12 @@ class SlugService
         if (is_array($reserved)) {
             if (in_array($slug, $reserved)) {
                 $method = $config['uniqueSuffix'];
+                $firstSuffix = $config['firstUniqueSuffix'];
+
                 if ($method === null) {
-                    $suffix = $this->generateSuffix($slug, $separator, collect($reserved));
+                    $suffix = $this->generateSuffix($slug, $separator, collect($reserved), $firstSuffix);
                 } elseif (is_callable($method)) {
-                    $suffix = $method($slug, $separator, collect($reserved));
+                    $suffix = $method($slug, $separator, collect($reserved), $firstSuffix);
                 } else {
                     throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
                 }
@@ -302,10 +304,12 @@ class SlugService
         }
 
         $method = $config['uniqueSuffix'];
+        $firstSuffix = $config['firstUniqueSuffix'];
+
         if ($method === null) {
-            $suffix = $this->generateSuffix($slug, $separator, $list);
+            $suffix = $this->generateSuffix($slug, $separator, $list, $firstSuffix);
         } elseif (is_callable($method)) {
-            $suffix = $method($slug, $separator, $list);
+            $suffix = $method($slug, $separator, $list, $firstSuffix);
         } else {
             throw new \UnexpectedValueException('Sluggable "uniqueSuffix" for ' . get_class($this->model) . ':' . $attribute . ' is not null, or a closure.');
         }
@@ -319,10 +323,11 @@ class SlugService
      * @param string $slug
      * @param string $separator
      * @param \Illuminate\Support\Collection $list
+     * @param mixed $firstSuffix
      *
      * @return string
      */
-    protected function generateSuffix(string $slug, string $separator, Collection $list): string
+    protected function generateSuffix(string $slug, string $separator, Collection $list, $firstSuffix): string
     {
         $len = strlen($slug . $separator);
 
@@ -338,8 +343,11 @@ class SlugService
             return (int) substr($value, $len);
         });
 
-        // find the highest value and return one greater.
-        return $list->max() + 1;
+        $max = $list->max();
+
+        // return one more than the largest value,
+        // or return the first suffix the first time
+        return (string) ($max === 0 ? $firstSuffix : $max + 1);
     }
 
     /**

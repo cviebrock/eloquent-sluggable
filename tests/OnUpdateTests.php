@@ -93,16 +93,16 @@ class OnUpdateTests extends TestCase
         $data = [
             'title' => 'My First Post'
         ];
-        $post0 = PostWithOnUpdate::create($data);
         $post1 = PostWithOnUpdate::create($data);
         $post2 = PostWithOnUpdate::create($data);
         $post3 = PostWithOnUpdate::create($data);
-        self::assertEquals('my-first-post-3', $post3->slug);
+        $post4 = PostWithOnUpdate::create($data);
+        self::assertEquals('my-first-post-4', $post4->slug);
 
-        $post3->update([
+        $post4->update([
             'subtitle' => 'A Subtitle'
         ]);
-        self::assertEquals('my-first-post-3', $post3->slug);
+        self::assertEquals('my-first-post-4', $post4->slug);
     }
 
     /**

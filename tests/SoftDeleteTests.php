@@ -45,7 +45,7 @@ class SoftDeleteTests extends TestCase
         $post2 = PostWithSoftDeletingIncludeTrashed::create([
             'title' => 'A Post Title'
         ]);
-        self::assertEquals('a-post-title-1', $post2->slug);
+        self::assertEquals('a-post-title-2', $post2->slug);
     }
 
     /**

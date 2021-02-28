@@ -91,6 +91,17 @@ return [
     'uniqueSuffix' => null,
 
     /**
+     * What is the first suffix to add to a slug to make it unique?
+     * For the default method of adding incremental integers, we start
+     * counting at 2, so the list of slugs would be, e.g.:
+     *
+     *   - my-post
+     *   - my-post-2
+     *   - my-post-3
+     */
+    'firstUniqueSuffix' => 2,
+
+    /**
      * Should we include the trashed items when generating a unique slug?
      * This only applies if the softDelete property is set for the Eloquent model.
      * If set to "false", then a new slug could duplicate one that exists on a trashed model.

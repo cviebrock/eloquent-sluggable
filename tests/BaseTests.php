@@ -197,7 +197,7 @@ class BaseTests extends TestCase
         self::assertEquals('my-first-post', $post1->slug);
 
         $post2 = $post1->replicate();
-        self::assertEquals('my-first-post-1', $post2->slug);
+        self::assertEquals('my-first-post-2', $post2->slug);
     }
 
     /**
@@ -245,7 +245,7 @@ class BaseTests extends TestCase
             if ($i === 0) {
                 self::assertEquals('a-post', $post->slug);
             } elseif ($i < 10) {
-                self::assertEquals('a-post-' . $i, $post->slug);
+                self::assertEquals('a-post-' . $i+1, $post->slug);
             }
         }
     }
@@ -262,7 +262,7 @@ class BaseTests extends TestCase
             if ($i === 0) {
                 self::assertEquals('a-post-wit', $post->slug);
             } elseif ($i < 10) {
-                self::assertEquals('a-post-wit-' . $i, $post->slug);
+                self::assertEquals('a-post-wit-' . $i+1, $post->slug);
             }
         }
     }

@@ -29,7 +29,7 @@ class StaticTests extends TestCase
         self::assertEquals('my-test-post', $post->slug);
 
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post');
-        self::assertEquals('my-test-post-1', $slug);
+        self::assertEquals('my-test-post-2', $slug);
     }
 
     /**
