@@ -531,6 +531,20 @@ class BaseTests extends TestCase
     }
 
     /**
+     * Test that when using the SAVED observer the slug is
+     * actually persisted in storage.
+     */
+    public function testOnSavedPersistsSlug()
+    {
+        $post = PostWithIdSourceOnSaved::create([
+            'title' => 'My Test Post',
+        ]);
+        $post->refresh();
+
+        self::assertEquals('my-test-post-1', $post->slug);
+    }
+
+    /**
      * Test that you can't use the model's primary key
      * as part of the source field if the sluggableEvent
      * is the default SAVING.
