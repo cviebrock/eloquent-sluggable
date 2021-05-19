@@ -1,9 +1,9 @@
 # Change Log
 
-## 8.0.6 - 17-May-2021
+## 8.0.7 - 19-May-2021
 
 - fix issue with `SluggableObserver::SAVED` not always saving 
-  the model (#558, thanks @llewellyn-kevin)
+  the model (#558, #560, thanks @llewellyn-kevin)
 
 
 ## 8.0.5 - 28-Feb-2021
