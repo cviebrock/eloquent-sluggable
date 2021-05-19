@@ -50,7 +50,7 @@ class SluggableObserver
             return;
         }
 
-        return $this->generateSlug($model, 'saving');
+        $this->generateSlug($model, 'saving');
     }
 
     /**

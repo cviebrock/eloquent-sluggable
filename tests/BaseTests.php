@@ -316,6 +316,28 @@ class BaseTests extends TestCase
     }
 
     /**
+     * Test that models are still updated even if slug is not updated.
+     *
+     * @see https://github.com/cviebrock/eloquent-sluggable/issues/559
+     */
+    public function testModelStillSavesWhenSlugIsNotUpdated()
+    {
+        $post = Post::create([
+            'title' => 'My Post',
+            'subtitle' => 'My First Subtitle',
+        ]);
+
+        self::assertEquals('my-post', $post->slug);
+
+        $post->subtitle = 'My Second Subtitle';
+        $post->save();
+        $post->refresh();
+
+        self::assertEquals('my-post', $post->slug);
+        self::assertEquals('My Second Subtitle', $post->subtitle);
+    }
+
+    /**
      * Test generating slug from related model field.
      */
     public function testSlugFromRelatedModel(): void
