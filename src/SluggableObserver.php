@@ -90,9 +90,9 @@ class SluggableObserver
      *
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @param  string $event
-     * @return array|null
+     * @return bool|null
      */
-    protected function fireSluggingEvent(Model $model, string $event): ?array
+    protected function fireSluggingEvent(Model $model, string $event): ?bool
     {
         return $this->events->until('eloquent.slugging: ' . get_class($model), [$model, $event]);
     }
