@@ -302,9 +302,6 @@ to use your model's primary key as part of the source fields for your slugs.
 
 ## Events
 
-> **NOTE:** Events should be working but are not fully tested yet.
-> [Please help me out!](#bugs-suggestions-and-contributions)
-
 Sluggable models will fire two Eloquent model events: "slugging" and "slugged".
   
 The "slugging" event is fired just before the slug is generated.  If the callback

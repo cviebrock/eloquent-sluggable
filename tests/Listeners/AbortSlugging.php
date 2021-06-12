@@ -17,8 +17,6 @@ class AbortSlugging
      */
     public function handle(Model $model, string $event): bool
     {
-        echo "SLUGGING ABORTED!\n";
-
         return false;
     }
 }
