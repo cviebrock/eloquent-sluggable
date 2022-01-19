@@ -27,7 +27,7 @@
     "require-dev": {
         "limedeck/phpunit-detailed-printer": "^6.0",
         "mockery/mockery": "^1.4.2",
-        "orchestra/database": "^7.0|dev-master",
+        "orchestra/database": "^7.0",
         "orchestra/testbench": "^7.0",
         "phpunit/phpunit": "^9.4"
     },
