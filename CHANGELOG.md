@@ -1,5 +1,10 @@
 # Change Log
 
+## 9.0.0 - 24-Jan-2022
+
+- Laravel 9 support (#577, #578, thanks @carbonvader and @tabcitu)
+
+
 ## 8.0.8 - 11-Jun-2021
 
 - fix event tests and `registerModelEvent()` hook (#556, #561, thanks @standaniels)

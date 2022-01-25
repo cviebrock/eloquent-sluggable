@@ -102,15 +102,15 @@ version of the package.
 |       7.0       |      ^7.0       |
 |       6.0       |      ^6.0       |
 |       5.8       |      4.8.*      |
-|       5.7       |   4.6.*|4.7.*   |
+|       5.7       |      4.7.*      |
 |       5.6       |      4.5.*      |
-|       5.5       |   4.3.*|4.4.*   |
+|       5.5       |      4.4.*      |
 |       5.4       |      4.2.*      |
 
 Older versions of Laravel can use older versions of the package, although they 
 are no longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
 [UPGRADING.md](UPGRADING.md) for specifics, and be sure that you are reading 
-the correct README.md for your version (Github displays the version in 
+the correct README.md for your version (GitHub displays the version in 
 the _master_ branch by default, which might not be what you want).
 
 
@@ -707,9 +707,9 @@ if a given slug is unique.  The arguments passed to the scope are:
 * `$slug` -- the "base" slug (before any unique suffixes are applied)
 
 Feel free to use these values anyway you like in your query scope.  As an example, look at 
-`tests/Models/PostWithUniqueSlugConstraints.php` where the slug is generated for a post from it's title, but
-the slug is scoped to the author.  So Bob can have a post with the same title as Pam's post, but both
-will have the same slug.
+`tests/Models/PostWithUniqueSlugConstraints.php` where the slug is generated for a post from
+its title, but the slug is scoped to the author.  So Bob can have a post with the same title
+as Pam's post, but both will have the same slug.
 
 ### scopeFindSimilarSlugs
 
@@ -771,7 +771,7 @@ Open Source License Program ... and the excellent PHPStorm IDE, of course!
 
 [![JetBrains](./.github/jetbrains.svg)](https://www.jetbrains.com/?from=cviebrock/eloquent-sluggable)
 
-Please use [Github](https://github.com/cviebrock/eloquent-sluggable) for reporting bugs, 
+Please use [GitHub](https://github.com/cviebrock/eloquent-sluggable) for reporting bugs, 
 and making comments or suggestions.
  
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute changes.
