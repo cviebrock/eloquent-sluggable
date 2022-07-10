@@ -1,9 +1,13 @@
-<?php namespace Cviebrock\EloquentSluggable\Services;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Services;
 
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * Class SlugService
@@ -167,6 +171,19 @@ class SlugService
             $slug = $slugEngine->slugify($source, $separator);
         } elseif (is_callable($method)) {
             $slug = $method($source, $separator);
+        } elseif (is_array($method)) {
+            // check is class exists
+            if (empty($method[0]) || !class_exists($method[0])) {
+                throw new \UnexpectedValueException(sprintf('Class "%s" not found', $method[0]));
+            }
+
+            // check method is exists in class declared
+            $reflection_class = new ReflectionClass($method[0]);
+            if ($reflection_class->hasMethod(($method[1] ?? ''))) {
+                throw new \UnexpectedValueException(sprintf('Call to undefined method %s::%s', $method[1], $method[0]));
+            }
+
+            $slug = call_user_func([$method[0], $method[1]], $source, $separator);
         } else {
             throw new \UnexpectedValueException('Sluggable "method" for ' . get_class($this->model) . ':' . $attribute . ' is not callable nor null.');
         }

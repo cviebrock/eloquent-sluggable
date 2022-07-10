@@ -9,6 +9,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngine2;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomEngineOptions;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethodArrayCall;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
@@ -91,6 +92,18 @@ class BaseTests extends TestCase
     public function testCustomMethod(): void
     {
         $post = PostWithCustomMethod::create([
+            'title' => 'A Post Title',
+            'subtitle' => 'A Subtitle'
+        ]);
+        self::assertEquals('eltit-tsop-a', $post->slug);
+    }
+
+    /**
+     * Test building a slug using a custom method.
+     */
+    public function testCustomMethodArrayCall(): void
+    {
+        $post = PostWithCustomMethodArrayCall::create([
             'title' => 'A Post Title',
             'subtitle' => 'A Subtitle'
         ]);
