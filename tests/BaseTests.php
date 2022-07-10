@@ -99,7 +99,7 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test building a slug using a custom method.
+     * Test building a slug using a custom method with array call.
      */
     public function testCustomMethodArrayCall(): void
     {

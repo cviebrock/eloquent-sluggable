@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use ReflectionClass;
-use ReflectionMethod;
 
 /**
  * Class SlugService
@@ -180,7 +179,7 @@ class SlugService
             // check method is exists in class declared
             $reflection_class = new ReflectionClass($method[0]);
             if ($reflection_class->hasMethod(($method[1] ?? ''))) {
-                throw new \UnexpectedValueException(sprintf('Call to undefined method %s::%s', $method[1], $method[0]));
+                throw new \BadMethodCallException(sprintf('Call to undefined method %s::%s', $method[1], $method[0]));
             }
 
             $slug = call_user_func([$method[0], $method[1]], $source, $separator);
