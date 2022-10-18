@@ -765,11 +765,7 @@ See [ROUTE-MODEL-BINDING.md](ROUTE-MODEL-BINDING.md) for details.
 ## Bugs, Suggestions, Contributions and Support
 
 Thanks to [everyone](https://github.com/cviebrock/eloquent-taggable/graphs/contributors)
-who has contributed to this project!  Special thanks to 
-[JetBrains](https://www.jetbrains.com/?from=cviebrock/eloquent-sluggable) for their 
-Open Source License Program ... and the excellent PHPStorm IDE, of course!
-
-[![JetBrains](./.github/jetbrains.svg)](https://www.jetbrains.com/?from=cviebrock/eloquent-sluggable)
+who has contributed to this project!
 
 Please use [GitHub](https://github.com/cviebrock/eloquent-sluggable) for reporting bugs, 
 and making comments or suggestions.
