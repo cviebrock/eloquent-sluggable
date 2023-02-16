@@ -14,34 +14,36 @@ Easy creation of slugs for your Eloquent models in Laravel.
 [![License](https://img.shields.io/packagist/l/cviebrock/eloquent-sluggable)](LICENSE.md)
 
 
-* [Background: What is a slug](#background-what-is-a-slug)
-* [Installation](#installation)
-* [Updating your Eloquent Models](#updating-your-eloquent-models)
-* [Usage](#usage)
-* [The SlugService Class](#the-slugservice-class)
-* [Events](#events)
-* [When Is A Model Slugged?](#when-is-a-model-slugged)
-* [Configuration](#configuration)
-    * [source](#source)
-    * [method](#method)
-    * [onUpdate](#onupdate)
-    * [separator](#separator)
-    * [unique](#unique)
-    * [uniqueSuffix](#uniquesuffix)
-    * [firstUniqueSuffix](#firstuniquesuffix)
-    * [includeTrashed](#includetrashed)
-    * [reserved](#reserved)
-    * [maxLength](#maxlength)
-    * [maxLengthKeepWords](#maxlengthkeepwords)
-    * [slugEngineOptions](#slugengineoptions)
-* [Extending Sluggable](#extending-sluggable)
-    * [customizeSlugEngine](#customizeslugengine)
-    * [scopeWithUniqueSlugConstraints](#scopewithuniqueslugconstraints)
-    * [scopeFindSimilarSlugs](#scopefindsimilarslugs)
-* [SluggableScopeHelpers Trait](#sluggablescopehelpers-trait)
-* [Route Model Binding](#route-model-binding)
-* [Bugs, Suggestions, Contributions and Support](#bugs-suggestions-contributions-and-support)
-* [Copyright and License](#copyright-and-license)
+- [Eloquent-Sluggable](#eloquent-sluggable)
+  - [Background: What is a slug?](#background-what-is-a-slug)
+  - [Installation](#installation)
+  - [Updating your Eloquent Models](#updating-your-eloquent-models)
+  - [Usage](#usage)
+  - [The SlugService Class](#the-slugservice-class)
+  - [When Is A Model Slugged?](#when-is-a-model-slugged)
+  - [Events](#events)
+  - [Configuration](#configuration)
+    - [source](#source)
+    - [method](#method)
+    - [onUpdate](#onupdate)
+    - [separator](#separator)
+    - [unique](#unique)
+    - [uniqueSuffix](#uniquesuffix)
+    - [firstUniqueSuffix](#firstuniquesuffix)
+    - [includeTrashed](#includetrashed)
+    - [reserved](#reserved)
+    - [maxLength](#maxlength)
+    - [maxLengthKeepWords](#maxlengthkeepwords)
+    - [slugEngineOptions](#slugengineoptions)
+  - [Short Configuration](#short-configuration)
+  - [Extending Sluggable](#extending-sluggable)
+    - [customizeSlugEngine](#customizeslugengine)
+    - [scopeWithUniqueSlugConstraints](#scopewithuniqueslugconstraints)
+    - [scopeFindSimilarSlugs](#scopefindsimilarslugs)
+  - [SluggableScopeHelpers Trait](#sluggablescopehelpers-trait)
+  - [Route Model Binding](#route-model-binding)
+  - [Bugs, Suggestions, Contributions and Support](#bugs-suggestions-contributions-and-support)
+  - [Copyright and License](#copyright-and-license)
 
 
 ## Background: What is a slug?
@@ -97,6 +99,7 @@ version of the package.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
+|      10.0       |     ^10.0       |
 |       9.0       |      ^9.0       |
 |       8.0       |      ^8.0       |
 |       7.0       |      ^7.0       |
