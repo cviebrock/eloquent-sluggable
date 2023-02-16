@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" printerClass="LimeDeck\Testing\Printer" processIsolation="false" stopOnFailure="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit 
+    backupGlobals="false" 
+    backupStaticProperties="false"
+    bootstrap="vendor/autoload.php" 
+    cacheDirectory=".phpunit.cache" 
+    colors="true" 
+    processIsolation="false" 
+    stopOnFailure="true" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+  >
   <coverage>
     <include>
       <directory suffix=".php">src/</directory>
