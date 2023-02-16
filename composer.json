@@ -28,7 +28,7 @@
         "limedeck/phpunit-detailed-printer": "^6.0",
         "mockery/mockery": "^1.4.4",
         "orchestra/testbench": "^8.0",
-        "phpunit/phpunit": "^9.6.0 || ^10.0.7"
+        "phpunit/phpunit": "^10"
     },
     "autoload": {
         "psr-4": {
