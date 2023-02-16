@@ -3,6 +3,7 @@
 ## 10.0.0 - 16-Feb-2023
 
 - Laravel 10 support
+- switch to using Pest instead of PHPUnit for tests
 
 ## 9.0.0 - 24-Jan-2022
 
