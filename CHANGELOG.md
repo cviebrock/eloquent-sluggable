@@ -1,5 +1,10 @@
 # Change Log
 
+## 10.0.x - xx-xxx-xxxx
+
+- fix for larastan issue (#596, thanks @WalrusSoup)
+
+
 ## 10.0.0 - 16-Feb-2023
 
 - Laravel 10.0 support

@@ -75,7 +75,7 @@ trait SluggableScopeHelpers
      *
      * @param string $slug
      * @param array $columns
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Model|static
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
