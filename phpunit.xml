@@ -8,12 +8,9 @@
     processIsolation="false" 
     stopOnFailure="true" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
   >
   <coverage>
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
     <report>
       <html outputDirectory="build/coverage"/>
     </report>
@@ -26,4 +23,9 @@
   <logging>
     <junit outputFile="build/report.junit.xml"/>
   </logging>
+  <source>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+  </source>
 </phpunit>
