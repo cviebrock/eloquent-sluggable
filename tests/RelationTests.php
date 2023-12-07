@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEagerRelation;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class RelationTests
@@ -16,6 +17,8 @@ class RelationTests extends TestCase
      */
     public function testEagerLoading(): void
     {
+        Model::shouldBeStrict(true);
+
         $author = Author::create([
             'name' => 'Arthur Conan Doyle'
         ]);
