@@ -27,7 +27,7 @@
     "require-dev": {
         "mockery/mockery": "^1.4.4",
         "orchestra/testbench": "^8.0",
-        "pestphp/pest": "2.x-dev"
+        "pestphp/pest": "^2.28"
     },
     "autoload": {
         "psr-4": {
