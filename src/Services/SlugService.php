@@ -375,7 +375,9 @@ class SlugService
         }
 
         // get the list of all matching slugs
-        $results = $query->select([$attribute, $this->model->getQualifiedKeyName()])
+        $results = $query
+            ->withoutEagerLoads()
+            ->select([$attribute, $this->model->getQualifiedKeyName()])
             ->get()
             ->toBase();
 
