@@ -54,6 +54,9 @@
             "providers": [
                 "Cviebrock\\EloquentSluggable\\ServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-master": "11.0.x-dev"
         }
     },
     "minimum-stability": "dev",
