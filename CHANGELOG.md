@@ -1,5 +1,10 @@
 # Change Log
 
+## 11.x.x - xx-xxx-xxxx
+
+- Added Laravel 11 support
+- Changed the minimum PHP version to v8.2
+
 ## 10.0.x - xx-xxx-xxxx
 
 - fix for larastan issue (#596, thanks @WalrusSoup)
