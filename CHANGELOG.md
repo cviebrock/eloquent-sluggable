@@ -1,6 +1,6 @@
 # Change Log
 
-## 11.x.x - xx-xxx-xxxx
+## 11.0.0 - 12-Mar-2024
 
 - Added Laravel 11 support (#608, thanks @fulopattila122)
 - Changed the minimum PHP version to 8.2 to line up with Laravel 11
