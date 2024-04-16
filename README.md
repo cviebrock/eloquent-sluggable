@@ -121,7 +121,7 @@ the _master_ branch by default, which might not be what you want).
 1. Install the package via Composer:
 
     ```sh
-    $ composer require cviebrock/eloquent-sluggable
+    composer require cviebrock/eloquent-sluggable
     ```
 
     The package will automatically register its service provider.
