@@ -12,6 +12,7 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethodArrayCall;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset2;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
@@ -426,6 +427,17 @@ class BaseTests extends TestCase
             'title' => 'Mia unua poŝto'
         ]);
         self::assertEquals('mia-unua-posxto', $post->slug);
+    }
+
+    /**
+     * Test using a custom Slugify ruleset.
+     */
+    public function testForeignRuleset2(): void
+    {
+        $post = PostWithForeignRuleset2::create([
+            'title' => 'Jyväskylä'
+        ]);
+        self::assertEquals('jyvaskyla', $post->slug);
     }
 
     /**

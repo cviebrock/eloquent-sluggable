@@ -596,6 +596,36 @@ for Slugify for what those options are.  Also, look at
 [customizeSlugEngine](#customizeslugengine) for other ways to customize Slugify
 for slugging.
 
+A common use for this is to turn on a different ruleset for a specific language.
+For example the string `Jyväskylä` will slug to `jyvaeskylae` using the default settings.
+In Finnish, it really should slug to `jyvaskyla`, so for that to work, you need to enable 
+the Finnish ruleset for the attribute you are slugging:
+
+```php
+public function sluggable(): array
+{
+    return [
+        'slug' => [
+            'source' => 'title',
+            'slugEngineOptions' => [
+                'ruleset' => 'finnish'
+            ]
+        ]
+    ];
+}
+```
+
+This can also be accomplished with the [customizeSlugEngine](#customizeslugengine) method
+(which, unless you add custom logic, will apply to _all_ attributes on the model):
+
+```php
+public function customizeSlugEngine(Slugify $engine, string $attribute): \Cocur\Slugify\Slugify
+{
+    $engine->activateRuleSet('finnish');
+
+    return $engine;
+}
+```
 
 ## Short Configuration
 
