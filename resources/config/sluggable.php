@@ -80,6 +80,15 @@ return [
     'unique' => true,
 
     /**
+     * If the slug is not unique and you want to try to make it unique by replacing
+     * some other parts of the slug, you can set this to a closure which accepts
+     * the base slug, the separator, and a Collection of the other "similar" slugs.
+     * The closure should return the new unique slug to use, if the slug is still not
+     * unique, it will append a suffix.
+     */
+    'uniqueUsing' => null,
+
+    /**
      * If you are enforcing unique slugs, the default is to add an
      * incremental value to the end of the base slug.  Alternatively, you
      * can change this value to a closure that accepts three parameters:

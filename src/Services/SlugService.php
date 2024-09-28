@@ -303,6 +303,20 @@ class SlugService
             }
         }
 
+        // If uniqueUsing is set to a closure, use it to generate a new "unique" slug
+        if (isset($config['uniqueUsing']) && is_callable($config['uniqueUsing'])) {
+            $using = $config['uniqueUsing'];
+
+            // Generate mew slug using the closure
+            $slugUsing = $using($slug, $separator, $list);
+
+            // Remove uniqueUsing from the config to avoid infinite loop
+            unset($config['uniqueUsing']);
+
+            // Call makeSlugUnique again with the new slug to ensure it's unique
+            return $this->makeSlugUnique($slugUsing, $config, $attribute);
+        }
+
         $method = $config['uniqueSuffix'];
         $firstSuffix = $config['firstUniqueSuffix'];
 
