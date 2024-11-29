@@ -30,7 +30,8 @@
         "mockery/mockery": "^1.4.4",
         "orchestra/testbench": "^9.0",
         "pestphp/pest": "^2.28",
-        "phpstan/phpstan": "^2.0"
+        "phpstan/phpstan": "^2.0",
+        "staabm/annotate-pull-request-from-checkstyle": "^1.8"
     },
     "autoload": {
         "psr-4": {
@@ -53,6 +54,9 @@
         "tests": [
             "rm -rf build",
             "XDEBUG_MODE=coverage php vendor/bin/pest"
+        ],
+        "tests:ci": [
+            "vendor/bin/pest --teamcity"
         ]
     },
     "extra": {
