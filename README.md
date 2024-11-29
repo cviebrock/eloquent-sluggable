@@ -2,7 +2,8 @@
 
 Easy creation of slugs for your Eloquent models in Laravel.
 
-> **NOTE:** These instructions are for the latest version of Laravel.  
+> [!NOTE]
+> These instructions are for the latest version of Laravel.  
 > If you are using an older version, please install a version of the package
 > that [correlates to your Laravel version](#installation).
 
@@ -95,12 +96,13 @@ automatically, with minimal configuration.
 Depending on your version of Laravel, you should install a different
 version of the package.
 
-> **NOTE:** As of version 6.0, the package's version should match the Laravel version.
+> [!NOTE]
+> As of version 6.0, the package's version should match the Laravel version.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
-|      11.0       |     ^11.0       |
-|      10.0       |     ^10.0       |
+|      11.0       |      ^11.0      |
+|      10.0       |      ^10.0      |
 |       9.0       |      ^9.0       |
 |       8.0       |      ^8.0       |
 |       7.0       |      ^7.0       |
@@ -116,6 +118,10 @@ are no longer supported or maintained.  See [CHANGELOG.md](CHANGELOG.md) and
 [UPGRADING.md](UPGRADING.md) for specifics, and be sure that you are reading 
 the correct README.md for your version (GitHub displays the version in 
 the _master_ branch by default, which might not be what you want).
+
+> [!WARNING]
+> Support for Laravel [Lumen](https://lumen.laravel.com/) will be dropped 
+> in the 12.0 version of this package.
 
 
 1. Install the package via Composer:
@@ -187,7 +193,8 @@ So is retrieving the slug:
 echo $post->slug;
 ```
 
-> **NOTE:** that if you are replicating your models using Eloquent's `replicate()` method, 
+> [!NOTE]
+> If you are replicating your models using Eloquent's `replicate()` method, 
 > the package will automatically re-slug the model afterwards to ensure uniqueness.
 
 ```php
@@ -200,19 +207,20 @@ $newPost = $post->replicate();
 // $newPost->slug is "my-awesome-blog-post-1"
 ```
 
-> **NOTE:** empty strings, non-strings or other "odd" source values will result in different slugs:
-
-| Source Value | Resulting Slug        |
-|--------------|-----------------------|
-| string       | string                |
-| empty string | _no slug will be set_ |
-| `null`       | _no slug will be set_ |
-| `0`          | `"0"`                 |
-| `1`          | `"1"`                 |
-| `false`      | `"0"`                 |
-| `true`       | `"1"`                 |
-
-(The above values would be subject to any unique or other checks as well.)
+> [!NOTE]
+> Empty strings, non-strings or other "odd" source values will result in different slugs:
+>
+> | Source Value | Resulting Slug        |
+> |--------------|-----------------------|
+> | string       | string                |
+> | empty string | _no slug will be set_ |
+> | `null`       | _no slug will be set_ |
+> | `0`          | `"0"`                 |
+> | `1`          | `"1"`                 |
+> | `false`      | `"0"`                 |
+> | `true`       | `"1"`                 |
+>
+> The above values would be subject to any unique or other checks as well.
 
 ## The SlugService Class 
 
@@ -544,8 +552,9 @@ generated slugs would look something like:
 If you want to start counting at a different number (or pass a different value
 into your custom `uniqueSuffix` function above), then you can define it here.
 
-> **NOTE:** Prior versions of the package started with a unique
-> suffix of `1`.  This was switched to `2` in version 8.0.5, as it's a more
+> [!NOTE]
+> Prior versions of the package started with a unique suffix of `1`.  
+> This was switched to `2` in version 8.0.5, as it's a more
 > "intuitive" suffix value to attach to the second slug.
 
 ### includeTrashed
@@ -567,7 +576,8 @@ Setting this to a positive integer will ensure that your generated slugs are res
 to a maximum length (e.g. to ensure that they fit within your database fields). By default, 
 this value is null and no limit is enforced.
 
-> **NOTE:** If `unique` is enabled (which it is by default), and you anticipate having 
+> [!NOTE]
+> If `unique` is enabled (which it is by default), and you anticipate having 
 > several models with the same slug, then you should set this value to a few characters 
 > less than the length of your database field. The reason why is that the class will 
 > append "-2", "-3", "-4", etc., to subsequent models in order to maintain uniqueness. 
@@ -652,7 +662,8 @@ In instances like these, the package offers hooks into the slugging workflow whe
 can use your own functions, either on a per-model basis, or in your own trait that extends 
 the package's trait.
 
-> **NOTE:** If you are putting these methods into your own trait, you will 
+> [!NOTE]
+> If you are putting these methods into your own trait, you will 
 > need to indicate in your models that PHP should use _your_ trait methods 
 > instead of the packages (since a class can't use two traits with the
 > same methods), e.g.
