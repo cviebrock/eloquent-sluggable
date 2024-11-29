@@ -7,18 +7,27 @@ We accept contributions via pull requests via
 
 1. Fork the project.
 2. Create your bugfix/feature branch and write your (well-commented) code.
-3. Create unit tests for your code:
+3. Ensure you follow our coding style:
+    - Run `composer run style:check` to check.
+    - Run `composer run style:fix` to automagically fix styling errors.
+4. Run basic static analysis on your code with `composer run analyze` and fix any errors.
+5. Create unit tests for your code:
 	- Run `composer install --dev` in the root directory to install required testing packages.
 	- Add your test classes/methods to the `/tests/` directory.
-	- Run `vendor/bin/phpunit` and make sure everything passes (new and old tests).
-3. Commit your changes (and your tests) and push to your branch.
-4. Create a new pull request against this package's `master` branch.
+	- Run `composer run tests` and make sure everything passes (new and old tests).
+6. Updated any documentation (e.g. in `README.md`), if appropriate.
+7. Commit your changes (and your tests) and push to your branch.
+8. Create a new pull request against this package's `master` branch.
 
 
 ## Pull Requests
 
-- **Use the [PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).**
-  The easiest way to apply the conventions is to install [PHP Code Sniffer](http://pear.php.net/package/PHP_CodeSniffer).
+- **Use the [PHP-CS-Fixer Coding Standard](https://cs.symfony.com/doc/ruleSets/PhpCsFixer.html).**
+  The easiest way to apply the conventions is to run `composer run style:fix`.
+
+- **Run static analysis with [phpstan](https://phpstan.org).**
+  The easiest way to check is with `composer run analyze`.  Bonus points if you can bump up the
+  analysis level in `phpstan.dist.neon`!
 
 - **Add tests!**  Your pull request won't be accepted if it doesn't have tests.
 
