@@ -1,5 +1,10 @@
 # Change Log
 
+## 11.0.1 - 28-Nov-2024
+
+- Support PHP 8.4 (#616, thanks @SupianIDz)
+
+
 ## 11.0.0 - 12-Mar-2024
 
 - Added Laravel 11 support (#608, thanks @fulopattila122)
