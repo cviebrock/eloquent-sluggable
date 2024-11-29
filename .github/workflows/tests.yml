@@ -9,10 +9,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [8.2, 8.3, 8.4]
+        php:
+          - version: 8.2
+          - version: 8.3
+          - version: 8.4
+            env: PHP_CS_FIXER_IGNORE_ENV=1
         stability: [prefer-lowest, prefer-stable]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+    name: PHP ${{ matrix.php.version }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
@@ -20,7 +24,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.php.version }}
           tools: composer:v2, cs2pr
           coverage: none
       - name: Setup problem matchers for PHPUnit
@@ -32,12 +36,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: dependencies-${{ matrix.php }}-${{ matrix.stability }}-composer-
+          key: dependencies-${{ matrix.php.version }}-${{ matrix.stability }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: dependencies-${{ matrix.php.version }}-${{ matrix.stability }}-composer-
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
       - name: Check coding style
-        run: composer run style:check -- --format=checkstyle | cs2pr
+        run: ${{ matrix.php.env }} composer run style:check -- --format=checkstyle | cs2pr
       - name: Check static analysis
         run: composer run analyze -- --error-format=checkstyle | cs2pr
       - name: Configure matchers for PHPUnit
