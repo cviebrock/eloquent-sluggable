@@ -1,4 +1,6 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Listeners\AbortSlugging;
 use Cviebrock\EloquentSluggable\Tests\Listeners\DoNotAbortSlugging;
@@ -6,13 +8,12 @@ use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Illuminate\Support\Facades\Event;
 
 /**
- * Class EventTests
+ * Class EventTests.
  *
- * @package Tests
+ * @internal
  */
 class EventTests extends TestCase
 {
-
     /**
      * Test that the "slugging" event is fired.
      */
@@ -24,7 +25,7 @@ class EventTests extends TestCase
         ]);
 
         Post::create([
-            'title' => 'My Test Post'
+            'title' => 'My Test Post',
         ]);
 
         Event::assertDispatched('eloquent.slugging: ' . Post::class);
@@ -43,7 +44,7 @@ class EventTests extends TestCase
         $this->app['events']->listen('eloquent.slugging: ' . Post::class, DoNotAbortSlugging::class);
 
         $post = Post::create([
-            'title' => 'My Test Post'
+            'title' => 'My Test Post',
         ]);
 
         self::assertEquals('my-test-post', $post->slug);
@@ -59,7 +60,7 @@ class EventTests extends TestCase
         $this->app['events']->listen('eloquent.slugging: ' . Post::class, AbortSlugging::class);
 
         $post = Post::create([
-            'title' => 'My Test Post'
+            'title' => 'My Test Post',
         ]);
 
         self::assertEquals(null, $post->slug);

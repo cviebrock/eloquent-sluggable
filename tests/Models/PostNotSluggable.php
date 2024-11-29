@@ -1,36 +1,35 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PostNotSluggable
+ * Class PostNotSluggable.
  *
  * A test model that doesn't use the Sluggable package.
  *
- * @package Cviebrock\EloquentSluggable\Tests\Models
- *
- * @property int $id
- * @property string $title
+ * @property int     $id
+ * @property string  $title
  * @property ?string $subtitle
  * @property ?string $slug
  * @property ?string $dummy
- * @property ?int $author_id
+ * @property ?int    $author_id
  */
 class PostNotSluggable extends Model
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $table = 'posts';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $timestamps = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $fillable = ['title', 'subtitle'];
 

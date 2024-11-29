@@ -1,4 +1,6 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfigWithScopeHelpers;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndCustomSlugKey;
@@ -6,22 +8,20 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndHelperTrait
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * Class ScopeHelperTests
+ * Class ScopeHelperTests.
  *
- * @package Tests
+ * @internal
  */
 class ScopeHelperTests extends TestCase
 {
-
     /**
      * Test that primary slug is set to $model->slugKeyName when set.
      */
     public function testSlugKeyNameProperty(): void
     {
-
         $post = PostWithMultipleSlugsAndCustomSlugKey::create([
-            'title' => 'A Post Title',
-            'subtitle' => 'A Post Subtitle'
+            'title'    => 'A Post Title',
+            'subtitle' => 'A Post Subtitle',
         ]);
 
         self::assertEquals('dummy', $post->getSlugKeyName());
@@ -35,7 +35,7 @@ class ScopeHelperTests extends TestCase
     public function testFirstSlugAsFallback(): void
     {
         $post = PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
 
         self::assertEquals('slug', $post->getSlugKeyName());
@@ -47,21 +47,22 @@ class ScopeHelperTests extends TestCase
      */
     public function testQueryScope(): void
     {
-
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title A'
+            'title' => 'A Post Title A',
         ]);
 
         $post = PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title B'
+            'title' => 'A Post Title B',
         ]);
 
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title C'
+            'title' => 'A Post Title C',
         ]);
 
-        self::assertEquals($post->getKey(),
-            PostWithMultipleSlugsAndHelperTrait::whereSlug('a-post-title-b')->first()->getKey());
+        self::assertEquals(
+            $post->getKey(),
+            PostWithMultipleSlugsAndHelperTrait::whereSlug('a-post-title-b')->first()->getKey()
+        );
     }
 
     /**
@@ -69,21 +70,22 @@ class ScopeHelperTests extends TestCase
      */
     public function testFindBySlug(): void
     {
-
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title A'
+            'title' => 'A Post Title A',
         ]);
 
         $post = PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title B'
+            'title' => 'A Post Title B',
         ]);
 
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title C'
+            'title' => 'A Post Title C',
         ]);
 
-        self::assertEquals($post->getKey(),
-            PostWithMultipleSlugsAndHelperTrait::findBySlug('a-post-title-b')->getKey());
+        self::assertEquals(
+            $post->getKey(),
+            PostWithMultipleSlugsAndHelperTrait::findBySlug('a-post-title-b')->getKey()
+        );
     }
 
     /**
@@ -100,19 +102,21 @@ class ScopeHelperTests extends TestCase
     public function testFindBySlugOrFail(): void
     {
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title A'
+            'title' => 'A Post Title A',
         ]);
 
         $post = PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title B'
+            'title' => 'A Post Title B',
         ]);
 
         PostWithMultipleSlugsAndHelperTrait::create([
-            'title' => 'A Post Title C'
+            'title' => 'A Post Title C',
         ]);
 
-        self::assertEquals($post->getKey(),
-            PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
+        self::assertEquals(
+            $post->getKey(),
+            PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey()
+        );
 
         $this->expectException(ModelNotFoundException::class);
 

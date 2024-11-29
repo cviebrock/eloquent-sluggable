@@ -1,26 +1,23 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 /**
- * Class PostShortConfigWithScopeHelpers
- *
- * @package Cviebrock\EloquentSluggable\Tests\Models
+ * Class PostShortConfigWithScopeHelpers.
  */
 class PostShortConfigWithScopeHelpers extends Post
 {
-
     use SluggableScopeHelpers;
 
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
         return [
-            'slug_field'
+            'slug_field',
         ];
     }
 }

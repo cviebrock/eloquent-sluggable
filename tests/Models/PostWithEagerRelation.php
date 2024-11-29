@@ -1,14 +1,11 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
 
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class PostWithEagerRelations
- *
- * @package Cviebrock\EloquentSluggable\Tests\Models
+ * Class PostWithEagerRelations.
  */
 class PostWithEagerRelation extends PostWithRelation
 {
-
     protected $with = ['author'];
-
 }

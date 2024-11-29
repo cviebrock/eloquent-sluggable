@@ -1,22 +1,22 @@
-<?php namespace Cviebrock\EloquentSluggable;
+<?php
+
+namespace Cviebrock\EloquentSluggable;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * Class SluggableScopeHelpers
+ * Class SluggableScopeHelpers.
  *
  * Helper trait for defining the primary slug of a model
  * and providing useful scopes and query methods.
- *
- * @package Cviebrock\EloquentSluggable
  */
 trait SluggableScopeHelpers
 {
-
     /**
      * Primary slug column of this model.
-     *
-     * @return string
      */
     public function getSlugKeyName(): string
     {
@@ -38,8 +38,6 @@ trait SluggableScopeHelpers
 
     /**
      * Primary slug value of this model.
-     *
-     * @return string
      */
     public function getSlugKey(): string
     {
@@ -48,10 +46,6 @@ trait SluggableScopeHelpers
 
     /**
      * Query scope for finding a model by its primary slug.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $scope
-     * @param string $slug
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereSlug(Builder $scope, string $slug): Builder
     {
@@ -61,9 +55,7 @@ trait SluggableScopeHelpers
     /**
      * Find a model by its primary slug.
      *
-     * @param string $slug
-     * @param array $columns
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
+     * @return Collection|Model|static|static[]|null
      */
     public static function findBySlug(string $slug, array $columns = ['*'])
     {
@@ -73,11 +65,9 @@ trait SluggableScopeHelpers
     /**
      * Find a model by its primary slug or throw an exception.
      *
-     * @param string $slug
-     * @param array $columns
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return Model|static
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException
      */
     public static function findBySlugOrFail(string $slug, array $columns = ['*'])
     {

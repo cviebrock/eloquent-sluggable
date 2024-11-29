@@ -1,20 +1,16 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Support\Str;
 
-
 /**
- * Class PostWithCustomMethod
- *
- * @package Cviebrock\EloquentSluggable\Tests\Models
+ * Class PostWithCustomMethod.
  */
 class PostWithCustomMethod extends Post
 {
-
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
@@ -23,8 +19,8 @@ class PostWithCustomMethod extends Post
                 'source' => 'title',
                 'method' => function ($string, $separator) {
                     return strrev(Str::slug($string, $separator));
-                }
-            ]
+                },
+            ],
         ];
     }
 }

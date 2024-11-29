@@ -1,4 +1,6 @@
-<?php namespace Cviebrock\EloquentSluggable;
+<?php
+
+namespace Cviebrock\EloquentSluggable;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -6,13 +8,10 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 
 /**
- * Class ServiceProvider
- *
- * @package Cviebrock\EloquentSluggable
+ * Class ServiceProvider.
  */
 class ServiceProvider extends BaseServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      */
@@ -26,7 +25,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(SluggableObserver::class, function($app) {
+        $this->app->singleton(SluggableObserver::class, function ($app) {
             return new SluggableObserver(new SlugService(), $app['events']);
         });
     }
@@ -37,9 +36,9 @@ class ServiceProvider extends BaseServiceProvider
 
         if ($this->app instanceof LaravelApplication) {
             $this->publishes([$source => config_path('sluggable.php')], 'config');
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('sluggable'); /** @phpstan-ignore class.notFound */
+            $this->app->configure('sluggable'); // @phpstan-ignore class.notFound
         }
 
         $this->mergeConfigFrom($source, 'sluggable');

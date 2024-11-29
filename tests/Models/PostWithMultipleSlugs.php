@@ -1,17 +1,14 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class PostWithMultipleSlugs
- *
- * @package Cviebrock\EloquentSluggable\Tests\Models
+ * Class PostWithMultipleSlugs.
  */
 class PostWithMultipleSlugs extends Post
 {
-
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
@@ -20,7 +17,7 @@ class PostWithMultipleSlugs extends Post
                 'source' => 'title',
             ],
             'dummy' => [
-                'source' => 'subtitle',
+                'source'    => 'subtitle',
                 'separator' => '.',
             ],
         ];

@@ -1,4 +1,6 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
@@ -12,11 +14,11 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethod;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomMethodArrayCall;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSource;
-use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset2;
-use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSuffix;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEmptySeparator;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithForeignRuleset2;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSource;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithIdSourceOnSaved;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLength;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMaxLengthSplitWords;
@@ -27,20 +29,19 @@ use Cviebrock\EloquentSluggable\Tests\Models\PostWithRelation;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithReservedSlug;
 
 /**
- * Class BaseTests
+ * Class BaseTests.
  *
- * @package Tests
+ * @internal
  */
 class BaseTests extends TestCase
 {
-
     /**
      * Test basic slugging functionality.
      */
     public function testSimpleSlug(): void
     {
         $post = Post::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('my-first-post', $post->slug);
     }
@@ -51,7 +52,7 @@ class BaseTests extends TestCase
     public function testShortConfig(): void
     {
         $post = PostShortConfig::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('my-first-post', $post->slug);
     }
@@ -62,7 +63,7 @@ class BaseTests extends TestCase
     public function testAccentedCharacters(): void
     {
         $post = Post::create([
-            'title' => 'My Dinner With André & François'
+            'title' => 'My Dinner With André & François',
         ]);
         self::assertEquals('my-dinner-with-andre-francois', $post->slug);
     }
@@ -73,8 +74,8 @@ class BaseTests extends TestCase
     public function testMultipleSource(): void
     {
         $post = PostWithMultipleSources::create([
-            'title' => 'A Post Title',
-            'subtitle' => 'A Subtitle'
+            'title'    => 'A Post Title',
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('a-post-title-a-subtitle', $post->slug);
     }
@@ -82,7 +83,7 @@ class BaseTests extends TestCase
     public function testLeadingTrailingSpaces(): void
     {
         $post = Post::create([
-            'title' => "\tMy First Post \r\n"
+            'title' => "\tMy First Post \r\n",
         ]);
         self::assertEquals('my-first-post', $post->slug);
     }
@@ -93,8 +94,8 @@ class BaseTests extends TestCase
     public function testCustomMethod(): void
     {
         $post = PostWithCustomMethod::create([
-            'title' => 'A Post Title',
-            'subtitle' => 'A Subtitle'
+            'title'    => 'A Post Title',
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('eltit-tsop-a', $post->slug);
     }
@@ -105,8 +106,8 @@ class BaseTests extends TestCase
     public function testCustomCallableMethod(): void
     {
         $post = PostWithCustomCallableMethod::create([
-            'title' => 'A Post Title',
-            'subtitle' => 'A Subtitle'
+            'title'    => 'A Post Title',
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('eltit-tsop-a', $post->slug);
     }
@@ -118,7 +119,7 @@ class BaseTests extends TestCase
     {
         for ($i = 1; $i <= 20; $i++) {
             $post = PostWithCustomSuffix::create([
-                'title' => 'A Post Title',
+                'title'    => 'A Post Title',
                 'subtitle' => 'A Subtitle',
             ]);
 
@@ -136,7 +137,7 @@ class BaseTests extends TestCase
     public function testToStringMethod(): void
     {
         $post = PostWithNoSource::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title', $post->slug);
     }
@@ -147,7 +148,7 @@ class BaseTests extends TestCase
     public function testCustomSeparator(): void
     {
         $post = PostWithCustomSeparator::create([
-            'title' => 'A post title'
+            'title' => 'A post title',
         ]);
         self::assertEquals('a.post.title', $post->slug);
     }
@@ -158,7 +159,7 @@ class BaseTests extends TestCase
     public function testReservedWord(): void
     {
         $post = PostWithReservedSlug::create([
-            'title' => 'Add'
+            'title' => 'Add',
         ]);
         self::assertEquals('add-2', $post->slug);
     }
@@ -171,7 +172,7 @@ class BaseTests extends TestCase
     public function testIssue5(): void
     {
         $post = Post::create([
-            'title' => 'My first post'
+            'title' => 'My first post',
         ]);
         self::assertEquals('my-first-post', $post->slug);
 
@@ -194,7 +195,7 @@ class BaseTests extends TestCase
     public function testIssue20(): void
     {
         $post1 = Post::create([
-            'title' => 'My first post'
+            'title' => 'My first post',
         ]);
         self::assertEquals('my-first-post', $post1->slug);
 
@@ -208,7 +209,7 @@ class BaseTests extends TestCase
     public function testNonSluggableModels(): void
     {
         $post = PostNotSluggable::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals(null, $post->slug);
     }
@@ -219,7 +220,7 @@ class BaseTests extends TestCase
     public function testMaxLength(): void
     {
         $post = PostWithMaxLength::create([
-            'title' => 'A post with a really long title'
+            'title' => 'A post with a really long title',
         ]);
         self::assertEquals('a-post', $post->slug);
     }
@@ -230,7 +231,7 @@ class BaseTests extends TestCase
     public function testMaxLengthSplitWords(): void
     {
         $post = PostWithMaxLengthSplitWords::create([
-            'title' => 'A post with a really long title'
+            'title' => 'A post with a really long title',
         ]);
         self::assertEquals('a-post-wit', $post->slug);
     }
@@ -242,7 +243,7 @@ class BaseTests extends TestCase
     {
         for ($i = 1; $i <= 20; $i++) {
             $post = PostWithMaxLength::create([
-                'title' => 'A post with a really long title'
+                'title' => 'A post with a really long title',
             ]);
             if ($i === 1) {
                 self::assertEquals('a-post', $post->slug);
@@ -259,7 +260,7 @@ class BaseTests extends TestCase
     {
         for ($i = 1; $i <= 20; $i++) {
             $post = PostWithMaxLengthSplitWords::create([
-                'title' => 'A post with a really long title'
+                'title' => 'A post with a really long title',
             ]);
             if ($i === 1) {
                 self::assertEquals('a-post-wit', $post->slug);
@@ -275,7 +276,7 @@ class BaseTests extends TestCase
     public function testMaxLengthDoesNotEndInSeparator(): void
     {
         $post = PostWithMaxLengthSplitWords::create([
-            'title' => 'It should work'
+            'title' => 'It should work',
         ]);
         self::assertEquals('it-should', $post->slug);
     }
@@ -289,7 +290,7 @@ class BaseTests extends TestCase
     {
         $post = Post::create([
             'title' => 'My first post',
-            'slug' => 'custom-slug'
+            'slug'  => 'custom-slug',
         ]);
         self::assertEquals('custom-slug', $post->slug);
     }
@@ -303,7 +304,7 @@ class BaseTests extends TestCase
     {
         $post = Post::create([
             'title' => 'My first post',
-            'slug' => 'custom-slug'
+            'slug'  => 'custom-slug',
         ]);
         self::assertEquals('custom-slug', $post->slug);
 
@@ -325,7 +326,7 @@ class BaseTests extends TestCase
     public function testModelStillSavesWhenSlugIsNotUpdated()
     {
         $post = Post::create([
-            'title' => 'My Post',
+            'title'    => 'My Post',
             'subtitle' => 'My First Subtitle',
         ]);
 
@@ -345,10 +346,10 @@ class BaseTests extends TestCase
     public function testSlugFromRelatedModel(): void
     {
         $author = Author::create([
-            'name' => 'Arthur Conan Doyle'
+            'name' => 'Arthur Conan Doyle',
         ]);
         $post = new PostWithRelation([
-            'title' => 'First'
+            'title' => 'First',
         ]);
         $post->author()->associate($author);
         $post->save();
@@ -361,7 +362,7 @@ class BaseTests extends TestCase
     public function testSlugFromRelatedModelNotExists(): void
     {
         $post = PostWithRelation::create([
-            'title' => 'First'
+            'title' => 'First',
         ]);
         self::assertEquals('first', $post->slug);
     }
@@ -372,7 +373,7 @@ class BaseTests extends TestCase
     public function testNullSourceGeneratesEmptySlug(): void
     {
         $post = PostWithCustomSource::create([
-            'title' => 'My Test Post'
+            'title' => 'My Test Post',
         ]);
         self::assertEquals(null, $post->slug);
     }
@@ -383,7 +384,7 @@ class BaseTests extends TestCase
     public function testZeroLengthSourceGeneratesEmptySlug(): void
     {
         $post = Post::create([
-            'title' => ''
+            'title' => '',
         ]);
         self::assertNull($post->slug);
     }
@@ -394,7 +395,7 @@ class BaseTests extends TestCase
     public function testCustomEngineRules(): void
     {
         $post = PostWithCustomEngine::create([
-            'title' => 'The quick brown fox jumps over the lazy dog'
+            'title' => 'The quick brown fox jumps over the lazy dog',
         ]);
         self::assertEquals('tha-qaack-brawn-fax-jamps-avar-tha-lazy-dag', $post->slug);
     }
@@ -405,7 +406,7 @@ class BaseTests extends TestCase
     public function testCustomEngineRules2(): void
     {
         $post = PostWithCustomEngine2::create([
-            'title' => 'The quick brown fox/jumps over/the lazy dog'
+            'title' => 'The quick brown fox/jumps over/the lazy dog',
         ]);
         self::assertEquals('the-quick-brown-fox/jumps-over/the-lazy-dog', $post->slug);
     }
@@ -413,7 +414,7 @@ class BaseTests extends TestCase
     public function testCustomEngineOptions(): void
     {
         $post = PostWithCustomEngineOptions::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('My-First-Post', $post->slug);
     }
@@ -424,7 +425,7 @@ class BaseTests extends TestCase
     public function testForeignRuleset(): void
     {
         $post = PostWithForeignRuleset::create([
-            'title' => 'Mia unua poŝto'
+            'title' => 'Mia unua poŝto',
         ]);
         self::assertEquals('mia-unua-posxto', $post->slug);
     }
@@ -435,7 +436,7 @@ class BaseTests extends TestCase
     public function testForeignRuleset2(): void
     {
         $post = PostWithForeignRuleset2::create([
-            'title' => 'Jyväskylä'
+            'title' => 'Jyväskylä',
         ]);
         self::assertEquals('jyvaskyla', $post->slug);
     }
@@ -448,7 +449,7 @@ class BaseTests extends TestCase
     public function testEmptySeparator(): void
     {
         $post = PostWithEmptySeparator::create([
-            'title' => 'My Test Post'
+            'title' => 'My Test Post',
         ]);
         self::assertEquals('mytestpost', $post->slug);
     }
@@ -459,7 +460,7 @@ class BaseTests extends TestCase
     public function testMultipleSlugs(): void
     {
         $post = PostWithMultipleSlugs::create([
-            'title' => 'My Test Post',
+            'title'    => 'My Test Post',
             'subtitle' => 'My Subtitle',
         ]);
 
@@ -468,12 +469,12 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test subscript characters in slug field
+     * Test subscript characters in slug field.
      */
     public function testSubscriptCharacters(): void
     {
         $post = Post::create([
-            'title' => 'RDA-125-15/30/45m³/h CAV'
+            'title' => 'RDA-125-15/30/45m³/h CAV',
         ]);
 
         self::assertEquals('rda-125-15-30-45m3-h-cav', $post->slug);
@@ -485,7 +486,7 @@ class BaseTests extends TestCase
     public function testFalsyString(): void
     {
         $post = Post::create([
-            'title' => '0'
+            'title' => '0',
         ]);
         self::assertEquals('0', $post->slug);
     }
@@ -496,7 +497,7 @@ class BaseTests extends TestCase
     public function testFalsyInt(): void
     {
         $post = Post::create([
-            'title' => 0
+            'title' => 0,
         ]);
         self::assertEquals('0', $post->slug);
     }
@@ -507,7 +508,7 @@ class BaseTests extends TestCase
     public function testTrueSource(): void
     {
         $post = Post::create([
-            'title' => true
+            'title' => true,
         ]);
         self::assertEquals('1', $post->slug);
     }
@@ -518,7 +519,7 @@ class BaseTests extends TestCase
     public function testFalseSource(): void
     {
         $post = Post::create([
-            'title' => false
+            'title' => false,
         ]);
         self::assertEquals('0', $post->slug);
     }
@@ -530,7 +531,7 @@ class BaseTests extends TestCase
     public function testIssue527(): void
     {
         $post = Post::create([
-            'title' => 'example title'
+            'title' => 'example title',
         ]);
         self::assertEquals('example-title', $post->slug);
 
@@ -551,12 +552,12 @@ class BaseTests extends TestCase
     public function testPrimaryKeyInSource(): void
     {
         $post = PostWithIdSourceOnSaved::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('my-first-post-1', $post->slug);
 
         $post2 = PostWithIdSourceOnSaved::create([
-            'title' => 'My Second Post'
+            'title' => 'My Second Post',
         ]);
         self::assertEquals('my-second-post-2', $post2->slug);
 
@@ -587,7 +588,7 @@ class BaseTests extends TestCase
     public function testPrimaryKeyInSourceOnSaving(): void
     {
         $post = PostWithIdSource::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('my-first-post', $post->slug);
 
@@ -603,8 +604,8 @@ class BaseTests extends TestCase
     public function testCustomMethodArrayCall(): void
     {
         $post = PostWithCustomMethodArrayCall::create([
-            'title' => 'A Post Title',
-            'subtitle' => 'A Subtitle'
+            'title'    => 'A Post Title',
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('eltit-tsop-a', $post->slug);
     }

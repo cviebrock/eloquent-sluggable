@@ -1,27 +1,24 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 /**
- * Class PostWithCustomSeparator
+ * Class PostWithCustomSeparator.
  *
  * A test model that uses a custom suffix generation method.
- *
- * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithCustomSeparator extends Post
 {
-
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'title',
-                'separator' => '.'
-            ]
+                'source'    => 'title',
+                'separator' => '.',
+            ],
         ];
     }
 }

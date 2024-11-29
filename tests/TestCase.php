@@ -1,22 +1,18 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
-use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 /**
- * Class TestCase
- *
- * @package Tests
+ * Class TestCase.
  */
 abstract class TestCase extends Orchestra
 {
-
     /**
      * Setup the test environment.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -30,27 +26,27 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getEnvironmentSetUp($app)
     {
         // set up database configuration
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getPackageProviders($app)
     {
         return [
             ServiceProvider::class,
-            TestServiceProvider::class
+            TestServiceProvider::class,
         ];
     }
 
@@ -61,7 +57,7 @@ abstract class TestCase extends Orchestra
      */
     protected function withoutEvents(): self
     {
-        $mock = Mockery::mock(Dispatcher::class);
+        $mock = \Mockery::mock(Dispatcher::class);
 
         $mock->shouldReceive('fire', 'until');
 

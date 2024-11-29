@@ -1,23 +1,20 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class PostWithUniqueSlugConstraints
+ * Class PostWithUniqueSlugConstraints.
  *
- * @package Cviebrock\EloquentSluggable\Tests\Models
- *
- * @property \Cviebrock\EloquentSluggable\Tests\Models\Author|null $author
+ * @property Author|null $author
  */
 class PostWithUniqueSlugConstraints extends Post
 {
-
     /**
      * Relation to Author model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function author(): BelongsTo
     {
@@ -25,7 +22,7 @@ class PostWithUniqueSlugConstraints extends Post
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug): Builder
     {
@@ -34,5 +31,4 @@ class PostWithUniqueSlugConstraints extends Post
 
         return $query->where('author_id', $author->getKey());
     }
-
 }

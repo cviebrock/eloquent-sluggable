@@ -1,15 +1,14 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class TestServiceProvider
- *
- * @package Cviebrock\EloquentSluggable
+ * Class TestServiceProvider.
  */
 class TestServiceProvider extends BaseServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -19,8 +18,6 @@ class TestServiceProvider extends BaseServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot(): void
     {

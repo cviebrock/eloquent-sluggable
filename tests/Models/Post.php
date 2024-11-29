@@ -1,37 +1,36 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests\Models;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Post
+ * Class Post.
  *
- * @package Cviebrock\EloquentSluggable\Tests\Models
- *
- * @property int $id
- * @property string $title
+ * @property int     $id
+ * @property string  $title
  * @property ?string $subtitle
  * @property ?string $slug
  * @property ?string $dummy
- * @property ?int $author_id
+ * @property ?int    $author_id
  */
 class Post extends Model
 {
-
     use Sluggable;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $table = 'posts';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $timestamps = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $fillable = ['title', 'subtitle', 'slug', 'dummy', 'author_id'];
 
@@ -47,15 +46,13 @@ class Post extends Model
 
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 }

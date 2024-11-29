@@ -1,16 +1,17 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 
 /**
- * Class StaticTests
+ * Class StaticTests.
  *
- * @package Tests
+ * @internal
  */
 class StaticTests extends TestCase
 {
-
     /**
      * Test that we can generate a slug statically.
      */
@@ -38,14 +39,14 @@ class StaticTests extends TestCase
     public function testStaticSlugGeneratorWithConfig(): void
     {
         $config = [
-            'separator' => '.'
+            'separator' => '.',
         ];
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post', $config);
         self::assertEquals('my.test.post', $slug);
     }
 
     /**
-     * Test passing an invalid attribute to static method
+     * Test passing an invalid attribute to static method.
      */
     public function testStaticSlugWithInvalidAttribute(): void
     {

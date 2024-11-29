@@ -1,17 +1,18 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Models\Author;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithEagerRelation;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class RelationTests
+ * Class RelationTests.
  *
- * @package Tests
+ * @internal
  */
 class RelationTests extends TestCase
 {
-
     /**
      * Test basic slugging functionality.
      */
@@ -20,10 +21,10 @@ class RelationTests extends TestCase
         Model::shouldBeStrict(true);
 
         $author = Author::create([
-            'name' => 'Arthur Conan Doyle'
+            'name' => 'Arthur Conan Doyle',
         ]);
         $post = new PostWithEagerRelation([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         $post->author()->associate($author);
         $post->save();
@@ -37,5 +38,4 @@ class RelationTests extends TestCase
         $post2->save();
         self::assertEquals('arthur-conan-doyle-my-second-post', $post2->slug);
     }
-
 }

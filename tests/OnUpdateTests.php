@@ -1,29 +1,30 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithOnUpdate;
 
 /**
- * Class OnUpdateTests
+ * Class OnUpdateTests.
  *
- * @package Tests
+ * @internal
  */
 class OnUpdateTests extends TestCase
 {
-
     /**
      * Test that the slug isn't regenerated if onUpdate is false.
      */
     public function testSlugDoesntChangeWithoutOnUpdate(): void
     {
         $post = Post::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         $post->save();
         self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
-            'title' => 'A New Title'
+            'title' => 'A New Title',
         ]);
         self::assertEquals('my-first-post', $post->slug);
     }
@@ -34,14 +35,14 @@ class OnUpdateTests extends TestCase
     public function testSlugDoesChangeWhenEmptiedManually(): void
     {
         $post = Post::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         $post->save();
         self::assertEquals('my-first-post', $post->slug);
 
         $post->slug = null;
         $post->update([
-            'title' => 'A New Title'
+            'title' => 'A New Title',
         ]);
         self::assertEquals('a-new-title', $post->slug);
     }
@@ -52,13 +53,13 @@ class OnUpdateTests extends TestCase
     public function testSlugDoesChangeWithOnUpdate(): void
     {
         $post = PostWithOnUpdate::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         $post->save();
         self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
-            'title' => 'A New Title'
+            'title' => 'A New Title',
         ]);
         self::assertEquals('a-new-title', $post->slug);
     }
@@ -70,13 +71,13 @@ class OnUpdateTests extends TestCase
     public function testSlugDoesNotChangeIfSourceDoesNotChange(): void
     {
         $post = PostWithOnUpdate::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         $post->save();
         self::assertEquals('my-first-post', $post->slug);
 
         $post->update([
-            'subtitle' => 'A Subtitle'
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('my-first-post', $post->slug);
     }
@@ -91,7 +92,7 @@ class OnUpdateTests extends TestCase
     public function testSlugDoesNotChangeIfSourceDoesNotChangeMultiple(): void
     {
         $data = [
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ];
         $post1 = PostWithOnUpdate::create($data);
         $post2 = PostWithOnUpdate::create($data);
@@ -100,7 +101,7 @@ class OnUpdateTests extends TestCase
         self::assertEquals('my-first-post-4', $post4->slug);
 
         $post4->update([
-            'subtitle' => 'A Subtitle'
+            'subtitle' => 'A Subtitle',
         ]);
         self::assertEquals('my-first-post-4', $post4->slug);
     }
@@ -112,13 +113,13 @@ class OnUpdateTests extends TestCase
     public function testSlugDoesNotChangeIfSourceNotProvidedInModel(): void
     {
         $post = Post::create([
-            'title' => 'My First Post'
+            'title' => 'My First Post',
         ]);
         self::assertEquals('my-first-post', $post->slug);
 
-        $post = Post::whereKey($post->id)->first(['id','subtitle']);
+        $post = Post::whereKey($post->id)->first(['id', 'subtitle']);
         $post->update([
-            'subtitle' => 'A Subtitle'
+            'subtitle' => 'A Subtitle',
         ]);
 
         $post = Post::findOrFail($post->id);

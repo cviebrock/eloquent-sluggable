@@ -1,31 +1,32 @@
-<?php namespace Cviebrock\EloquentSluggable\Tests;
+<?php
+
+namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithIncludeTrashed;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeleting;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithSoftDeletingIncludeTrashed;
 
 /**
- * Class SoftDeleteTests
+ * Class SoftDeleteTests.
  *
- * @package Tests
+ * @internal
  */
 class SoftDeleteTests extends TestCase
 {
-
     /**
      * Test uniqueness with soft deletes when we ignore trashed models.
      */
     public function testSoftDeletesWithoutTrashed(): void
     {
         $post1 = PostWithSoftDeleting::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title', $post1->slug);
 
         $post1->delete();
 
         $post2 = PostWithSoftDeleting::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title', $post2->slug);
     }
@@ -36,14 +37,14 @@ class SoftDeleteTests extends TestCase
     public function testSoftDeletesWithTrashed(): void
     {
         $post1 = PostWithSoftDeletingIncludeTrashed::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title', $post1->slug);
 
         $post1->delete();
 
         $post2 = PostWithSoftDeletingIncludeTrashed::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title-2', $post2->slug);
     }
@@ -54,7 +55,7 @@ class SoftDeleteTests extends TestCase
     public function testSoftDeletesWithNonSoftDeleteModel(): void
     {
         $post1 = PostWithIncludeTrashed::create([
-            'title' => 'A Post Title'
+            'title' => 'A Post Title',
         ]);
         self::assertEquals('a-post-title', $post1->slug);
     }
