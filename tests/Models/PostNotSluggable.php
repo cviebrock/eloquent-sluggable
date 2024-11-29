@@ -8,28 +8,29 @@ use Illuminate\Database\Eloquent\Model;
  * A test model that doesn't use the Sluggable package.
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
+ *
+ * @property int $id
+ * @property string $title
+ * @property ?string $subtitle
+ * @property ?string $slug
+ * @property ?string $dummy
+ * @property ?int $author_id
  */
 class PostNotSluggable extends Model
 {
 
     /**
-     * The table associated with the model.
-     *
-     * @var string
+     * @inheritdoc
      */
     protected $table = 'posts';
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
+     * @inheritdoc
      */
     public $timestamps = false;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $fillable = ['title', 'subtitle'];
 

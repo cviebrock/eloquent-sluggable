@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Class PostWithUniqueSlugConstraints
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
+ *
+ * @property \Cviebrock\EloquentSluggable\Tests\Models\Author|null $author
  */
 class PostWithUniqueSlugConstraints extends Post
 {
@@ -27,6 +29,7 @@ class PostWithUniqueSlugConstraints extends Post
      */
     public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug): Builder
     {
+        /** @var self $model */
         $author = $model->author;
 
         return $query->where('author_id', $author->getKey());

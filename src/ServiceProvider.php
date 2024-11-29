@@ -37,8 +37,9 @@ class ServiceProvider extends BaseServiceProvider
 
         if ($this->app instanceof LaravelApplication) {
             $this->publishes([$source => config_path('sluggable.php')], 'config');
+        /** @phpstan-ignore-next-line */
         } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('sluggable');
+            $this->app->configure('sluggable'); /** @phpstan-ignore class.notFound */
         }
 
         $this->mergeConfigFrom($source, 'sluggable');

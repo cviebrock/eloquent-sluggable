@@ -13,6 +13,8 @@ use Illuminate\Support\Collection;
 class SlugService
 {
 
+    final public function __construct() {}
+
     /**
      * @var \Illuminate\Database\Eloquent\Model
      * @var \Cviebrock\EloquentSluggable\Sluggable
@@ -407,12 +409,12 @@ class SlugService
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
-    public static function createSlug($model, string $attribute, string $fromString, ?array $config = null): string
+    public static function createSlug(Model|string $model, string $attribute, string $fromString, ?array $config = null): string
     {
         if (is_string($model)) {
             $model = new $model;
         }
-        /** @var static $instance */
+
         $instance = (new static())->setModel($model);
 
         if ($config === null) {
@@ -421,8 +423,6 @@ class SlugService
                 $modelClass = get_class($model);
                 throw new \InvalidArgumentException("Argument 2 passed to SlugService::createSlug ['{$attribute}'] is not a valid slug attribute for model {$modelClass}.");
             }
-        } elseif (!is_array($config)) {
-            throw new \UnexpectedValueException('SlugService::createSlug expects an array or null as the fourth argument; ' . gettype($config) . ' given.');
         }
 
         $config = $instance->getConfiguration($config);

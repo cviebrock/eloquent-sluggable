@@ -9,23 +9,19 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
  *
- * @property integer id
- * @property string name
+ * @property integer $id
+ * @property string $name
  */
 class Author extends Model
 {
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
+     * @inheritdoc
      */
     public $timestamps = false;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $fillable = ['name'];
 }

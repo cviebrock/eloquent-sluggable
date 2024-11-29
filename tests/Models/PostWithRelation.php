@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
  *
- * @property \Cviebrock\EloquentSluggable\Tests\Models\Author author
+ * @property \Cviebrock\EloquentSluggable\Tests\Models\Author|null $author
  */
 class PostWithRelation extends Post
 {

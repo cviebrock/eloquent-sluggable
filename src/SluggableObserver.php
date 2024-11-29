@@ -46,6 +46,7 @@ class SluggableObserver
      */
     public function saving(Model $model)
     {
+        /** @phpstan-ignore-next-line */
         if ($model->sluggableEvent() !== self::SAVING) {
             return;
         }
@@ -59,6 +60,7 @@ class SluggableObserver
      */
     public function saved(Model $model)
     {
+        /** @phpstan-ignore-next-line */
         if ($model->sluggableEvent() !== self::SAVED) {
             return;
         }

@@ -25,9 +25,12 @@
         "illuminate/support": "^11.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "larastan/larastan": "^3.0",
         "mockery/mockery": "^1.4.4",
         "orchestra/testbench": "^9.0",
-        "pestphp/pest": "^2.28"
+        "pestphp/pest": "^2.28",
+        "phpstan/phpstan": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,10 +43,13 @@
         }
     },
     "scripts": {
+        "analyze": "vendor/bin/phpstan analyze",
         "fresh": [
             "rm -rf vendor composer.lock",
             "composer install"
         ],
+        "style:check": "vendor/bin/php-cs-fixer check -v",
+        "style:fix": "vendor/bin/php-cs-fixer fix -v",
         "tests": [
             "rm -rf build",
             "XDEBUG_MODE=coverage php vendor/bin/pest"

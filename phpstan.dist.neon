@@ -1,0 +1,11 @@
+includes:
+  - vendor/larastan/larastan/extension.neon
+
+parameters:
+  level: 4
+  paths:
+    - resources
+    - src
+    - tests
+  editorUrl: '%%relFile%%:%%line%%'
+  editorUrlTitle: '%%relFile%%:%%line%%'

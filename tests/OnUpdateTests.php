@@ -116,7 +116,7 @@ class OnUpdateTests extends TestCase
         ]);
         self::assertEquals('my-first-post', $post->slug);
 
-        $post = Post::whereKey($post->id)->get(['id','subtitle'])->first();
+        $post = Post::whereKey($post->id)->first(['id','subtitle']);
         $post->update([
             'subtitle' => 'A Subtitle'
         ]);
