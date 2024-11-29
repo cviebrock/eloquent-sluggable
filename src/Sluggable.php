@@ -45,7 +45,7 @@ trait Sluggable
     /**
      * @inheritDoc
      */
-    public function replicate(array $except = null)
+    public function replicate(?array $except = null)
     {
         $instance = parent::replicate($except);
         (new SlugService())->slug($instance, true);
