@@ -26,7 +26,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton(SluggableObserver::class, function ($app) {
-            return new SluggableObserver(new SlugService(), $app['events']);
+            return new SluggableObserver($this->app->make(SlugService::class), $app['events']);
         });
     }
 
