@@ -1,6 +1,8 @@
 name: tests
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   tests:
@@ -9,11 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php:
-          - version: 8.2
-          - version: 8.3
-          - version: 8.4
-            env: PHP_CS_FIXER_IGNORE_ENV=1
+        php: ['8.2', '8.3', '8.4', { version: 8.2 }, { version: 8.3 }, { version: 8.4, env: PHP_CS_FIXER_IGNORE_ENV=1 }]
         stability: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php.version }} - ${{ matrix.stability }}
@@ -21,30 +19,39 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php.version }}
           tools: composer:v2, cs2pr
           coverage: none
+
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: dependencies-${{ matrix.php.version }}-${{ matrix.stability }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: dependencies-${{ matrix.php.version }}-${{ matrix.stability }}-composer-
+
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
       - name: Check coding style
         run: ${{ matrix.php.env }} composer run style:check -- --format=checkstyle | cs2pr
+
       - name: Check static analysis
         run: composer run analyze -- --error-format=checkstyle | cs2pr
+
       - name: Configure matchers for PHPUnit
         uses: mheap/phpunit-matcher-action@v1
+
       - name: Run PHP tests
         run: composer run tests:ci
