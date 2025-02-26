@@ -101,6 +101,7 @@ version of the package.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
+|      12.0       |      ^12.0      |
 |      11.0       |      ^11.0      |
 |      10.0       |      ^10.0      |
 |       9.0       |      ^9.0       |

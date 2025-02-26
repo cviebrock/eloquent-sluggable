@@ -6,7 +6,6 @@
         "eloquent",
         "sluggable",
         "laravel",
-        "lumen",
         "slug"
     ],
     "homepage": "https://github.com/cviebrock/eloquent-sluggable",
@@ -20,16 +19,16 @@
     "require": {
         "php": "^8.2",
         "cocur/slugify": "^4.3",
-        "illuminate/config": "^11.0",
-        "illuminate/database": "^11.0",
-        "illuminate/support": "^11.0"
+        "illuminate/config": "^12.0",
+        "illuminate/database": "^12.0",
+        "illuminate/support": "^12.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.65",
         "larastan/larastan": "^3.0",
         "mockery/mockery": "^1.4.4",
-        "orchestra/testbench": "^9.0",
-        "pestphp/pest": "^2.28",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^3.7",
         "phpstan/phpstan": "^2.0"
     },
     "autoload": {
