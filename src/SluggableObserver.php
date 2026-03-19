@@ -87,7 +87,7 @@ class SluggableObserver
     /**
      * Fire the namespaced post-validation event.
      */
-    protected function fireSluggedEvent(Model $model, string $status): void
+    protected function fireSluggedEvent(Model $model, bool $status): void
     {
         $this->events->dispatch('eloquent.slugged: ' . get_class($model), [$model, $status]);
     }

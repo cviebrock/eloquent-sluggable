@@ -17,17 +17,17 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "cocur/slugify": "^4.3",
-        "illuminate/config": "^12.0",
-        "illuminate/database": "^12.0",
-        "illuminate/support": "^12.0"
+        "illuminate/config": "^13.0",
+        "illuminate/database": "^13.0",
+        "illuminate/support": "^13.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.65",
+        "friendsofphp/php-cs-fixer": "~3.94.2",
         "larastan/larastan": "^3.0",
         "mockery/mockery": "^1.4.4",
-        "orchestra/testbench": "^10.0",
+        "orchestra/testbench": "^11.0",
         "pestphp/pest": "^3.7",
         "phpstan/phpstan": "^2.0"
     },
@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-        "analyze": "vendor/bin/phpstan analyze",
+        "analyze": "vendor/bin/phpstan --memory-limit=1G analyze",
         "fresh": [
             "rm -rf vendor composer.lock",
             "composer install"

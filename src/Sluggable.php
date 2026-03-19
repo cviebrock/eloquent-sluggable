@@ -18,7 +18,9 @@ trait Sluggable
      */
     public static function bootSluggable(): void
     {
-        static::observe(app(SluggableObserver::class));
+        static::whenBooted(function () {
+            static::observe(app(SluggableObserver::class));
+        });
     }
 
     /**
