@@ -24,7 +24,7 @@
         "illuminate/support": "^12.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.65",
+        "friendsofphp/php-cs-fixer": "~3.94.2",
         "larastan/larastan": "^3.0",
         "mockery/mockery": "^1.4.4",
         "orchestra/testbench": "^10.0",
