@@ -10,7 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         php:
-          - version: 8.2
           - version: 8.3
           - version: 8.4
             env: PHP_CS_FIXER_IGNORE_ENV=1
