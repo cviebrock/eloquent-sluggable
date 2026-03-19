@@ -34,6 +34,9 @@ return (new Config())
         // Forbid multi-line whitespace before the closing semicolon
         'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],
 
+        // Breaks 8.3 compatability if we turn this on
+        'new_expression_parentheses' => false,
+
         // Clean up PHPDocs, but leave @inheritDoc entries alone
         'no_superfluous_phpdoc_tags' => ['allow_mixed' => true, 'remove_inheritdoc' => false],
 
