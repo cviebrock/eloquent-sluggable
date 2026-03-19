@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-        "analyze": "vendor/bin/phpstan analyze",
+        "analyze": "vendor/bin/phpstan --memory-limit=1G analyze",
         "fresh": [
             "rm -rf vendor composer.lock",
             "composer install"

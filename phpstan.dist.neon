@@ -2,7 +2,7 @@ includes:
   - vendor/larastan/larastan/extension.neon
 
 parameters:
-  level: 4
+  level: 5
   paths:
     - resources
     - src

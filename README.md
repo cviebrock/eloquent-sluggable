@@ -101,6 +101,7 @@ version of the package.
 
 | Laravel Version | Package Version |
 |:---------------:|:---------------:|
+|      13.0       |      ^13.0      |
 |      12.0       |      ^12.0      |
 |      11.0       |      ^11.0      |
 |      10.0       |      ^10.0      |
@@ -121,8 +122,7 @@ the correct README.md for your version (GitHub displays the version in
 the _master_ branch by default, which might not be what you want).
 
 > [!WARNING]
-> Support for Laravel [Lumen](https://lumen.laravel.com/) will be dropped 
-> in the 12.0 version of this package.
+> Support for Laravel [Lumen](https://lumen.laravel.com/) has been dropped.
 
 
 1. Install the package via Composer:

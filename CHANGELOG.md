@@ -1,5 +1,10 @@
 # Change Log
 
+## 13.0.0 - 19-Mar-2026
+
+- Added Laravel 13 support
+
+
 ## 12.0.0 - 26-Feb-2025
 
 - Added Laravel 12 support
