@@ -11,7 +11,7 @@ return (new Config())
     ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRules([
         '@PhpCsFixer'      => true,
-        '@PHP84Migration'  => true,
+        '@PHP8x4Migration' => true,
         'indentation_type' => true,
 
         // Overrides for (opinionated) @PhpCsFixer and @Symfony rules:
