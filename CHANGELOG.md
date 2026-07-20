@@ -1,5 +1,10 @@
 # Change Log
 
+## 13.0.1 - 20-July-2026
+
+- add `.gitattributes` file and reduce size of package archive (#630, thanks @hosni)
+
+
 ## 13.0.0 - 19-Mar-2026
 
 - Added Laravel 13 support
