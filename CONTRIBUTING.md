@@ -46,7 +46,7 @@ We accept contributions via pull requests via
   [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages)
   before submitting.
 
-- Don't worry about updating `CHANGELOG.md` or `.semver`.  The package administrator
+- Don't worry about updating `CHANGELOG.md`.  The package administrator
   will handle updating those when new releases are created.
   
 
