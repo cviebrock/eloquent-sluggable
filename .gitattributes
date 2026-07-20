@@ -1,0 +1,18 @@
+* text=auto
+
+*.md diff=markdown
+*.php diff=php
+
+/.github/ export-ignore
+/tests/ export-ignore
+
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.php-cs-fixer.php export-ignore
+/.semver export-ignore
+/CONTRIBUTING.md export-ignore
+/phpstan.dist.neon export-ignore
+/phpunit.xml export-ignore
+/ROUTE-MODEL-BINDING.md export-ignore
+/SCOPE-HELPERS.md export-ignore
+/TODO.md export-ignore
