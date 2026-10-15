@@ -51,6 +51,18 @@ class EventTests extends TestCase
         Event::assertDispatched('eloquent.slugged: ' . Post::class);
     }
 
+    public function testSluggedEventReportsUnchangedSlug(): void
+    {
+        Event::fake(['eloquent.slugged: ' . Post::class]);
+
+        $post = Post::create(['title' => 'My Test Post']);
+        $post->save();
+
+        Event::assertDispatched('eloquent.slugged: ' . Post::class, static function ($event, $payload) use ($post) {
+            return $payload[0] === $post && $payload[1] === false;
+        });
+    }
+
     public function testCancelSluggingEvent(): void
     {
         Event::fake([

@@ -8,8 +8,10 @@ $post = Post::findBySlug($slugString);
 $post = Post::findBySlugOrFail($slugString);
 ```
 
-These two methods have the same signature and functionality as Eloquent's `find()` and `findOrFail()` methods
-except that they use the slug field instead of the primary key.
+These methods accept a single slug string and an optional array of columns to select.
+They return the first matching model, using the slug field instead of the primary key.
+`findBySlug()` returns null when no model matches; `findBySlugOrFail()` throws
+`ModelNotFoundException`.
 
 The helper trait also adds a query scope to help limit searches to a particular slug:
 
@@ -55,7 +57,7 @@ class Post extends Model
 }
 ```
 
-In the above case, `Post::findBySlugOrFail($slug)` is the equivalent to `Post::where('alternate,'=',$slug)->firstOrFail()`.
+In the above case, `Post::findBySlugOrFail($slug)` is the equivalent to `Post::where('alternate', '=', $slug)->firstOrFail()`.
 
 
 - - -
