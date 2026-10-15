@@ -205,7 +205,7 @@ $post = Post::create([
 // $post->slug is "my-awesome-blog-post"
 
 $newPost = $post->replicate();
-// $newPost->slug is "my-awesome-blog-post-1"
+// $newPost->slug is "my-awesome-blog-post-2"
 ```
 
 > [!NOTE]
@@ -322,9 +322,9 @@ The "slugging" event is fired just before the slug is generated.  If the callbac
 from this event returns `false`, then the slugging is not performed. If anything
 else is returned, including `null`, then the slugging will be performed.
 
-The "slugged" event is fired just after a slug is generated.  It won't be called
-in the case where the model doesn't need slugging (as determined by the `needsSlugging()`
-method).
+The "slugged" event is fired after the slugging attempt, unless the "slugging" event
+cancelled it. Its second callback argument is a boolean indicating whether the slug
+attributes are dirty, so the event can also fire when no slug changes.
 
 You can hook into either of these events just like any other Eloquent model event:
 
@@ -337,7 +337,7 @@ Post::registerModelEvent('slugging', static function($post) {
 });
 
 Post::registerModelEvent('slugged', static function($post) {
-    Log::info('Post slugged: ' . $post->getSlug());
+    Log::info('Post slugged: ' . $post->slug);
 });
 ```
 
@@ -452,7 +452,7 @@ class Person extends Eloquent
 }
 ```
 
-If `source` is empty, false or null, then the value of `$model->__toString()` is used
+If `source` is null, then the value of `$model->__toString()` is used
 as the source for slug generation.
 
 ### method
@@ -512,8 +512,8 @@ For example, if you have two blog posts and both are called "My Blog Post", then
 will both sluggify to "my-blog-post" if `unique` is false. This could be a problem, e.g. 
 if you use the slug in URLs.
 
-By setting `unique` to true, then the second Post model will sluggify to "my-blog-post-1". 
-If there is a third post with the same title, it will sluggify to "my-blog-post-2" 
+By setting `unique` to true, then the second Post model will sluggify to "my-blog-post-2".
+If there is a third post with the same title, it will sluggify to "my-blog-post-3"
 and so on. Each subsequent model will get an incremental value appended to the end 
 of the slug, ensuring uniqueness.
 
@@ -673,7 +673,7 @@ the package's trait.
 > /**
 >  * Your trait where you collect your common Sluggable extension methods
 >  */
-> class MySluggableTrait {
+> trait MySluggableTrait {
 >     public function customizeSlugEngine(...) {}
 >     public function scopeWithUniqueSlugConstraints(...) {}
 >     // etc.
@@ -810,7 +810,7 @@ See [ROUTE-MODEL-BINDING.md](ROUTE-MODEL-BINDING.md) for details.
 
 ## Bugs, Suggestions, Contributions and Support
 
-Thanks to [everyone](https://github.com/cviebrock/eloquent-taggable/graphs/contributors)
+Thanks to [everyone](https://github.com/cviebrock/eloquent-sluggable/graphs/contributors)
 who has contributed to this project!
 
 Please use [GitHub](https://github.com/cviebrock/eloquent-sluggable) for reporting bugs, 
