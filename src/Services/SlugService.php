@@ -363,6 +363,8 @@ class SlugService
 
                 throw new \InvalidArgumentException("Argument 2 passed to SlugService::createSlug ['{$attribute}'] is not a valid slug attribute for model {$modelClass}.");
             }
+        } else {
+            $config = array_merge(Arr::get($model->sluggable(), $attribute, []), $config);
         }
 
         $config = $instance->getConfiguration($config);
