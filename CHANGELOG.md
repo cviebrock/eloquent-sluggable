@@ -3,7 +3,7 @@
 ## 13.0.2 - 15-Oct-2026
 
 - fixes overriding configuration in `SlugService::createSlug()` (#631, thanks @dajiaohuang)
-- fixes documention and adds additional event testing (#632, thanks @dajiaohuang)
+- fixes documentation and adds additional event testing (#632, thanks @dajiaohuang)
 
 
 ## 13.0.1 - 20-July-2026
