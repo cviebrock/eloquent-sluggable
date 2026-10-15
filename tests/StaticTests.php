@@ -4,6 +4,7 @@ namespace Cviebrock\EloquentSluggable\Tests;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Tests\Models\Post;
+use Cviebrock\EloquentSluggable\Tests\Models\PostWithCustomSeparator;
 
 /**
  * Class StaticTests.
@@ -43,6 +44,35 @@ class StaticTests extends TestCase
         ];
         $slug = SlugService::createSlug(Post::class, 'slug', 'My Test Post', $config);
         self::assertEquals('my.test.post', $slug);
+    }
+
+    public function testStaticOverridesPreserveModelConfiguration(): void
+    {
+        $post = PostWithCustomSeparator::create(['title' => 'My Test Post']);
+        self::assertEquals('my.test.post', $post->fresh()->slug);
+
+        $slug = SlugService::createSlug(PostWithCustomSeparator::class, 'slug', 'My Test Post', ['unique' => false]);
+        self::assertEquals('my.test.post', $slug);
+    }
+
+    public function testEmptyStaticOverridesPreserveModelConfiguration(): void
+    {
+        PostWithCustomSeparator::create(['title' => 'My Test Post']);
+
+        $slug = SlugService::createSlug(PostWithCustomSeparator::class, 'slug', 'My Test Post', []);
+        self::assertEquals('my.test.post.2', $slug);
+    }
+
+    public function testStaticOverridesTakePrecedenceOverModelConfiguration(): void
+    {
+        $slug = SlugService::createSlug(PostWithCustomSeparator::class, 'slug', 'My Test Post', ['separator' => '_']);
+        self::assertEquals('my_test_post', $slug);
+    }
+
+    public function testStaticExplicitConfigurationForAnotherAttribute(): void
+    {
+        $slug = SlugService::createSlug(Post::class, 'dummy', 'My Test Post', ['separator' => '_']);
+        self::assertEquals('my_test_post', $slug);
     }
 
     /**
